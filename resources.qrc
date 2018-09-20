@@ -1,0 +1,53 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="list-2x.png">shared/list-2x.png</file>
+        <file alias="list-3x.png">shared/list-3x.png</file>
+        <file alias="list-4x.png">shared/list-4x.png</file>
+        <file alias="list-6x.png">shared/list-6x.png</file>
+        <file alias="list-8x.png">shared/list-8x.png</file>
+        <file alias="wrench-2x.png">shared/wrench-2x.png</file>
+        <file alias="wrench-3x.png">shared/wrench-3x.png</file>
+        <file alias="wrench-4x.png">shared/wrench-4x.png</file>
+        <file alias="wrench-6x.png">shared/wrench-6x.png</file>
+        <file alias="wrench-8x.png">shared/wrench-8x.png</file>
+        <file alias="power-standby-2x.png">shared/power-standby-2x.png</file>
+        <file alias="power-standby-3x.png">shared/power-standby-3x.png</file>
+        <file alias="power-standby-4x.png">shared/power-standby-4x.png</file>
+        <file alias="power-standby-6x.png">shared/power-standby-6x.png</file>
+        <file alias="power-standby-8x.png">shared/power-standby-8x.png</file>
+        <file alias="person-2x.png">shared/person-2x.png</file>
+        <file alias="person-3x.png">shared/person-3x.png</file>
+        <file alias="person-4x.png">shared/person-4x.png</file>
+        <file alias="person-6x.png">shared/person-6x.png</file>
+        <file alias="person-8x.png">shared/person-8x.png</file>
+        <file alias="bell-2x.png">shared/bell-2x.png</file>
+        <file alias="bell-3x.png">shared/bell-3x.png</file>
+        <file alias="bell-4x.png">shared/bell-4x.png</file>
+        <file alias="bell-6x.png">shared/bell-6x.png</file>
+        <file alias="bell-8x.png">shared/bell-8x.png</file>
+        <file alias="book-2x.png">shared/book-2x.png</file>
+        <file alias="book-3x.png">shared/book-3x.png</file>
+        <file alias="book-4x.png">shared/book-4x.png</file>
+        <file alias="book-6x.png">shared/book-6x.png</file>
+        <file alias="book-8x.png">shared/book-8x.png</file>
+        <file alias="browser-2x.png">shared/browser-2x.png</file>
+        <file alias="browser-3x.png">shared/browser-3x.png</file>
+        <file alias="browser-4x.png">shared/browser-4x.png</file>
+        <file alias="browser-6x.png">shared/browser-6x.png</file>
+        <file alias="browser-8x.png">shared/browser-8x.png</file>
+        <file alias="bullhorn-2x.png">shared/bullhorn-2x.png</file>
+        <file alias="bullhorn-3x.png">shared/bullhorn-3x.png</file>
+        <file alias="bullhorn-4x.png">shared/bullhorn-4x.png</file>
+        <file alias="bullhorn-6x.png">shared/bullhorn-6x.png</file>
+        <file alias="bullhorn-8x.png">shared/bullhorn-8x.png</file>
+        <file alias="monitor-2x.png">shared/monitor-2x.png</file>
+        <file alias="monitor-3x.png">shared/monitor-3x.png</file>
+        <file alias="monitor-4x.png">shared/monitor-4x.png</file>
+        <file alias="monitor-6x.png">shared/monitor-6x.png</file>
+        <file alias="monitor-8x.png">shared/monitor-8x.png</file>
+        <file alias="bullhorn-gray-2x.png">shared/bullhorn-gray-2x.png</file>
+    </qresource>
+    <qresource prefix="/sound">
+        <file alias="single_chime.wav">shared/single_chime.wav</file>
+    </qresource>
+</RCC>
