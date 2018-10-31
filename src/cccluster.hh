@@ -9,14 +9,14 @@
 /** Defines a spot. */
 typedef struct
 {
-  QString spot;    ///< Spot call sign.
-  QString spotter; ///< Spotter call sign.
-  double  freq;    ///< Spot frequency.
-  QString mode;    ///< Spot mode (CW, etc).
-  int     db;      ///< Spot signal strength.
-  int     wpm;     ///< Spot speed.
-  QTime   time;    ///< Spot time.
-  QTime   rxtime;  ///< Time of announcement on cluster.
+  QString   spot;    ///< Spot call sign.
+  QString   spotter; ///< Spotter call sign.
+  double    freq;    ///< Spot frequency.
+  QString   mode;    ///< Spot mode (CW, etc).
+  int       db;      ///< Spot signal strength.
+  int       wpm;     ///< Spot speed.
+  QTime     time;    ///< Spot time.
+  QDateTime rxtime;  ///< Time of announcement on cluster.
 } Spot;
 
 

@@ -50,4 +50,7 @@
     <qresource prefix="/sound">
         <file alias="single_chime.wav">shared/single_chime.wav</file>
     </qresource>
+    <qresource prefix="/dxcc">
+        <file alias="dxcc.txt">shared/dxcc.txt</file>
+    </qresource>
 </RCC>

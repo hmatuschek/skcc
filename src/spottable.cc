@@ -43,39 +43,39 @@ SpotTable::data(const QModelIndex &index, int role) const {
   if (_spots.at(index.row()).isEmpty())
     return QVariant();
 
-  if (Qt::DisplayRole == role) {
-    QList<Spot> spots = _spots.at(index.row());
-    QString call = spots.first().spot;
-    bool skcc = _skcc.isMember(call);
-    int  sc = spots.size();
-    int  db = spots.first().db;
-    QString spotter = spots.first().spotter;
-    double  dist = _spotterlist.spotterDist(spotter, _locator);
-    for (QList<Spot>::iterator it = spots.begin(); it != spots.end(); it++) {
-      double d2 = _spotterlist.spotterDist(it->spotter, _locator);
-      if (d2<dist) {
-        db = it->db;
-        spotter = it->spotter;
-      }
+  QList<Spot> spots = _spots.at(index.row());
+  QString call = spots.first().spot;
+  bool skcc = _skcc.isMember(call);
+  int  sc = spots.size();
+  int  db = spots.first().db;
+  QString spotter = spots.first().spotter;
+  double  dist = _spotterlist.spotterDist(spotter, _locator);
+  for (QList<Spot>::iterator it = spots.begin(); it != spots.end(); it++) {
+    double d2 = _spotterlist.spotterDist(it->spotter, _locator);
+    if (d2<dist) {
+      db = it->db;
+      spotter = it->spotter;
     }
+  }
+
+  if (Qt::DisplayRole == role) {
     switch (index.column()) {
       case 0: return (skcc ? QString("[skcc] ") : QString()) + call;
+      case 1: return _spots.at(index.row()).last().freq;
+      case 2: return db;
+      case 3: return _spots.at(index.row()).first().wpm;
+      case 4: return dxcc_name_from_call(call);
+      case 5: return spotter + ((1<sc) ? QString(" + %1").arg(sc-1) : QString());
+      case 6: return _spots.at(index.row()).last().time.toString();
+    }
+  } else if (Qt::EditRole == role) {
+    switch (index.column()) {
+      case 0: return call;
       case 1: return _spots.at(index.row()).first().freq;
       case 2: return db;
       case 3: return _spots.at(index.row()).first().wpm;
       case 4: return dxcc_name_from_call(call);
-      case 5: return spotter + ((1<sc) ? QString(" + %1").arg(sc-1) : QString());;
-      case 6: return _spots.at(index.row()).last().time.toString();
-    }
-  } else if (Qt::EditRole == role) {
-    QString call = _spots.at(index.row()).first().spot;
-    switch (index.column()) {
-      case 0: return call;
-      case 1: return _spots.at(index.row()).first().freq;
-      case 2: return _spots.at(index.row()).first().db;
-      case 3: return _spots.at(index.row()).first().wpm;
-      case 4: return dxcc_name_from_call(call);
-      case 5: return _spots.at(index.row()).first().spotter;
+      case 5: return spotter;
       case 6: return _spots.at(index.row()).last().rxtime;
     }
   } else if (Qt::BackgroundRole == role) {
@@ -203,14 +203,14 @@ SpotTable::onNewSpot(const Spot &spot)
 {
   // First remove all old spots
   if (0 < _maxAge) {
-    QTime now = QDateTime::currentDateTimeUtc().time();
+    QDateTime now = QDateTime::currentDateTimeUtc();
 
     int row = 0;
     for (QList<QList<Spot> >::iterator it=_spots.begin(); it!=_spots.end(); it++, row++)
     {
       int spotRemIdx = -1;
       for (QList<Spot>::iterator sit=it->begin(); sit!=it->end(); sit++) {
-        if (sit->time.secsTo(now)>_maxAge)
+        if (sit->rxtime.secsTo(now)>_maxAge)
           spotRemIdx++;
         else
           break;

@@ -1,5 +1,6 @@
 #include "cccluster.hh"
 #include <QRegExp>
+#include <QDateTime>
 
 
 /* ******************************************************************************************** *
@@ -7,8 +8,8 @@
  * ******************************************************************************************** */
 CCCluster::CCCluster(const QString &call, const QString &host, quint16 port, QObject *parent)
   : QTcpSocket(parent), _state(CONNECTING), _host(host), _port(port), _call(call),
-    _rbnpattern("^DX de ([A-Za-Z0-9]+).*: ([0-9\\.]+) ([A-Z0-9/]+) (?CW|DX) "
-                 "([0-9]+) dB ([0-9]+) WPM CQ ([0-9][0-9])([0-9][0-9])Z$")
+    _rbnpattern("^DX de ([A-Za-Z0-9]+).*: ([0-9\\.]+) ([A-Z0-9/]+) CW "
+                 "([0-9]+) dB ([0-9]+) WPM (CQ|DX) ([0-9][0-9])([0-9][0-9])Z$")
 {
   _ping.setInterval(30000);
   _ping.setSingleShot(false);
@@ -60,8 +61,8 @@ CCCluster::onReadyRead()
       if (_rbnpattern.exactMatch(line)) {
         Spot spot = { _rbnpattern.cap(3), _rbnpattern.cap(1), _rbnpattern.cap(2).toDouble(),
                       "CW", _rbnpattern.cap(4).toInt(), _rbnpattern.cap(5).toInt(),
-                      QTime(_rbnpattern.cap(6).toInt(), _rbnpattern.cap(7).toInt()),
-                      QTime::currentTime() };
+                      QTime(_rbnpattern.cap(7).toInt(), _rbnpattern.cap(8).toInt()),
+                      QDateTime::currentDateTimeUtc()};
         /*qDebug() << "Got " << spot.spot << "from" << spot.spotter << "on" << spot.freq
                  << "with" << spot.db << "dB and" << spot.wpm << "wpm at" << spot.time;*/
         emit newSpot(spot);

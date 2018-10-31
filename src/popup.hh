@@ -7,7 +7,7 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 
-
+/** Simple popup window for notifications. */
 class PopUp : public QWidget
 {
 	Q_OBJECT

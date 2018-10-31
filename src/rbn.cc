@@ -45,7 +45,7 @@ RBNSpotterList::listDownloaded(QNetworkReply *reply) {
 	}
 
   reply->deleteLater();
-
+  qDebug() << "Got" << _spotter.size() << "skimmer.";
   emit listUpdated();
 }
 
