@@ -112,7 +112,7 @@
     ER*                 Moldova                            EU    29    16    179
     ES*                 Estonia                            EU    29    15    052
     ET*                 Ethiopia                           AF    48    37    053
-    EU-EW*              Belarus                            EU    29    16    027
+    E[U-W]*              Belarus                            EU    29    16    027
     EX*                 Kyrgyzstan                         AS    30,31 17    135
     EY*                 Tajikistan                         AS    30    17    262
     EZ*                 Turkmenistan                       AS    30    17    280
