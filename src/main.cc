@@ -3,7 +3,7 @@
 #include <QTableView>
 #include <QSortFilterProxyModel>
 #include "settingsdialog.hh"
-
+#include "trayicon.hh"
 
 int main(int argc, char *argv[])
 {
@@ -16,6 +16,9 @@ int main(int argc, char *argv[])
   }
 
   Application app(argc, argv);
+
+  TrayIcon icon(&app);
+  icon.show();
 
   app.exec();
 
