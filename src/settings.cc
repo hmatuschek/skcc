@@ -335,6 +335,70 @@ Settings::setFriends(const Friends &friends) {
   endArray();
 }
 
+QColor
+Settings::selfSpotColor() const {
+  return value("colors/selfSpot", QColor(Qt::gray)).value<QColor>();
+}
+void
+Settings::setSelfSpotColor(const QColor &color) {
+  setValue("colors/selfSpot", color);
+}
+
+QColor
+Settings::friendSpotColor() const {
+  return value("colors/friendSpot", QColor(Qt::blue)).value<QColor>();
+}
+void
+Settings::setFriendSpotColor(const QColor &color) {
+  setValue("colors/friendSpot", color);
+}
+
+QColor
+Settings::newDXCCColor() const {
+  return value("colors/newDXCC", QColor(Qt::magenta)).value<QColor>();
+}
+void
+Settings::setNewDXCCColor(const QColor &color) {
+  setValue("colors/newDXCC", color);
+}
+
+QColor
+Settings::newBandColor() const {
+  return value("colors/newBand", QColor(Qt::red)).value<QColor>();
+}
+void
+Settings::setNewBandColor(const QColor &color) {
+  setValue("colors/newBand", color);
+}
+
+QColor
+Settings::newSlotColor() const {
+  return value("colors/newSlot", QColor(Qt::yellow)).value<QColor>();
+}
+void
+Settings::setNewSlotColor(const QColor &color) {
+  setValue("colors/newSlot", color);
+}
+
+QColor
+Settings::newQSOColor() const {
+  return value("colors/newQSO", QColor(Qt::white)).value<QColor>();
+}
+void
+Settings::setNewQSOColor(const QColor &color) {
+  setValue("colors/newQSO", color);
+}
+
+QColor
+Settings::workedColor() const {
+  return value("colors/worked", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setWorkedColor(const QColor &color) {
+  setValue("colors/worked", color);
+}
+
+
 
 Friend::Friend()
   : _call(), _name(), _comment()

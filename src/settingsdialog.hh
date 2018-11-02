@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QTableWidget>
-
+#include "colorbutton.hh"
 
 class SettingsDialog : public QDialog
 {
@@ -28,6 +28,7 @@ private:
 	QLineEdit *_clusterPort;
 	QLineEdit *_logFile;
   QTableWidget *_friends;
+  ColorButton *_newDXCC, *_selfSpot, *_friendSpot, *_newBand, *_newSlot, *_newQSO, *_worked;
 };
 
 #endif // SETTINGSDIALOG_HH

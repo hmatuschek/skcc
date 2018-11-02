@@ -98,6 +98,26 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   connect(add, SIGNAL(clicked(bool)), this, SLOT(onAddFriend()));
   connect(rem, SIGNAL(clicked(bool)), this, SLOT(onRemFriend()));
 
+  tab = new QWidget();
+  tabs->addTab(tab, tr("Colors"));
+  form = new QFormLayout();
+
+  _selfSpot = new ColorButton(settings.selfSpotColor());
+  _friendSpot = new ColorButton(settings.friendSpotColor());
+  _newDXCC = new ColorButton(settings.newDXCCColor());
+  _newBand = new ColorButton(settings.newBandColor());
+  _newSlot = new ColorButton(settings.newSlotColor());
+  _newQSO = new ColorButton(settings.newQSOColor());
+  _worked = new ColorButton(settings.workedColor());
+  form->addRow(tr("self spot"), _selfSpot);
+  form->addRow(tr("friend spot"), _friendSpot);
+  form->addRow(tr("new DXCC"), _newDXCC);
+  form->addRow(tr("new band"), _newBand);
+  form->addRow(tr("new slot"), _newSlot);
+  form->addRow(tr("new QSO"), _newQSO);
+  form->addRow(tr("worked"), _worked);
+  tab->setLayout(form);
+
   QDialogButtonBox *bb = new QDialogButtonBox(QDialogButtonBox::Save|QDialogButtonBox::Cancel);
   layout->addWidget(bb);
 
@@ -146,6 +166,13 @@ SettingsDialog::accept() {
   settings.setClusterHost(_clusterHost->text().simplified());
   settings.setClusterPort(quint16(_clusterPort->text().toUInt()));
   settings.setLogFile(_logFile->text());
+  settings.setSelfSpotColor(_selfSpot->color());
+  settings.setFriendSpotColor(_friendSpot->color());
+  settings.setNewDXCCColor(_newDXCC->color());
+  settings.setNewBandColor(_newBand->color());
+  settings.setNewSlotColor(_newSlot->color());
+  settings.setNewQSOColor(_newQSO->color());
+  settings.setWorkedColor(_worked->color());
 
   Friends friends;
   for (int i=0; i<_friends->rowCount(); i++) {

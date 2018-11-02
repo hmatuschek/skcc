@@ -79,19 +79,20 @@ SpotTable::data(const QModelIndex &index, int role) const {
       case 6: return _spots.at(index.row()).last().rxtime;
     }
   } else if (Qt::BackgroundRole == role) {
+    Settings settings;
     if (_spots.at(index.row()).first().spot == _call)
-      return QColor(Qt::gray);
+      return settings.selfSpotColor();
     if (_friends.contains(_spots.at(index.row()).first().spot.toUpper()))
-      return QColor(Qt::blue);
+      return settings.friendSpotColor();
     LogFile::Match match = _logfile.isNew(
           _spots.at(index.row()).first().spot, freq2band(_spots.at(index.row()).first().freq),
           _spots.at(index.row()).first().mode);
     switch (match) {
-      case LogFile::NEW_DXCC: return QColor(Qt::magenta);
-      case LogFile::NEW_BAND: return QColor(Qt::red);
-      case LogFile::NEW_SLOT: return QColor(Qt::yellow);
-      case LogFile::NEW_QSO: return QColor(Qt::white);
-      case LogFile::WORKED: return QColor(Qt::green);
+      case LogFile::NEW_DXCC: return settings.newDXCCColor();
+      case LogFile::NEW_BAND: return settings.newBandColor();
+      case LogFile::NEW_SLOT: return settings.newSlotColor();
+      case LogFile::NEW_QSO: return settings.newQSOColor();
+      case LogFile::WORKED: return settings.workedColor();
     }
   } else if (Qt::FontRole == role) {
     return QFont("Helvetica [Cronyx]", 12);

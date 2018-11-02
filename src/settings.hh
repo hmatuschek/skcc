@@ -2,6 +2,7 @@
 #define SETTINGS_HH
 
 #include <QSettings>
+#include <QColor>
 #include "adi.hh"
 
 class Friend
@@ -129,6 +130,22 @@ public:
 
   Friends friends();
   void setFriends(const Friends &friends);
+
+  QColor selfSpotColor() const;
+  void setSelfSpotColor(const QColor &color);
+  QColor friendSpotColor() const;
+  void setFriendSpotColor(const QColor &color);
+  QColor newDXCCColor() const;
+  void setNewDXCCColor(const QColor &color);
+  QColor newBandColor() const;
+  void setNewBandColor(const QColor &color);
+  QColor newSlotColor() const;
+  void setNewSlotColor(const QColor &color);
+  QColor newQSOColor() const;
+  void setNewQSOColor(const QColor &color);
+  QColor workedColor() const;
+  void setWorkedColor(const QColor &color);
 };
 
 #endif // SETTINGS_HH
+
