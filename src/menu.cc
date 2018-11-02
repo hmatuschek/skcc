@@ -145,19 +145,19 @@ Menu::Menu(Application *app, QWidget *parent)
     menu->addAction(action);
 
     menu = addMenu(QIcon("://icons/list-2x.png"), tr("Spot"));
-    _maxAge = new QAction(tr("Max. age: %1s").arg(_app->spots()->maxAge()));
+    _maxAge = new QAction(tr("Max. age: %1s").arg(_app->spots()->maxAge()), this);
     connect(_maxAge, SIGNAL(triggered(bool)), this, SLOT(onMaxAgeTriggered()));
     menu->addAction(_maxAge);
 
-    _maxSpeed = new QAction(tr("Max. speed: %1wpm").arg(_app->spots()->maxSpeed()));
+    _maxSpeed = new QAction(tr("Max. speed: %1wpm").arg(_app->spots()->maxSpeed()), this);
     connect(_maxSpeed, SIGNAL(triggered(bool)), this, SLOT(onMaxSpeedTriggered()));
     menu->addAction(_maxSpeed);
 
-    _minSNR = new QAction(tr("Min. SNR: %1db").arg(_app->spots()->minSNR()));
+    _minSNR = new QAction(tr("Min. SNR: %1db").arg(_app->spots()->minSNR()), this);
     connect(_minSNR, SIGNAL(triggered(bool)), this, SLOT(onMinSNRTriggered()));
     menu->addAction(_minSNR);
 
-    _maxDist = new QAction(tr("Max. spotter dist.: %1km").arg(_app->spots()->maxDist()));
+    _maxDist = new QAction(tr("Max. spotter dist.: %1km").arg(_app->spots()->maxDist()), this);
     connect(_maxDist, SIGNAL(triggered(bool)), this, SLOT(onMaxSpotterDistTriggered()));
     menu->addAction(_maxDist);
 

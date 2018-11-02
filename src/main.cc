@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
 {
   Settings settings;
   while (! settings.isComplete()) {
+    QApplication app(argc, argv);
     SettingsDialog dialog;
     dialog.setModal(true);
     if (QDialog::Rejected == dialog.exec())

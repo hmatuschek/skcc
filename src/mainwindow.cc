@@ -28,6 +28,7 @@ SpotWindow::SpotWindow(SpotTable *spots, QWidget *parent)
   sortByColumn(6, Qt::DescendingOrder);
   setShowGrid(false);
   verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+  verticalHeader()->hide();
 
   setColumnWidth(0, 100);
   setColumnWidth(1, 70);

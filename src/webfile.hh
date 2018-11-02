@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QFileInfo>
 #include <QNetworkAccessManager>
+#include <QUrl>
 
 /** This class downloades and updates some HTTP resource locally.
  * This class downloads the specified URL and stores it under the given filename. The file will
