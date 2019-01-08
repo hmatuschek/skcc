@@ -264,9 +264,13 @@
     TZ(36)*             Mali                               AF    46    35    442
     U[A-I][1-7]*        European Russia                    EU    (E)   16    054
 	R[A-Z][1-7]*        European Russia                    EU    (E)   16    054
+	U[1-7]*             European Russia                    EU    (E)   16    054
+	R[1-7]*             European Russia                    EU    (E)   16    054
     UA2,RA2*            Kaliningrad                        EU    29    15    126
     U[A-I][890]*        Asiatic Russia                     AS    (F)   (G)   015
 	R[A-Z][890]*        Asiatic Russia                     AS    (F)   (G)   015
+	U[890]*             Asiatic Russia                     AS    (F)   (G)   015
+	R[890]*             Asiatic Russia                     AS    (F)   (G)   015
     U[J-M]              Uzbekistan                         AS    30    17    292
     U[N-Q]*             Kazakhstan                         AS    29-31 17    130
     U[R-Z],E[M-O]*      Ukraine                            EU    29    16    288
