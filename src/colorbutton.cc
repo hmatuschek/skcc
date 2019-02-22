@@ -2,25 +2,23 @@
 #include <QColorDialog>
 
 ColorButton::ColorButton(const QColor &color, QWidget *parent)
-	: QPushButton(parent)
+	: QToolButton(parent), _color(color)
 {
-  setMinimumSize(50,15);
 	setColor(color);
 	connect(this, SIGNAL(clicked(bool)), this, SLOT(onClicked()));
 }
 
-QColor
-ColorButton::color() {
-  return palette().color(QPalette::Button);
+const QColor &
+ColorButton::color() const {
+  return _color;
 }
 
 void
 ColorButton::setColor(const QColor &color) {
-  QPalette palette = this->palette();
-  palette.setColor(QPalette::Button, color);
-  setAutoFillBackground(true);
-  setPalette(palette);
-  update();
+  _color = color;
+  QPixmap pixmap(48,48);
+  pixmap.fill(_color);
+  setIcon(QIcon(pixmap));
 }
 
 void
