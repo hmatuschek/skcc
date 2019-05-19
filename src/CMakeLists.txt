@@ -1,10 +1,10 @@
-set(skcc_SOURCES main.cc locator.cc adi.cc bands.cc
+set(skcc_SOURCES main.cc locator.cc bands.cc
     cccluster.cc spottable.cc rbn.cc skcc.cc popup.cc mainwindow.cc settings.cc settingsdialog.cc
-	application.cc webfile.cc dxcc.cc menu.cc trayicon.cc colorbutton.cc)
+	application.cc webfile.cc dxcc.cc menu.cc trayicon.cc colorbutton.cc adi.cc)
 set(skcc_MOC_HEADERS
     cccluster.hh spottable.hh rbn.hh skcc.hh popup.hh mainwindow.hh settings.hh settingsdialog.hh
-	application.hh webfile.hh dxcc.hh menu.hh trayicon.hh colorbutton.hh)
-set(skcc_HEADERS locator.hh adi.hh bands.hh ${skcc_MOC_HEADERS})
+	application.hh webfile.hh dxcc.hh menu.hh trayicon.hh colorbutton.hh adi.hh)
+set(skcc_HEADERS locator.hh bands.hh ${skcc_MOC_HEADERS})
 
 qt5_wrap_cpp(skcc_MOC_SOURCES ${skcc_MOC_HEADERS})
 qt5_add_resources(skcc_RCC_SOURCES ../resources.qrc)

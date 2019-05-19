@@ -14,6 +14,7 @@
 #include <QInputDialog>
 #include <QDebug>
 #include <QHeaderView>
+#include <QPushButton>
 
 
 SettingsDialog::SettingsDialog(QWidget *parent)
@@ -38,7 +39,6 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 	_clusterPort = new QLineEdit(QString::number(settings.clusterPort()));
   _clusterPort->setValidator(new QIntValidator(0, 65535));
 	_logFile = new QLineEdit(settings.logFile());
-
 
   QGroupBox *box = new QGroupBox(tr("Operator"));
   QFormLayout *form = new QFormLayout();

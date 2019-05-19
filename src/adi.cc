@@ -4,13 +4,16 @@
 
 
 bool LogFile::Record::isValid() const {
-  return !( call.isEmpty() || (! time.isValid()) || band.isEmpty() || mode.isEmpty() );
+  return !( call.isEmpty() || band.isEmpty() || mode.isEmpty() );
 }
 
 LogFile::LogFile(const QString &filename)
-  : _filename(filename)
+  : _filename(filename), _watcher()
 {
+  _watcher.addPath(_filename);
   update();
+
+  connect(&_watcher, SIGNAL(fileChanged(const QString &)), this, SLOT(update()));
 }
 
 void
@@ -19,7 +22,7 @@ LogFile::update() {
 
   QFile file(_filename);
   if (! file.open(QIODevice::ReadOnly)) {
-    qDebug() << "Cannot open" << _filename;
+    qDebug() << "LOG: Cannot open" << _filename;
     return;
   }
 
@@ -50,9 +53,12 @@ int LogFile::readRecord(const QString data, int start) {
     QString name = tag.cap(1).toLower();
     if ("eor" == name.toLower()) {
       if (qso.isValid()) {
+        qDebug() << "Found QSO" << qso.call << "in log.";
         start += tag.matchedLength();
         insert(qso);
       } else {
+        qDebug() << "Skip invalid QSO" << qso.call << qso.band << qso.dxcc
+                 << qso.mode << qso.time << "in log.";
         start = -1;
       }
       return start;
@@ -62,9 +68,13 @@ int LogFile::readRecord(const QString data, int start) {
     QString value = data.mid(start+tag.matchedLength(), len);
     if ("call" == name)
       qso.call = value.toUpper();
-    if ("qso_date" == name)
+    if ("qso_date_on" == name)
+      qso.time.setDate(QDate::fromString(value, "yyyyMMdd"));
+    if ((! qso.time.date().isValid()) && ("qso_date_off" == name))
       qso.time.setDate(QDate::fromString(value, "yyyyMMdd"));
     if ("time_on" == name)
+      qso.time.setTime(QTime::fromString(value, "hhmmss"));
+    if ((!qso.time.time().isValid()) && ("time_on" == name))
       qso.time.setTime(QTime::fromString(value, "hhmmss"));
     if ("band" == name)
       qso.band = value.toUpper();

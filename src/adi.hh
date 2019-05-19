@@ -5,10 +5,13 @@
 #include <QString>
 #include <QDateTime>
 #include <QList>
+#include <QFileSystemWatcher>
 
 
-class LogFile
+class LogFile: QObject
 {
+  Q_OBJECT
+
 public:
 	typedef enum {
 		WORKED,
@@ -43,6 +46,7 @@ private:
 private:
   QString _filename;
   QList<Record> _log;
+  QFileSystemWatcher _watcher;
 };
 
 #endif // ADI_HH
