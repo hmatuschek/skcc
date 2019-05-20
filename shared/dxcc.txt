@@ -138,7 +138,7 @@
     FT/Z*               Amsterdam & St. Paul Is.           AF    68    39    010
     FW*                 Wallis & Futuna Is.                OC    62    32    298
     FY*                 French Guiana                      SA    12    09    063
-    G,GX,M*             England                            EU    27    14    223
+    2E,G,GX,M*          England                            EU    27    14    223
     GD,GT*              Isle of Man                        EU    27    14    114
     GI,GN*              Northern Ireland                   EU    27    14    265
     GJ,GH*              Jersey                             EU    27    14    122

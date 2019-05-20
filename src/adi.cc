@@ -53,7 +53,7 @@ int LogFile::readRecord(const QString data, int start) {
     QString name = tag.cap(1).toLower();
     if ("eor" == name.toLower()) {
       if (qso.isValid()) {
-        qDebug() << "Found QSO" << qso.call << "in log.";
+        //qDebug() << "Found QSO" << qso.call << "in log.";
         start += tag.matchedLength();
         insert(qso);
       } else {

@@ -84,6 +84,8 @@ SpotTable::data(const QModelIndex &index, int role) const {
       return settings.selfSpotColor();
     if (_friends.contains(_spots.at(index.row()).first().spot.toUpper()))
       return settings.friendSpotColor();
+    if (0 > dxcc_from_call(_spots.at(index.row()).first().spot))
+      return settings.newQSOColor();
     LogFile::Match match = _logfile.isNew(
           _spots.at(index.row()).first().spot, freq2band(_spots.at(index.row()).first().freq),
           _spots.at(index.row()).first().mode);
