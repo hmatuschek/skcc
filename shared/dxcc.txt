@@ -84,10 +84,10 @@
     CM,CO#*             Cuba                               NA    11    08    070
     CN                  Morocco                            AF    37    33    446
     CP#*                Bolivia                            SA    12,14 10    104
-    CT*                 Portugal                           EU    37    14    272
+    C[Q-U]*                 Portugal                           EU    37    14    272
     CT3*                Madeira Is.                        AF    36    33    256
     CU*                 Azores                             EU    36    14    149
-    CV-CX#*             Uruguay                            SA    14    13    144
+    C[V-X]#*             Uruguay                            SA    14    13    144
     CY0*                Sable I.                           NA    09    05    211
     CY9*                St. Paul I.                        NA    09    05    252
     D2,D3               Angola                             AF    52    36    401
@@ -116,7 +116,7 @@
     EX*                 Kyrgyzstan                         AS    30,31 17    135
     EY*                 Tajikistan                         AS    30    17    262
     EZ*                 Turkmenistan                       AS    30    17    280
-    F*                  France                             EU    27    14    227
+    TM,TP,F*            France                             EU    27    14    227
     FG,TO*              Guadeloupe                         NA    11    08    079
     FH,TO(13)*          Mayotte                            AF    53    39    169
     FJ,TO(49)*          Saint Barthelemy                   NA    11    08    516
@@ -138,13 +138,13 @@
     FT/Z*               Amsterdam & St. Paul Is.           AF    68    39    010
     FW*                 Wallis & Futuna Is.                OC    62    32    298
     FY*                 French Guiana                      SA    12    09    063
-    2E,G,GX,M*          England                            EU    27    14    223
-    GD,GT*              Isle of Man                        EU    27    14    114
-    GI,GN*              Northern Ireland                   EU    27    14    265
-    GJ,GH*              Jersey                             EU    27    14    122
-    GM,GS*              Scotland                           EU    27    14    279
-    GU,GP*              Guernsey                           EU    27    14    106
-    GW,GC*              Wales                              EU    27    14    294
+    G,GX,M,2E*          England                            EU    27    14    223
+    GD,GT,2D*           Isle of Man                        EU    27    14    114
+    GI,GN,2I*           Northern Ireland                   EU    27    14    265
+    GJ,GH,2J*           Jersey                             EU    27    14    122
+    GM,GS,2M*           Scotland                           EU    27    14    279
+    GU,GP,2U*           Guernsey                           EU    27    14    106
+    GW,GC,2W*           Wales                              EU    27    14    294
     H4*                 Solomon Is.                        OC    51    28    185
     H40(18)*            Temotu Province                    OC    51    32    507
     HA,HG*              Hungary                            EU    28    15    239
