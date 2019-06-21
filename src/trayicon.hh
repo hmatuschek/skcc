@@ -5,6 +5,7 @@
 #include "application.hh"
 #include "popup.hh"
 #include "mainwindow.hh"
+#include "selfspotmap.hh"
 
 
 class TrayIcon: public QSystemTrayIcon
@@ -28,6 +29,7 @@ protected:
 	Application *_app;
 	PopUp *_popup;
 	SpotWindow *_spotWindow;
+  SelfSpotMapView *_mapView;
 };
 
 #endif // TRAYICON_HH

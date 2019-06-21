@@ -101,10 +101,10 @@
     E5                  South Cook Is.                     OC    62    32    234
     E6*                 Niue                               OC    62    32    188
     E7(29)#*            Bosnia-Herzegovina                 EU    28    15    501
-    E[A-H]*             Spain                              EU    37    14    281
-    E[A-H]6*            Balearic Is.                       EU    37    14    021
-    E[A-H]8*            Canary Is.                         AF    36    33    029
-    E[A-H]9*            Ceuta & Melilla                    AF    37    33    032
+    E[A-H],AM*          Spain                              EU    37    14    281
+    E[A-H]6,AM6*        Balearic Is.                       EU    37    14    021
+    E[A-H]8,AM8*        Canary Is.                         AF    36    33    029
+    E[A-H]9,AM9*        Ceuta & Melilla                    AF    37    33    032
     EI,EJ*              Ireland                            EU    27    14    245
     EK*                 Armenia                            AS    29    21    014
     EL#*                Liberia                            AF    46    35    434

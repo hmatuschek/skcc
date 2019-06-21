@@ -238,6 +238,9 @@ SpotTable::onNewSpot(const Spot &spot)
     }
   }
 
+  if (spot.spot == _call)
+    emit newSelfSpot(spot, _spotterlist.spotterGrid(spot.spotter));
+
   if ((_showSelf && (spot.spot == _call)) || _friends.contains(spot.spot.toUpper()))
     goto accept;
 

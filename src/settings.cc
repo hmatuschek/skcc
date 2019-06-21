@@ -398,7 +398,131 @@ Settings::setWorkedColor(const QColor &color) {
   setValue("colors/worked", color);
 }
 
+QColor
+Settings::qthColor() const {
+  return value("colors/qth", QColor(Qt::red)).value<QColor>();
+}
+void
+Settings::setQTHColor(const QColor &color) {
+  setValue("colors/qth", color);
+}
 
+QColor
+Settings::spot2200mColor() const {
+  return value("colors/spot2200m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot2200mColor(const QColor &color) {
+  setValue("colors/spot2200m", color);
+}
+
+QColor
+Settings::spot630mColor() const {
+  return value("colors/spot630m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot630mColor(const QColor &color) {
+  setValue("colors/spot630m", color);
+}
+
+QColor
+Settings::spot160mColor() const {
+  return value("colors/spot160m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot160mColor(const QColor &color) {
+  setValue("colors/spot160m", color);
+}
+
+QColor
+Settings::spot80mColor() const {
+  return value("colors/spot80m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot80mColor(const QColor &color) {
+  setValue("colors/spot80m", color);
+}
+
+QColor
+Settings::spot60mColor() const {
+  return value("colors/spot60m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot60mColor(const QColor &color) {
+  setValue("colors/spot60m", color);
+}
+
+QColor
+Settings::spot40mColor() const {
+  return value("colors/spot40m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot40mColor(const QColor &color) {
+  setValue("colors/spot40m", color);
+}
+
+QColor
+Settings::spot30mColor() const {
+  return value("colors/spot30m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot30mColor(const QColor &color) {
+  setValue("colors/spot30m", color);
+}
+
+QColor
+Settings::spot20mColor() const {
+  return value("colors/spot20m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot20mColor(const QColor &color) {
+  setValue("colors/spot20m", color);
+}
+
+QColor
+Settings::spot17mColor() const {
+  return value("colors/spot17m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot17mColor(const QColor &color) {
+  setValue("colors/spot17m", color);
+}
+
+QColor
+Settings::spot15mColor() const {
+  return value("colors/spot15m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot15mColor(const QColor &color) {
+  setValue("colors/spot15m", color);
+}
+
+QColor
+Settings::spot12mColor() const {
+  return value("colors/spot12m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot12mColor(const QColor &color) {
+  setValue("colors/spot12m", color);
+}
+
+QColor
+Settings::spot10mColor() const {
+  return value("colors/spot10m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot10mColor(const QColor &color) {
+  setValue("colors/spot10m", color);
+}
+
+QColor
+Settings::spot6mColor() const {
+  return value("colors/spot6m", QColor(Qt::green)).value<QColor>();
+}
+void
+Settings::setSpot6mColor(const QColor &color) {
+  setValue("colors/spot6m", color);
+}
 
 Friend::Friend()
   : _call(), _name(), _comment()

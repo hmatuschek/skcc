@@ -145,6 +145,35 @@ public:
   void setNewQSOColor(const QColor &color);
   QColor workedColor() const;
   void setWorkedColor(const QColor &color);
+
+  QColor qthColor() const;
+  void setQTHColor(const QColor &color);
+  QColor spot2200mColor() const;
+  void setSpot2200mColor(const QColor &color);
+  QColor spot630mColor() const;
+  void setSpot630mColor(const QColor &color);
+  QColor spot160mColor() const;
+  void setSpot160mColor(const QColor &color);
+  QColor spot80mColor() const;
+  void setSpot80mColor(const QColor &color);
+  QColor spot60mColor() const;
+  void setSpot60mColor(const QColor &color);
+  QColor spot40mColor() const;
+  void setSpot40mColor(const QColor &color);
+  QColor spot30mColor() const;
+  void setSpot30mColor(const QColor &color);
+  QColor spot20mColor() const;
+  void setSpot20mColor(const QColor &color);
+  QColor spot17mColor() const;
+  void setSpot17mColor(const QColor &color);
+  QColor spot15mColor() const;
+  void setSpot15mColor(const QColor &color);
+  QColor spot12mColor() const;
+  void setSpot12mColor(const QColor &color);
+  QColor spot10mColor() const;
+  void setSpot10mColor(const QColor &color);
+  QColor spot6mColor() const;
+  void setSpot6mColor(const QColor &color);
 };
 
 #endif // SETTINGS_HH

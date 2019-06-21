@@ -52,6 +52,7 @@ const SpotTable *
 Application::spots() const {
   return _spots;
 }
+
 SpotTable *
 Application::spots(){
   return _spots;

@@ -17,7 +17,11 @@ TrayIcon::TrayIcon(Application *app)
   _spotWindow = new SpotWindow(_app->spots());
   _spotWindow->setVisible(false);
 
+  _mapView = new SelfSpotMapView(Settings().locator(), *_app);
+  _mapView->setVisible(false);
+
   connect(menu->showSpotWindow(), SIGNAL(triggered()), _spotWindow, SLOT(show()));
+  connect(menu->showMapWindow(), SIGNAL(triggered()), _mapView, SLOT(show()));
   connect(menu->showSettings(), SIGNAL(triggered()), this, SLOT(onShowSettings()));
 
   _popup = new PopUp();

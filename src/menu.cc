@@ -208,6 +208,7 @@ Menu::Menu(Application *app, QWidget *parent)
 
     addSection(tr("Windows"));
     _showSpotWindow = addAction(QIcon("://icons/browser-2x.png"), tr("Show spot window"));
+    _showMapWindow = addAction(QIcon("://icons/globe-2x.png"), tr("Show map window"));
     _showSettings = addAction(QIcon("://icons/wrench-2x.png"), tr("Settings ..."));
 
     addSeparator();

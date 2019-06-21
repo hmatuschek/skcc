@@ -18,6 +18,8 @@ SpotWindow::SpotWindow(SpotTable *spots, QWidget *parent)
 {
   setWindowTitle(tr("Spot table"));
   setWindowIcon(QIcon("://icons/bullhorn-8x.png"));
+
+
   QSortFilterProxyModel *filter = new QSortFilterProxyModel();
   filter->setSortRole(Qt::EditRole);
 	filter->setSourceModel(_spottable);

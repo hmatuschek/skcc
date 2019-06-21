@@ -46,11 +46,22 @@
         <file alias="monitor-6x.png">shared/monitor-6x.png</file>
         <file alias="monitor-8x.png">shared/monitor-8x.png</file>
         <file alias="bullhorn-gray-2x.png">shared/bullhorn-gray-2x.png</file>
+        <file alias="globe-8x.png">shared/globe-8x.png</file>
+        <file alias="globe-6x.png">shared/globe-6x.png</file>
+        <file alias="globe-4x.png">shared/globe-4x.png</file>
+        <file alias="globe-3x.png">shared/globe-3x.png</file>
+        <file alias="globe-2x.png">shared/globe-2x.png</file>
     </qresource>
     <qresource prefix="/sound">
         <file alias="single_chime.wav">shared/single_chime.wav</file>
     </qresource>
     <qresource prefix="/dxcc">
         <file alias="dxcc.txt">shared/dxcc.txt</file>
+    </qresource>
+    <qresource prefix="/qml">
+        <file alias="mapview.qml">shared/mapview.qml</file>
+    </qresource>
+    <qresource prefix="/map">
+        <file alias="map.png">shared/map.png</file>
     </qresource>
 </RCC>

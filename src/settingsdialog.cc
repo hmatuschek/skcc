@@ -100,8 +100,9 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
   tab = new QWidget();
   tabs->addTab(tab, tr("Colors"));
-  form = new QFormLayout();
+  hbox = new QHBoxLayout();
 
+  form = new QFormLayout();
   _selfSpot = new ColorButton(settings.selfSpotColor());
   _friendSpot = new ColorButton(settings.friendSpotColor());
   _newDXCC = new ColorButton(settings.newDXCCColor());
@@ -116,7 +117,43 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   form->addRow(tr("new slot"), _newSlot);
   form->addRow(tr("new QSO"), _newQSO);
   form->addRow(tr("worked"), _worked);
-  tab->setLayout(form);
+  hbox->addLayout(form);
+
+  form = new QFormLayout();
+  _qthColor  = new ColorButton(settings.qthColor());
+  _spot2200m = new ColorButton(settings.spot2200mColor());
+  _spot630m  = new ColorButton(settings.spot630mColor());
+  _spot160m  = new ColorButton(settings.spot160mColor());
+  _spot80m   = new ColorButton(settings.spot80mColor());
+  _spot60m   = new ColorButton(settings.spot60mColor());
+  _spot40m   = new ColorButton(settings.spot40mColor());
+  form->addRow(tr("QTH"),   _qthColor);
+  form->addRow(tr("2200m"), _spot2200m);
+  form->addRow(tr("630m"),  _spot630m);
+  form->addRow(tr("160m"),  _spot160m);
+  form->addRow(tr("80m"),   _spot80m);
+  form->addRow(tr("60m"),   _spot60m);
+  form->addRow(tr("40m"),   _spot40m);
+  hbox->addLayout(form);
+
+  form = new QFormLayout();
+  _spot30m = new ColorButton(settings.spot30mColor());
+  _spot20m = new ColorButton(settings.spot20mColor());
+  _spot17m = new ColorButton(settings.spot17mColor());
+  _spot15m = new ColorButton(settings.spot15mColor());
+  _spot12m = new ColorButton(settings.spot12mColor());
+  _spot10m = new ColorButton(settings.spot10mColor());
+  _spot6m  = new ColorButton(settings.spot6mColor());
+  form->addRow(tr("30m"), _spot30m);
+  form->addRow(tr("20m"), _spot20m);
+  form->addRow(tr("17m"), _spot17m);
+  form->addRow(tr("15m"), _spot15m);
+  form->addRow(tr("12m"), _spot12m);
+  form->addRow(tr("10m"), _spot10m);
+  form->addRow(tr("6m"),  _spot6m);
+  hbox->addLayout(form);
+
+  tab->setLayout(hbox);
 
   QDialogButtonBox *bb = new QDialogButtonBox(QDialogButtonBox::Save|QDialogButtonBox::Cancel);
   layout->addWidget(bb);
@@ -173,6 +210,20 @@ SettingsDialog::accept() {
   settings.setNewSlotColor(_newSlot->color());
   settings.setNewQSOColor(_newQSO->color());
   settings.setWorkedColor(_worked->color());
+  settings.setQTHColor(_qthColor->color());
+  settings.setSpot2200mColor(_spot2200m->color());
+  settings.setSpot630mColor(_spot630m->color());
+  settings.setSpot160mColor(_spot160m->color());
+  settings.setSpot80mColor(_spot80m->color());
+  settings.setSpot60mColor(_spot60m->color());
+  settings.setSpot40mColor(_spot40m->color());
+  settings.setSpot30mColor(_spot30m->color());
+  settings.setSpot20mColor(_spot20m->color());
+  settings.setSpot17mColor(_spot17m->color());
+  settings.setSpot15mColor(_spot15m->color());
+  settings.setSpot12mColor(_spot12m->color());
+  settings.setSpot10mColor(_spot10m->color());
+  settings.setSpot6mColor(_spot6m->color());
 
   Friends friends;
   for (int i=0; i<_friends->rowCount(); i++) {

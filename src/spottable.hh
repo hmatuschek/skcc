@@ -75,6 +75,7 @@ signals:
 	void newBand(const Spot &spot);
 	void newSKCC(const Spot &spot);
   void newFriend(const Spot &spot);
+  void newSelfSpot(const Spot &spot, const QString &spotterLoc);
 
 protected:
 	CCCluster _cluster;

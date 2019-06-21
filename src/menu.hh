@@ -14,6 +14,7 @@ public:
 	Menu(Application *app, QWidget *parent=nullptr);
 
 	inline QAction *showSpotWindow() { return _showSpotWindow; }
+  inline QAction *showMapWindow() { return _showMapWindow; }
 	inline QAction *showSettings() { return _showSettings; }
 
 protected slots:
@@ -29,7 +30,7 @@ protected slots:
 
 protected:
 	Application *_app;
-	QAction *_maxAge, *_maxSpeed, *_minSNR, *_maxDist, *_showSpotWindow, *_showSettings;
+	QAction *_maxAge, *_maxSpeed, *_minSNR, *_maxDist, *_showSpotWindow, *_showMapWindow, *_showSettings;
 };
 
 #endif // MENU_HH
