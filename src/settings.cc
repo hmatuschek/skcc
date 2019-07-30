@@ -196,6 +196,16 @@ Settings::setShowSelfSpots(bool show) {
   setValue("showSelf", show);
 }
 
+bool
+Settings::showBeaconSpots() const {
+  return value("showBeacon", true).toBool();
+}
+
+void
+Settings::setShowBeaconSpots(bool show) {
+  setValue("showBeacon", show);
+}
+
 int
 Settings::maxSpotterDist() const {
   return value("maxDist", 1000).toInt();
@@ -351,6 +361,15 @@ Settings::friendSpotColor() const {
 void
 Settings::setFriendSpotColor(const QColor &color) {
   setValue("colors/friendSpot", color);
+}
+
+QColor
+Settings::beaconSpotColor() const {
+  return value("colors/beaconSpot", QColor(Qt::white)).value<QColor>();
+}
+void
+Settings::setBeaconSpotColor(const QColor &color) {
+  setValue("colors/beaconSpot", color);
 }
 
 QColor

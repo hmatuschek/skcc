@@ -100,6 +100,9 @@ public:
   bool showSelfSpots() const;
   void setShowSelfSpots(bool show);
 
+  bool showBeaconSpots() const;
+  void setShowBeaconSpots(bool show);
+
   int maxSpotterDist() const;
   void setMaxSpotterDist(int dist);
 
@@ -135,6 +138,8 @@ public:
   void setSelfSpotColor(const QColor &color);
   QColor friendSpotColor() const;
   void setFriendSpotColor(const QColor &color);
+  QColor beaconSpotColor() const;
+  void setBeaconSpotColor(const QColor &color);
   QColor newDXCCColor() const;
   void setNewDXCCColor(const QColor &color);
   QColor newBandColor() const;

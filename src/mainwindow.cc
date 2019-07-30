@@ -32,7 +32,7 @@ SpotWindow::SpotWindow(SpotTable *spots, QWidget *parent)
   verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
   verticalHeader()->hide();
 
-  setColumnWidth(0, 100);
+  setColumnWidth(0, 120);
   setColumnWidth(1, 70);
   setColumnWidth(2, 40);
   setColumnWidth(3, 40);
@@ -42,7 +42,7 @@ SpotWindow::SpotWindow(SpotTable *spots, QWidget *parent)
   setMinimumWidth(columnWidth(0)+columnWidth(1)+columnWidth(2)+
                   columnWidth(3)+columnWidth(4)+columnWidth(5)+
                   columnWidth(6)+1);
-  setMinimumHeight(480);
+  setMinimumHeight(500);
 
   connect(filter, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(scrollToTop()));
   connect(filter, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(scrollToTop()));

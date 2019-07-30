@@ -22,10 +22,10 @@ Application::Application(int &argc, char *argv[])
     Settings settings;
 
     _spots = new SpotTable(settings.call(), settings.locator(), settings.logFile(),
-                           settings.clusterHost(), settings.clusterPort(),
-                           settings.showSelfSpots(), settings.maxSpotterDist(),
-                           settings.maxSpotAge(), settings.minLogMatch(),
-                           settings.maxSpeed(), settings.minSNR(), this);
+                           settings.clusterHost(), settings.clusterPort(), settings.showSelfSpots(),
+                           settings.showBeaconSpots(), settings.maxSpotterDist(),
+                           settings.maxSpotAge(), settings.minLogMatch(), settings.maxSpeed(),
+                           settings.minSNR(), this);
 
     _spots->bands().clear();
     if (settings.band2200m()) _spots->bands().insert(BAND_2200M);

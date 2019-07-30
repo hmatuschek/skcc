@@ -28,7 +28,7 @@ private:
 	QLineEdit *_clusterPort;
 	QLineEdit *_logFile;
   QTableWidget *_friends;
-  ColorButton *_newDXCC, *_selfSpot, *_friendSpot, *_newBand, *_newSlot, *_newQSO, *_worked;
+  ColorButton *_newDXCC, *_selfSpot, *_friendSpot, *_beaconSpot, *_newBand, *_newSlot, *_newQSO, *_worked;
   ColorButton *_qthColor, *_spot2200m, *_spot630m, *_spot160m, *_spot80m, *_spot60m, *_spot40m;
   ColorButton *_spot30m, *_spot20m, *_spot17m, *_spot15m, *_spot12m, *_spot10m, *_spot6m;
 };

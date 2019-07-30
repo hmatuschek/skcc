@@ -105,6 +105,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   form = new QFormLayout();
   _selfSpot = new ColorButton(settings.selfSpotColor());
   _friendSpot = new ColorButton(settings.friendSpotColor());
+  _beaconSpot = new ColorButton(settings.beaconSpotColor());
   _newDXCC = new ColorButton(settings.newDXCCColor());
   _newBand = new ColorButton(settings.newBandColor());
   _newSlot = new ColorButton(settings.newSlotColor());
@@ -112,6 +113,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   _worked = new ColorButton(settings.workedColor());
   form->addRow(tr("self spot"), _selfSpot);
   form->addRow(tr("friend spot"), _friendSpot);
+  form->addRow(tr("beacon spot"), _beaconSpot);
   form->addRow(tr("new DXCC"), _newDXCC);
   form->addRow(tr("new band"), _newBand);
   form->addRow(tr("new slot"), _newSlot);
@@ -205,6 +207,7 @@ SettingsDialog::accept() {
   settings.setLogFile(_logFile->text());
   settings.setSelfSpotColor(_selfSpot->color());
   settings.setFriendSpotColor(_friendSpot->color());
+  settings.setBeaconSpotColor(_beaconSpot->color());
   settings.setNewDXCCColor(_newDXCC->color());
   settings.setNewBandColor(_newBand->color());
   settings.setNewSlotColor(_newSlot->color());

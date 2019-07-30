@@ -6,6 +6,12 @@
 #include <QTime>
 #include <QTimer>
 
+typedef enum {
+  CQ_SPOT, DX_SPOT, BEACON_SPOT
+} SpotType;
+
+SpotType readSpotType(const QString &type);
+
 /** Defines a spot. */
 typedef struct
 {
@@ -13,6 +19,7 @@ typedef struct
   QString   spotter; ///< Spotter call sign.
   double    freq;    ///< Spot frequency.
   QString   mode;    ///< Spot mode (CW, etc).
+  SpotType  type;    ///< Spot type (CQ, BEACON, etc).
   int       db;      ///< Spot signal strength.
   int       wpm;     ///< Spot speed.
   QTime     time;    ///< Spot time.

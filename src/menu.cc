@@ -166,6 +166,11 @@ Menu::Menu(Application *app, QWidget *parent)
     action->setChecked(Settings().showSelfSpots());
     connect(action, SIGNAL(toggled(bool)), this, SLOT(onShowSelfSpotsToggled(bool)));
 
+    action = menu->addAction(tr("Show beacon spots"));
+    action->setCheckable(true);
+    action->setChecked(Settings().showBeaconSpots());
+    connect(action, SIGNAL(toggled(bool)), this, SLOT(onShowBeaconSpotsToggled(bool)));
+
     menu = addMenu(QIcon("://icons/bell-2x.png"), tr("Notify"));
     agroup = new QActionGroup(this);
     agroup->setExclusive(false);
@@ -336,3 +341,8 @@ Menu::onShowSelfSpotsToggled(bool enable) {
   Settings().setShowSelfSpots(enable);
 }
 
+void
+Menu::onShowBeaconSpotsToggled(bool enable) {
+  _app->spots()->setShowBeaconSpots(enable);
+  Settings().setShowBeaconSpots(enable);
+}

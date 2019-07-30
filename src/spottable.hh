@@ -32,7 +32,7 @@ public:
    * @param parent Specifies the @c QObject parent. */
 	explicit SpotTable(const QString &call, const QString &loc, const QString &logfile,
                      const QString &cluster, uint16_t port,
-	                   bool showSelf=true, int maxdist=-1, int maxage=-1,
+	                   bool showSelf=true, bool showBeacon=true, int maxdist=-1, int maxage=-1,
 	                   LogFile::Match minMatch=LogFile::WORKED, int maxSpeed=-1, int minSNR=-1,
 	                   QObject *parent = nullptr);
 
@@ -44,7 +44,10 @@ public:
 	bool showSelfSpots() const;
 	void setShowSelfSpots(bool enable);
 
-	int maxDist() const;
+  bool showBeaconSpots() const;
+	void setShowBeaconSpots(bool enable);
+
+  int maxDist() const;
 	void setMaxDist(int dist);
 
 	int maxAge() const;
@@ -89,6 +92,7 @@ protected:
 	QString _locator;
 
 	bool _showSelf;
+  bool _showBeaconSpots;
 	int _maxAge;
 	int _maxDist;
 	int _maxSpeed;

@@ -25,6 +25,7 @@ protected slots:
 	void onMinSNRTriggered();
 	void onMaxSpotterDistTriggered();
 	void onShowSelfSpotsToggled(bool enabled);
+  void onShowBeaconSpotsToggled(bool enabled);
 	void onNotifyToggled(QAction *action);
 	void onNotificationSoundToggled(bool enabled);
 

@@ -9,11 +9,12 @@
 
 SpotTable::SpotTable(const QString &call, const QString &locator, const QString &logfile,
                      const QString &cluster, uint16_t port,
-                     bool showSelf, int maxdist, int maxage, LogFile::Match minMatch, int maxSpeed,
+                     bool showSelf, bool showBeacon, int maxdist, int maxage, LogFile::Match minMatch, int maxSpeed,
                      int minSNR, QObject *parent)
     : QAbstractTableModel(parent), _cluster(call, cluster, port),
       _spotterlist(), _logfile(logfile), _skcc(), _spots(), _call(call), _locator(locator),
-      _showSelf(showSelf), _maxAge(maxage), _maxDist(maxdist), _maxSpeed(maxSpeed), _minSNR(minSNR),
+      _showSelf(showSelf), _showBeaconSpots(showBeacon), _maxAge(maxage), _maxDist(maxdist),
+      _maxSpeed(maxSpeed), _minSNR(minSNR),
       _minMatch(minMatch)
 {
   _bands << BAND_2200M << BAND_630M << BAND_160M << BAND_80M << BAND_60M << BAND_40M << BAND_30M
@@ -46,6 +47,7 @@ SpotTable::data(const QModelIndex &index, int role) const {
   QList<Spot> spots = _spots.at(index.row());
   QString call = spots.first().spot;
   bool skcc = _skcc.isMember(call);
+  bool beacon = ( BEACON_SPOT == spots.first().type );
   int  sc = spots.size();
   int  db = spots.first().db;
   QString spotter = spots.first().spotter;
@@ -60,7 +62,7 @@ SpotTable::data(const QModelIndex &index, int role) const {
 
   if (Qt::DisplayRole == role) {
     switch (index.column()) {
-      case 0: return (skcc ? QString("[skcc] ") : QString()) + call;
+      case 0: return (skcc ? QString("[skcc] ") : QString()) + (beacon ? QString("[b] ") : QString()) + call;
       case 1: return _spots.at(index.row()).last().freq;
       case 2: return db;
       case 3: return _spots.at(index.row()).first().wpm;
@@ -84,6 +86,8 @@ SpotTable::data(const QModelIndex &index, int role) const {
       return settings.selfSpotColor();
     if (_friends.contains(_spots.at(index.row()).first().spot.toUpper()))
       return settings.friendSpotColor();
+    if (BEACON_SPOT == _spots.at(index.row()).first().type)
+      return settings.beaconSpotColor();
     if (0 > dxcc_from_call(_spots.at(index.row()).first().spot))
       return settings.newQSOColor();
     LogFile::Match match = _logfile.isNew(
@@ -149,6 +153,16 @@ SpotTable::showSelfSpots() const {
 void
 SpotTable::setShowSelfSpots(bool enable) {
   _showSelf = enable;
+}
+
+bool
+SpotTable::showBeaconSpots() const {
+  return _showBeaconSpots;
+}
+
+void
+SpotTable::setShowBeaconSpots(bool enable) {
+  _showBeaconSpots = enable;
 }
 
 LogFile::Match
@@ -251,10 +265,16 @@ SpotTable::onNewSpot(const Spot &spot)
       return;
   }
 
-  if (_minMatch > _logfile.isNew(spot.spot, freq2band(spot.freq), spot.mode))
+  if (! _bands.contains(freq2band(spot.freq)))
     return;
 
-  if (! _bands.contains(freq2band(spot.freq)))
+  if (BEACON_SPOT == spot.type) {
+    if (_showBeaconSpots)
+      goto accept;
+    return;
+  }
+
+  if (_minMatch > _logfile.isNew(spot.spot, freq2band(spot.freq), spot.mode))
     return;
 
   if ((0<_maxSpeed) && (spot.wpm>_maxSpeed))

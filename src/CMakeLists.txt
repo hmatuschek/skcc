@@ -32,9 +32,5 @@ if(UNIX AND APPLE)
 	           ../shared/world_04_5k.png ../shared/world_05_5k.png ../shared/world_06_5k.png
 			   ../shared/world_07_5k.png ../shared/world_08_5k.png ../shared/world_09_5k.png
 			   ../shared/world_10_5k.png ../shared/world_11_5k.png ../shared/world_12_5k.png
-			   ../shared/world_01_21k.jpg ../shared/world_02_21k.jpg ../shared/world_03_21k.jpg
-			   ../shared/world_04_21k.jpg ../shared/world_05_21k.jpg ../shared/world_06_21k.jpg
-			   ../shared/world_07_21k.jpg ../shared/world_08_21k.jpg ../shared/world_09_21k.jpg
-			   ../shared/world_10_21k.jpg ../shared/world_11_21k.jpg ../shared/world_12_21k.jpg
 	     DESTINATION /Applications/SKCC.app/Contents/Resources)
 endif(UNIX AND APPLE)
