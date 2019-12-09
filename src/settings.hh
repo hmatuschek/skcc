@@ -179,6 +179,9 @@ public:
   void setSpot10mColor(const QColor &color);
   QColor spot6mColor() const;
   void setSpot6mColor(const QColor &color);
+
+  int sectionSize(int idx);
+  void setSectionSize(int idx, int width);
 };
 
 #endif // SETTINGS_HH

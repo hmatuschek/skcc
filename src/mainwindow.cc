@@ -16,6 +16,7 @@
 SpotWindow::SpotWindow(SpotTable *spots, QWidget *parent)
     : QTableView(parent), _spottable(spots)
 {
+  Settings settings;
   setWindowTitle(tr("Spot table"));
   setWindowIcon(QIcon("://icons/bullhorn-8x.png"));
 
@@ -32,20 +33,26 @@ SpotWindow::SpotWindow(SpotTable *spots, QWidget *parent)
   verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
   verticalHeader()->hide();
 
-  setColumnWidth(0, 120);
-  setColumnWidth(1, 70);
-  setColumnWidth(2, 40);
-  setColumnWidth(3, 40);
-  setColumnWidth(4, 170);
-  setColumnWidth(5, 100);
-  setColumnWidth(6, 70);
+  for (int i=0; i<7; i++)
+    setColumnWidth(i, settings.sectionSize(i));
+
   setMinimumWidth(columnWidth(0)+columnWidth(1)+columnWidth(2)+
                   columnWidth(3)+columnWidth(4)+columnWidth(5)+
-                  columnWidth(6)+1);
+                  columnWidth(6)+2);
   setMinimumHeight(500);
+  resize(minimumWidth(), minimumHeight());
 
+  connect(this->horizontalHeader(), SIGNAL(sectionResized(int,int,int)),
+          this, SLOT(onSectionResized(int,int,int)));
   connect(filter, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(scrollToTop()));
   connect(filter, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(scrollToTop()));
 }
 
+void
+SpotWindow::onSectionResized(int logicalIndex, int oldSize, int newSize) {
+  Q_UNUSED(oldSize);
+  Settings settings;
+  settings.setSectionSize(logicalIndex, newSize);
+  qDebug() << "Set section" << logicalIndex << "to width" << newSize;
+}
 

@@ -543,6 +543,23 @@ Settings::setSpot6mColor(const QColor &color) {
   setValue("colors/spot6m", color);
 }
 
+int
+Settings::sectionSize(int idx) {
+  beginReadArray("SpotTableColumn");
+  setArrayIndex(idx);
+  int width = value("width", 100).toInt();
+  endArray();
+  return width;
+}
+void
+Settings::setSectionSize(int idx, int width) {
+  beginWriteArray("SpotTableColumn");
+  setArrayIndex(idx);
+  setValue("width", width);
+  endArray();
+}
+
+
 Friend::Friend()
   : _call(), _name(), _comment()
 {
@@ -604,3 +621,4 @@ Friend
 Friends::operator[](const QString &call) const {
   return _friends[call];
 }
+

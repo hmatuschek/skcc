@@ -21,8 +21,6 @@ add_executable(map WIN32 maptest.cc map.cc locator.cc ${map_MOC_SOURCES} ${map_R
 target_link_libraries(map ${LIBS})
 
 
-install(TARGETS skcc DESTINATION bin)
-
 # Create "Application Bundle" under MacOS X
 if(UNIX AND APPLE)
  install(TARGETS skcc DESTINATION /Applications/SKCC.app/Contents/MacOS)
@@ -33,4 +31,11 @@ if(UNIX AND APPLE)
 			   ../shared/world_07_5k.png ../shared/world_08_5k.png ../shared/world_09_5k.png
 			   ../shared/world_10_5k.png ../shared/world_11_5k.png ../shared/world_12_5k.png
 	     DESTINATION /Applications/SKCC.app/Contents/Resources)
+elseif(UNIX AND NOT APPLE)
+  install(TARGETS skcc DESTINATION bin)
+  install(FILES ../shared/world_01_5k.png ../shared/world_02_5k.png ../shared/world_03_5k.png
+              ../shared/world_04_5k.png ../shared/world_05_5k.png ../shared/world_06_5k.png
+          ../shared/world_07_5k.png ../shared/world_08_5k.png ../shared/world_09_5k.png
+          ../shared/world_10_5k.png ../shared/world_11_5k.png ../shared/world_12_5k.png
+          DESTINATION share/io.github.hmatuschek/skcc)
 endif(UNIX AND APPLE)

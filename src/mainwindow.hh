@@ -13,7 +13,8 @@ class SpotWindow : public QTableView
 public:
   explicit SpotWindow(SpotTable *spots, QWidget *parent = nullptr);
 
-signals:
+protected slots:
+  void onSectionResized(int logicalIndex, int oldSize, int newSize);
 
 protected:
 	SpotTable *_spottable;

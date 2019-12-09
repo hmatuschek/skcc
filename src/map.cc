@@ -9,18 +9,24 @@
 #include <QShortcut>
 #include <QDate>
 #include <QStandardPaths>
+#include <QIcon>
+
 
 MapView::MapView(const QString &centerLoc, QWidget *parent)
   : QWidget(parent), _scale(1), _map(),
     _scrollDelta(0), _dragStart()
 {
+  setWindowTitle(tr("Map"));
+  setWindowIcon(QIcon("://icons/bullhorn-8x.png"));
+
   QString mapname = QString("world_%1_5k.png").arg(QDate::currentDate().month(), 2, 10, QChar('0'));
-  qDebug() << "Search map" << mapname;
+  qDebug() << "Search map" << mapname << "in" << QStandardPaths::standardLocations(QStandardPaths::AppDataLocation);
   mapname = QStandardPaths::locate(QStandardPaths::AppDataLocation, mapname);
-  qDebug() << "Load map" << mapname;
   if (mapname.isEmpty())
     mapname = ":/map/map.png";
+  qDebug() << "Load map" << mapname;
   _map.load(mapname);
+
   new QShortcut(QKeySequence("Ctrl+0"), this, SLOT(resetZoom()));
   new QShortcut(QKeySequence("Ctrl++"), this, SLOT(zoomIn()));
   new QShortcut(QKeySequence("Ctrl+-"), this, SLOT(zoomOut()));
