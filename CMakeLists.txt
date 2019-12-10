@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.8)
-project(skcc)
+project(rbnc)
 
 
 find_package(Qt5Core REQUIRED)
@@ -43,27 +43,18 @@ ELSE(UNIX AND NOT APPLE)
  SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
  SET(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
 ENDIF(UNIX AND NOT APPLE)
+
 # Sources...
 add_subdirectory(src)
 
 # Source distribution packages:
-set(CPACK_PACKAGE_VERSION_MAJOR "0")
-set(CPACK_PACKAGE_VERSION_MINOR "1")
+set(CPACK_PACKAGE_VERSION_MAJOR "1")
+set(CPACK_PACKAGE_VERSION_MINOR "0")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_SOURCE_GENERATOR "TGZ")
 set(CPACK_SOURCE_PACKAGE_FILE_NAME
   "${CMAKE_PROJECT_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 set(CPACK_SOURCE_IGNORE_FILES
   "/build/;/doc/;/dist/;/.git/;~$;.qm;.user$;${CPACK_SOURCE_IGNORE_FILES}")
-
-#
-# Install logo and .desktop file under Linux:
-#
-#IF(UNIX AND NOT APPLE)
-# INSTALL(FILES shared/kochmorse.svg
-#         DESTINATION share/icons)
-# INSTALL(FILES shared/kochmorse.desktop
-#         DESTINATION share/applications)
-#ENDIF(UNIX AND NOT APPLE)
 
 include(CPack)

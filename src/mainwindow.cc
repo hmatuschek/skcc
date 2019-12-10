@@ -11,6 +11,7 @@
 #include "bands.hh"
 #include "settings.hh"
 #include "adi.hh"
+#include "icons.hh"
 
 
 SpotWindow::SpotWindow(SpotTable *spots, QWidget *parent)
@@ -18,8 +19,7 @@ SpotWindow::SpotWindow(SpotTable *spots, QWidget *parent)
 {
   Settings settings;
   setWindowTitle(tr("Spot table"));
-  setWindowIcon(QIcon("://icons/bullhorn-8x.png"));
-
+  setWindowIcon(IconProvider::get(IconProvider::WINDOW_ICON));
 
   QSortFilterProxyModel *filter = new QSortFilterProxyModel();
   filter->setSortRole(Qt::EditRole);

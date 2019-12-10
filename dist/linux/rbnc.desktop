@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=RBN Client	
+GenericName=Reverse Beacon Network Client
+Comment=A System-tray application to monitor the Reverse Beacon Netork.
+Exec=rbnc
+Icon=/usr/share/icons/rbnc.png
+Type=Application
+Categories=Ham-Radio;
+Terminal=false
+Encoding=UTF-8

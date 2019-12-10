@@ -3,11 +3,12 @@
 #include "settingsdialog.hh"
 #include <QSound>
 #include "menu.hh"
+#include "icons.hh"
 
 TrayIcon::TrayIcon(Application *app)
     : QSystemTrayIcon(), _app(app)
 {
-  setIcon(QIcon("://icons/bullhorn-gray-2x.png"));
+  setIcon(IconProvider::get(IconProvider::TRAY_ICON_INACTIVE));
   Menu *menu = new Menu(_app);
   setContextMenu(menu);
 
@@ -40,12 +41,12 @@ TrayIcon::~TrayIcon()
 
 void
 TrayIcon::onClusterConnected() {
-  setIcon(QIcon("://icons/bullhorn-2x.png"));
+  setIcon(IconProvider::get(IconProvider::TRAY_ICON));
 }
 
 void
 TrayIcon::onClusterDisconnected() {
-  setIcon(QIcon("://icons/bullhorn-gray-2x.png"));
+  setIcon(IconProvider::get(IconProvider::TRAY_ICON_INACTIVE));
   _popup->setPopupText(tr("Disconnected from cluster!"));
 }
 

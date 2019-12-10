@@ -10,6 +10,7 @@
 #include <QDate>
 #include <QStandardPaths>
 #include <QIcon>
+#include "icons.hh"
 
 
 MapView::MapView(const QString &centerLoc, QWidget *parent)
@@ -17,7 +18,7 @@ MapView::MapView(const QString &centerLoc, QWidget *parent)
     _scrollDelta(0), _dragStart()
 {
   setWindowTitle(tr("Map"));
-  setWindowIcon(QIcon("://icons/bullhorn-8x.png"));
+  setWindowIcon(IconProvider::get(IconProvider::WINDOW_ICON));
 
   QString mapname = QString("world_%1_5k.png").arg(QDate::currentDate().month(), 2, 10, QChar('0'));
   qDebug() << "Search map" << mapname << "in" << QStandardPaths::standardLocations(QStandardPaths::AppDataLocation);

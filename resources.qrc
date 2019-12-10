@@ -51,6 +51,56 @@
         <file alias="globe-4x.png">shared/globe-4x.png</file>
         <file alias="globe-3x.png">shared/globe-3x.png</file>
         <file alias="globe-2x.png">shared/globe-2x.png</file>
+        <file alias="bell-inv-2x.png">shared/bell-inv-2x.png</file>
+        <file alias="bell-inv-3x.png">shared/bell-inv-3x.png</file>
+        <file alias="bell-inv-4x.png">shared/bell-inv-4x.png</file>
+        <file alias="bell-inv-6x.png">shared/bell-inv-6x.png</file>
+        <file alias="bell-inv-8x.png">shared/bell-inv-8x.png</file>
+        <file alias="book-inv-2x.png">shared/book-inv-2x.png</file>
+        <file alias="book-inv-3x.png">shared/book-inv-3x.png</file>
+        <file alias="book-inv-4x.png">shared/book-inv-4x.png</file>
+        <file alias="book-inv-6x.png">shared/book-inv-6x.png</file>
+        <file alias="book-inv-8x.png">shared/book-inv-8x.png</file>
+        <file alias="browser-inv-2x.png">shared/browser-inv-2x.png</file>
+        <file alias="browser-inv-3x.png">shared/browser-inv-3x.png</file>
+        <file alias="browser-inv-4x.png">shared/browser-inv-4x.png</file>
+        <file alias="browser-inv-6x.png">shared/browser-inv-6x.png</file>
+        <file alias="browser-inv-8x.png">shared/browser-inv-8x.png</file>
+        <file alias="bullhorn-inv-2x.png">shared/bullhorn-inv-2x.png</file>
+        <file alias="bullhorn-inv-3x.png">shared/bullhorn-inv-3x.png</file>
+        <file alias="bullhorn-inv-4x.png">shared/bullhorn-inv-4x.png</file>
+        <file alias="bullhorn-inv-6x.png">shared/bullhorn-inv-6x.png</file>
+        <file alias="bullhorn-inv-8x.png">shared/bullhorn-inv-8x.png</file>
+        <file alias="globe-inv-2x.png">shared/globe-inv-2x.png</file>
+        <file alias="globe-inv-3x.png">shared/globe-inv-3x.png</file>
+        <file alias="globe-inv-4x.png">shared/globe-inv-4x.png</file>
+        <file alias="globe-inv-6x.png">shared/globe-inv-6x.png</file>
+        <file alias="globe-inv-8x.png">shared/globe-inv-8x.png</file>
+        <file alias="list-inv-2x.png">shared/list-inv-2x.png</file>
+        <file alias="list-inv-3x.png">shared/list-inv-3x.png</file>
+        <file alias="list-inv-4x.png">shared/list-inv-4x.png</file>
+        <file alias="list-inv-6x.png">shared/list-inv-6x.png</file>
+        <file alias="list-inv-8x.png">shared/list-inv-8x.png</file>
+        <file alias="monitor-inv-2x.png">shared/monitor-inv-2x.png</file>
+        <file alias="monitor-inv-3x.png">shared/monitor-inv-3x.png</file>
+        <file alias="monitor-inv-4x.png">shared/monitor-inv-4x.png</file>
+        <file alias="monitor-inv-6x.png">shared/monitor-inv-6x.png</file>
+        <file alias="monitor-inv-8x.png">shared/monitor-inv-8x.png</file>
+        <file alias="person-inv-2x.png">shared/person-inv-2x.png</file>
+        <file alias="person-inv-3x.png">shared/person-inv-3x.png</file>
+        <file alias="person-inv-4x.png">shared/person-inv-4x.png</file>
+        <file alias="person-inv-6x.png">shared/person-inv-6x.png</file>
+        <file alias="person-inv-8x.png">shared/person-inv-8x.png</file>
+        <file alias="power-standby-inv-2x.png">shared/power-standby-inv-2x.png</file>
+        <file alias="power-standby-inv-3x.png">shared/power-standby-inv-3x.png</file>
+        <file alias="power-standby-inv-4x.png">shared/power-standby-inv-4x.png</file>
+        <file alias="power-standby-inv-6x.png">shared/power-standby-inv-6x.png</file>
+        <file alias="power-standby-inv-8x.png">shared/power-standby-inv-8x.png</file>
+        <file alias="wrench-inv-2x.png">shared/wrench-inv-2x.png</file>
+        <file alias="wrench-inv-3x.png">shared/wrench-inv-3x.png</file>
+        <file alias="wrench-inv-4x.png">shared/wrench-inv-4x.png</file>
+        <file alias="wrench-inv-6x.png">shared/wrench-inv-6x.png</file>
+        <file alias="wrench-inv-8x.png">shared/wrench-inv-8x.png</file>
     </qresource>
     <qresource prefix="/sound">
         <file alias="single_chime.wav">shared/single_chime.wav</file>
@@ -58,10 +108,10 @@
     <qresource prefix="/dxcc">
         <file alias="dxcc.txt">shared/dxcc.txt</file>
     </qresource>
-    <qresource prefix="/qml">
-        <file alias="mapview.qml">shared/mapview.qml</file>
-    </qresource>
     <qresource prefix="/map">
         <file alias="map.png">shared/map.png</file>
+    </qresource>
+    <qresource prefix="/text">
+        <file alias="about.html">shared/about.html</file>
     </qresource>
 </RCC>

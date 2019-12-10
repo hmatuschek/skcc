@@ -28,6 +28,7 @@ protected slots:
   void onShowBeaconSpotsToggled(bool enabled);
 	void onNotifyToggled(QAction *action);
 	void onNotificationSoundToggled(bool enabled);
+  void onShowAbout();
 
 protected:
 	Application *_app;

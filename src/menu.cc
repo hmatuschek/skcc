@@ -2,13 +2,15 @@
 #include <QActionGroup>
 #include <QInputDialog>
 #include "bands.hh"
+#include "icons.hh"
+#include "aboutdialog.hh"
 
 
 Menu::Menu(Application *app, QWidget *parent)
     : QMenu(parent), _app(app)
 {
     addSection(tr("Filter"));
-    QMenu *menu = addMenu(QIcon("://icons/monitor-2x.png"), tr("Band"));
+    QMenu *menu = addMenu(IconProvider::get(IconProvider::MENU_FILTER_ICON), tr("Band"));
     QActionGroup *agroup = new QActionGroup(this);
     agroup->setExclusive(false);
     connect(agroup, SIGNAL(triggered(QAction*)), this, SLOT(onBandToggled(QAction*)));
@@ -105,7 +107,7 @@ Menu::Menu(Application *app, QWidget *parent)
     menu->addAction(action);
 
 
-    menu = addMenu(QIcon("://icons/book-2x.png"), tr("Log"));
+    menu = addMenu(IconProvider::get(IconProvider::MENU_LOG_ICON), tr("Log"));
     agroup = new QActionGroup(this);
     connect(agroup, SIGNAL(triggered(QAction*)), this, SLOT(onMatchSelected(QAction*)));
 
@@ -144,7 +146,7 @@ Menu::Menu(Application *app, QWidget *parent)
     agroup->addAction(action);
     menu->addAction(action);
 
-    menu = addMenu(QIcon("://icons/list-2x.png"), tr("Spot"));
+    menu = addMenu(IconProvider::get(IconProvider::MENU_SPOT_ICON), tr("Spot"));
     _maxAge = new QAction(tr("Max. age: %1s").arg(_app->spots()->maxAge()), this);
     connect(_maxAge, SIGNAL(triggered(bool)), this, SLOT(onMaxAgeTriggered()));
     menu->addAction(_maxAge);
@@ -171,7 +173,7 @@ Menu::Menu(Application *app, QWidget *parent)
     action->setChecked(Settings().showBeaconSpots());
     connect(action, SIGNAL(toggled(bool)), this, SLOT(onShowBeaconSpotsToggled(bool)));
 
-    menu = addMenu(QIcon("://icons/bell-2x.png"), tr("Notify"));
+    menu = addMenu(IconProvider::get(IconProvider::MENU_NOTIFY_ICON), tr("Notify"));
     agroup = new QActionGroup(this);
     agroup->setExclusive(false);
     connect(agroup, SIGNAL(triggered(QAction*)), this, SLOT(onNotifyToggled(QAction*)));
@@ -212,12 +214,12 @@ Menu::Menu(Application *app, QWidget *parent)
     menu->addAction(action);
 
     addSection(tr("Windows"));
-    _showSpotWindow = addAction(QIcon("://icons/browser-2x.png"), tr("Show spot window"));
-    _showMapWindow = addAction(QIcon("://icons/globe-2x.png"), tr("Show map window"));
-    _showSettings = addAction(QIcon("://icons/wrench-2x.png"), tr("Settings ..."));
-
+    _showSpotWindow = addAction(IconProvider::get(IconProvider::MENU_SPOT_WINDOW_ICON), tr("Show spot window"));
+    _showMapWindow = addAction(IconProvider::get(IconProvider::MENU_MAP_WINDOW_ICON), tr("Show map window"));
+    _showSettings = addAction(IconProvider::get(IconProvider::MENU_SETTINGS_ICON), tr("Settings ..."));
+    addAction(IconProvider::get(IconProvider::MENU_ABOUT_ICON), tr("About RBNC ..."), this, SLOT(onShowAbout()));
     addSeparator();
-    addAction(QIcon("://icons/power-standby-2x.png"), tr("Quit"), _app, SLOT(quit()));
+    addAction(IconProvider::get(IconProvider::MENU_QUIT_ICON), tr("Quit"), _app, SLOT(quit()));
 }
 
 
@@ -345,4 +347,10 @@ void
 Menu::onShowBeaconSpotsToggled(bool enable) {
   _app->spots()->setShowBeaconSpots(enable);
   Settings().setShowBeaconSpots(enable);
+}
+
+void
+Menu::onShowAbout() {
+  AboutDialog dialog;
+  dialog.exec();
 }

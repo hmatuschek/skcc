@@ -15,7 +15,7 @@ Application::Application(int &argc, char *argv[])
     setQuitOnLastWindowClosed(false);
 
     // Set application name
-    setApplicationName("skcc");
+    setApplicationName("rbnc");
     setOrganizationName("io.github.hmatuschek");
     setOrganizationDomain("io.github.hmatuschek");
 
