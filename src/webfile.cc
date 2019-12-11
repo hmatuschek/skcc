@@ -23,7 +23,7 @@ WebFile::filename() const {
 
 void
 WebFile::update() {
-  if (_fileInfo.exists() && (_fileInfo.lastModified().daysTo(QDateTime::currentDateTime()) < _maxAge)) {
+  if (_fileInfo.exists() && ((_maxAge > 0) && (_fileInfo.lastModified().daysTo(QDateTime::currentDateTime()) < _maxAge)) ) {
     emit updated();
   } else {
     QNetworkRequest request(_url);

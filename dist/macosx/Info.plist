@@ -9,7 +9,7 @@
 	<string>Reverse Beacon Network Client 1.0.0</string>
 	
 	<key>CFBundleIdentifier</key>
-	<string>io.github.hmatuschek.rbnc</string>
+	<string>DM3MAT.rbnc</string>
 	
 	<key>CFBundleIconFile</key>
 	<string>rbnc.icns</string>

@@ -19,18 +19,9 @@ if(UNIX AND APPLE)
  install(TARGETS rbnc DESTINATION /Applications/RBNC.app/Contents/MacOS)
  install(FILES ../dist/macosx/rbnc.icns DESTINATION /Applications/RBNC.app/Contents)
  install(FILES ../dist/macosx/Info.plist DESTINATION /Applications/RBNC.app/Contents)
- install(FILES ../shared/world_01_5k.png ../shared/world_02_5k.png ../shared/world_03_5k.png
-	           ../shared/world_04_5k.png ../shared/world_05_5k.png ../shared/world_06_5k.png
-			   ../shared/world_07_5k.png ../shared/world_08_5k.png ../shared/world_09_5k.png
-			   ../shared/world_10_5k.png ../shared/world_11_5k.png ../shared/world_12_5k.png
-       DESTINATION /Applications/RBNC.app/Contents/Resources)
+ install(FILES DESTINATION /Applications/RBNC.app/Contents/Resources)
 elseif(UNIX AND NOT APPLE)
   install(TARGETS rbnc DESTINATION bin)
-  install(FILES ../shared/world_01_5k.png ../shared/world_02_5k.png ../shared/world_03_5k.png
-              ../shared/world_04_5k.png ../shared/world_05_5k.png ../shared/world_06_5k.png
-          ../shared/world_07_5k.png ../shared/world_08_5k.png ../shared/world_09_5k.png
-          ../shared/world_10_5k.png ../shared/world_11_5k.png ../shared/world_12_5k.png
-          DESTINATION share/io.github.hmatuschek/rbnc)
-  install(FILES ../dist/linux/rbnc.desktop DESTINATION share/applications)
-  install(FILES ../dist/linux/rbnc.png DESTINATION share/icons)
+  install(FILES ../dist/linux/rbnc.desktop DESTINATION share/applications/)
+  install(FILES ../dist/linux/rbnc.png DESTINATION share/icons/hicolor/64x64/apps/)
 endif(UNIX AND APPLE)

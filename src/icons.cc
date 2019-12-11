@@ -16,7 +16,7 @@ IconProvider::IconProvider()
   _icons.back().append(QIcon("://icons/browser-inv-2x.png"));
   _icons.back().append(QIcon("://icons/globe-inv-2x.png"));
   _icons.back().append(QIcon("://icons/wrench-inv-2x.png"));
-  _icons.back().append(QIcon("://icons/power-standby-inv-2x.png"));
+  _icons.back().append(QIcon("://icons/question-mark-inv-2x.png"));
   _icons.back().append(QIcon("://icons/power-standby-inv-2x.png"));
 
   _icons.append(QVector<QIcon>());
@@ -30,7 +30,7 @@ IconProvider::IconProvider()
   _icons.back().append(QIcon("://icons/browser-2x.png"));
   _icons.back().append(QIcon("://icons/globe-2x.png"));
   _icons.back().append(QIcon("://icons/wrench-2x.png"));
-  _icons.back().append(QIcon("://icons/power-standby-2x.png"));
+  _icons.back().append(QIcon("://icons/question-mark-2x.png"));
   _icons.back().append(QIcon("://icons/power-standby-2x.png"));
 }
 

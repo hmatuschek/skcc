@@ -168,7 +168,7 @@ Settings::setLocator(const QString &locator) {
 
 QString
 Settings::clusterHost() const {
-  return value("clusterHost", "rbn.dh8wr.com").toString();
+  return value("clusterHost", "telnet.reversebeacon.net").toString();
 }
 
 void
@@ -178,7 +178,7 @@ Settings::setClusterHost(const QString &addr) {
 
 quint16
 Settings::clusterPort() const {
-  return value("clusterPort", 7373).toUInt();
+  return value("clusterPort", 7000).toUInt();
 }
 
 void

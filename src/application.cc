@@ -16,8 +16,7 @@ Application::Application(int &argc, char *argv[])
 
     // Set application name
     setApplicationName("rbnc");
-    setOrganizationName("io.github.hmatuschek");
-    setOrganizationDomain("io.github.hmatuschek");
+    setOrganizationName("DM3MAT");
 
     Settings settings;
 

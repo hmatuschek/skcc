@@ -59,6 +59,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   hbox->addWidget(_logFile);
   QPushButton *button = new QPushButton(tr("..."));
   button->setToolTip(tr("Select a log file."));
+  hbox->addWidget(button);
   box->setLayout(hbox);
   tlayout->addWidget(box);
 
@@ -170,7 +171,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
 void
 SettingsDialog::onSelectLogFile() {
-  QString filename = QFileDialog::getOpenFileName(nullptr, tr("Select log file"), "", "ADIF File (*.adi,*.adif)");
+  QString filename = QFileDialog::getOpenFileName(nullptr, tr("Select log file"), "", "ADIF File (*.adi *.adif)");
   if (filename.isEmpty())
     return;
   _logFile->setText(filename);

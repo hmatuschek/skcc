@@ -2,6 +2,7 @@
 #define MAP_HH
 
 #include <QWidget>
+#include "webfile.hh"
 
 class MapView : public QWidget
 {
@@ -40,6 +41,8 @@ protected:
 	QPoint _dragStart;
   QList< QPair<QColor, QPoint> > _points;
 	QList< QPair<QColor, QVector<QPoint>> > _arcs;
+
+  WebFile *_downloadedMap;
 };
 
 #endif // MAP_HH

@@ -15,17 +15,18 @@
 
 MapView::MapView(const QString &centerLoc, QWidget *parent)
   : QWidget(parent), _scale(1), _map(),
-    _scrollDelta(0), _dragStart()
+    _scrollDelta(0), _dragStart(), _downloadedMap(nullptr)
 {
   setWindowTitle(tr("Map"));
   setWindowIcon(IconProvider::get(IconProvider::WINDOW_ICON));
 
   QString mapname = QString("world_%1_5k.png").arg(QDate::currentDate().month(), 2, 10, QChar('0'));
-  qDebug() << "Search map" << mapname << "in" << QStandardPaths::standardLocations(QStandardPaths::AppDataLocation);
+  QUrl mapurl(QString("http://"));
   mapname = QStandardPaths::locate(QStandardPaths::AppDataLocation, mapname);
-  if (mapname.isEmpty())
+  if (mapname.isEmpty()) {
     mapname = ":/map/map.png";
-  qDebug() << "Load map" << mapname;
+    _downloadedMap = new WebFile(mapname, mapurl, 365, this);
+  }
   _map.load(mapname);
 
   new QShortcut(QKeySequence("Ctrl+0"), this, SLOT(resetZoom()));
