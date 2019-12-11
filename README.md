@@ -9,7 +9,7 @@ one of those friends is active on the bands, irrespective of your filter
 settings.
 
 ## Releases
- * 2019-12-11 - [**Version 1.0.1**](https://github.com/hmatuschek/skcc/releases/tag/v1.0.1)
+ * 2019-12-11 - [**Version 1.0.2**](https://github.com/hmatuschek/skcc/releases/tag/v1.0.2)
 
 ## License
 RBNC - A client for the reverse beacon network
