@@ -12,6 +12,21 @@
 #include <QIcon>
 #include "icons.hh"
 
+QVector<QUrl> MapView::_mapURLs = {
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73580/world.topo.bathy.200401.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73605/world.topo.bathy.200402.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73630/world.topo.bathy.200403.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73655/world.topo.bathy.200404.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73701/world.topo.bathy.200405.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73726/world.topo.bathy.200406.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73751/world.topo.bathy.200407.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73776/world.topo.bathy.200408.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73801/world.topo.bathy.200409.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73826/world.topo.bathy.200410.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73884/world.topo.bathy.200411.3x5400x2700.png"),
+  QUrl("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73909/world.topo.bathy.200412.3x5400x2700.png")
+};
+
 
 MapView::MapView(const QString &centerLoc, QWidget *parent)
   : QWidget(parent), _scale(1), _map(),
@@ -21,13 +36,14 @@ MapView::MapView(const QString &centerLoc, QWidget *parent)
   setWindowIcon(IconProvider::get(IconProvider::WINDOW_ICON));
 
   QString mapname = QString("world_%1_5k.png").arg(QDate::currentDate().month(), 2, 10, QChar('0'));
-  QUrl mapurl(QString("http://"));
-  mapname = QStandardPaths::locate(QStandardPaths::AppDataLocation, mapname);
-  if (mapname.isEmpty()) {
-    mapname = ":/map/map.png";
-    _downloadedMap = new WebFile(mapname, mapurl, 365, this);
+  QUrl mapurl(_mapURLs[QDate::currentDate().month()-1]);
+  QString mappath = QStandardPaths::locate(QStandardPaths::AppDataLocation, mapname);
+  if (mappath.isEmpty()) {
+    _downloadedMap = new WebFile(mapname, mapurl, -1, this);
+    _downloadedMap->update();
+    mappath = ":/map/map.png";
   }
-  _map.load(mapname);
+  _map.load(mappath);
 
   new QShortcut(QKeySequence("Ctrl+0"), this, SLOT(resetZoom()));
   new QShortcut(QKeySequence("Ctrl++"), this, SLOT(zoomIn()));

@@ -43,6 +43,7 @@ protected:
 	QList< QPair<QColor, QVector<QPoint>> > _arcs;
 
   WebFile *_downloadedMap;
+  static QVector<QUrl> _mapURLs;
 };
 
 #endif // MAP_HH
