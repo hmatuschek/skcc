@@ -1,0 +1,30 @@
+# RBNC- A client for the reverse beacon network
+
+RBNC is a simple system-tray client application for the reverse beacon network.
+It connects to the network of monitoring stations and receives all spots. This
+application allows to filter by means of the spotter distance, band, speed and
+signal-to-noise ratio. This allows to filter for possible QSO partners on the
+bands. Additionally, you may specify "friends" to get a notification whenever
+one of those friends is active on the bands, irrespective of your filter
+settings.
+
+## Releases
+ * 2019-12-11 - [**Version 1.0.1**](https://github.com/hmatuschek/skcc/releases/tag/v1.0.1)
+
+## License
+RBNC - A client for the reverse beacon network
+Copyright (C) 2019 Hannes Matuschek, DM3MAT
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
