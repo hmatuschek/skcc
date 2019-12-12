@@ -563,7 +563,7 @@ IconProvider::Theme
 Settings::iconTheme() const {
   IconProvider::Theme theme = IconProvider::LIGHT_THEME;
 #if defined(Q_OS_MACOSX) || defined(Q_OS_WIN32)
-  theme = LIGHT_THEME;
+  theme = IconProvider::DARK_THEME;
 #endif
   return IconProvider::Theme(value("iconTheme", uint(theme)).toUInt());
 }

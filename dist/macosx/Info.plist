@@ -6,7 +6,7 @@
 	<string>rbnc</string>
 
 	<key>CFBundleGetInfoString</key>
-	<string>Reverse Beacon Network Client 1.0.0</string>
+  <string>Reverse Beacon Network Client 1.0.3</string>
 	
 	<key>CFBundleIdentifier</key>
 	<string>DM3MAT.rbnc</string>
@@ -27,7 +27,7 @@
 	<string>1.0</string>
 
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+  <string>1.0.3</string>
 
 	<key>LSMinimumSystemVersion</key>
 	<string>10.9.0</string>

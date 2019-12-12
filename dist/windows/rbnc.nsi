@@ -4,14 +4,14 @@
 # These three must be integers
 !define VERSIONMAJOR 1
 !define VERSIONMINOR 0
-!define VERSIONBUILD 2
+!define VERSIONBUILD 3
 
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
  
 InstallDir "$PROGRAMFILES\${APPNAME}"
 
 Name "${APPNAME}"
-outFile "rbnc-1.0.2-setup.exe"
+outFile "rbnc-${VERSIONMAJOR}.${VERSIONMINOR}.${VERSIONBUILD}-setup.exe"
 
 !include LogicLib.nsh
  
