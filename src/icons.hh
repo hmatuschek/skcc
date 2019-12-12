@@ -25,8 +25,8 @@ public:
   } Icon;
 
   typedef enum {
-    DARK_THEME = 0,
-    LIGHT_THEME
+    LIGHT_THEME = 0,
+    DARK_THEME
   } Theme;
 
 public:

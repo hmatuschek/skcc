@@ -5,6 +5,8 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include "colorbutton.hh"
+#include <QComboBox>
+
 
 class SettingsDialog : public QDialog
 {
@@ -31,6 +33,7 @@ private:
   ColorButton *_newDXCC, *_selfSpot, *_friendSpot, *_beaconSpot, *_newBand, *_newSlot, *_newQSO, *_worked;
   ColorButton *_qthColor, *_spot2200m, *_spot630m, *_spot160m, *_spot80m, *_spot60m, *_spot40m;
   ColorButton *_spot30m, *_spot20m, *_spot17m, *_spot15m, *_spot12m, *_spot10m, *_spot6m;
+  QComboBox *_iconTheme;
 };
 
 #endif // SETTINGSDIALOG_HH

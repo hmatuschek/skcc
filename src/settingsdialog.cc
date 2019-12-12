@@ -21,6 +21,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     : QDialog(parent)
 {
 	setWindowTitle(tr("Settings"));
+  setMinimumWidth(480);
 	Settings settings;
 
   QVBoxLayout *layout = new QVBoxLayout();
@@ -34,7 +35,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
 	_call = new QLineEdit(settings.call());
 	_locator = new QLineEdit(settings.locator());
-  _locator->setValidator(new QRegExpValidator(QRegExp("[A-Za-z]{2}[0-9]{2}[A-Z]{0,2}")));
+  _locator->setValidator(new QRegExpValidator(QRegExp("[A-Za-z]{2}[0-9]{2}[A-Za-z]{0,2}")));
 	_clusterHost = new QLineEdit(settings.clusterHost());
 	_clusterPort = new QLineEdit(QString::number(settings.clusterPort()));
   _clusterPort->setValidator(new QIntValidator(0, 65535));
@@ -100,63 +101,89 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   connect(rem, SIGNAL(clicked(bool)), this, SLOT(onRemFriend()));
 
   tab = new QWidget();
-  tabs->addTab(tab, tr("Colors"));
-  hbox = new QHBoxLayout();
+  tabs->addTab(tab, tr("Appearance"));
+  tlayout = new QVBoxLayout();
 
+  box = new QGroupBox(tr("Table colors"));
+  hbox = new QHBoxLayout();
   form = new QFormLayout();
   _selfSpot = new ColorButton(settings.selfSpotColor());
   _friendSpot = new ColorButton(settings.friendSpotColor());
   _beaconSpot = new ColorButton(settings.beaconSpotColor());
-  _newDXCC = new ColorButton(settings.newDXCCColor());
-  _newBand = new ColorButton(settings.newBandColor());
-  _newSlot = new ColorButton(settings.newSlotColor());
-  _newQSO = new ColorButton(settings.newQSOColor());
-  _worked = new ColorButton(settings.workedColor());
   form->addRow(tr("self spot"), _selfSpot);
   form->addRow(tr("friend spot"), _friendSpot);
   form->addRow(tr("beacon spot"), _beaconSpot);
+  hbox->addLayout(form);
+
+  form = new QFormLayout();
+  _newDXCC = new ColorButton(settings.newDXCCColor());
+  _newBand = new ColorButton(settings.newBandColor());
+  _newSlot = new ColorButton(settings.newSlotColor());
   form->addRow(tr("new DXCC"), _newDXCC);
   form->addRow(tr("new band"), _newBand);
   form->addRow(tr("new slot"), _newSlot);
+  hbox->addLayout(form);
+
+  form = new QFormLayout();
+  _newQSO = new ColorButton(settings.newQSOColor());
+  _worked = new ColorButton(settings.workedColor());
   form->addRow(tr("new QSO"), _newQSO);
   form->addRow(tr("worked"), _worked);
   hbox->addLayout(form);
+  box->setLayout(hbox);
+  tlayout->addWidget(box);
 
+  box = new QGroupBox(tr("Map colors"));
+  hbox = new QHBoxLayout();
   form = new QFormLayout();
   _qthColor  = new ColorButton(settings.qthColor());
   _spot2200m = new ColorButton(settings.spot2200mColor());
   _spot630m  = new ColorButton(settings.spot630mColor());
   _spot160m  = new ColorButton(settings.spot160mColor());
   _spot80m   = new ColorButton(settings.spot80mColor());
-  _spot60m   = new ColorButton(settings.spot60mColor());
-  _spot40m   = new ColorButton(settings.spot40mColor());
   form->addRow(tr("QTH"),   _qthColor);
   form->addRow(tr("2200m"), _spot2200m);
   form->addRow(tr("630m"),  _spot630m);
   form->addRow(tr("160m"),  _spot160m);
   form->addRow(tr("80m"),   _spot80m);
-  form->addRow(tr("60m"),   _spot60m);
-  form->addRow(tr("40m"),   _spot40m);
   hbox->addLayout(form);
 
   form = new QFormLayout();
+  _spot60m   = new ColorButton(settings.spot60mColor());
+  _spot40m   = new ColorButton(settings.spot40mColor());
   _spot30m = new ColorButton(settings.spot30mColor());
   _spot20m = new ColorButton(settings.spot20mColor());
   _spot17m = new ColorButton(settings.spot17mColor());
+  form->addRow(tr("60m"), _spot60m);
+  form->addRow(tr("40m"), _spot40m);
+  form->addRow(tr("30m"), _spot30m);
+  form->addRow(tr("20m"), _spot20m);
+  form->addRow(tr("17m"), _spot17m);
+  hbox->addLayout(form);
+
+  form = new QFormLayout();
   _spot15m = new ColorButton(settings.spot15mColor());
   _spot12m = new ColorButton(settings.spot12mColor());
   _spot10m = new ColorButton(settings.spot10mColor());
   _spot6m  = new ColorButton(settings.spot6mColor());
-  form->addRow(tr("30m"), _spot30m);
-  form->addRow(tr("20m"), _spot20m);
-  form->addRow(tr("17m"), _spot17m);
   form->addRow(tr("15m"), _spot15m);
   form->addRow(tr("12m"), _spot12m);
   form->addRow(tr("10m"), _spot10m);
   form->addRow(tr("6m"),  _spot6m);
   hbox->addLayout(form);
+  box->setLayout(hbox);
+  tlayout->addWidget(box);
 
-  tab->setLayout(hbox);
+  box = new QGroupBox(tr("Icons"));
+  form = new QFormLayout();
+  _iconTheme = new QComboBox();
+  _iconTheme->addItem(tr("Light"), uint(IconProvider::LIGHT_THEME));
+  _iconTheme->addItem(tr("Dark"), uint(IconProvider::DARK_THEME));
+  _iconTheme->setCurrentIndex(uint(settings.iconTheme()));
+  form->addRow(tr("Icon theme"), _iconTheme);
+  box->setLayout(form);
+  tlayout->addWidget(box);
+  tab->setLayout(tlayout);
 
   QDialogButtonBox *bb = new QDialogButtonBox(QDialogButtonBox::Save|QDialogButtonBox::Cancel);
   layout->addWidget(bb);
@@ -228,6 +255,7 @@ SettingsDialog::accept() {
   settings.setSpot12mColor(_spot12m->color());
   settings.setSpot10mColor(_spot10m->color());
   settings.setSpot6mColor(_spot6m->color());
+  settings.setIconTheme(IconProvider::Theme(_iconTheme->currentData().toUInt()));
 
   Friends friends;
   for (int i=0; i<_friends->rowCount(); i++) {

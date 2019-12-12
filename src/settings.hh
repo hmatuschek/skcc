@@ -4,6 +4,7 @@
 #include <QSettings>
 #include <QColor>
 #include "adi.hh"
+#include "icons.hh"
 
 class Friend
 {
@@ -182,6 +183,9 @@ public:
 
   int sectionSize(int idx);
   void setSectionSize(int idx, int width);
+
+  IconProvider::Theme iconTheme() const;
+  void setIconTheme(IconProvider::Theme theme);
 };
 
 #endif // SETTINGS_HH

@@ -559,6 +559,19 @@ Settings::setSectionSize(int idx, int width) {
   endArray();
 }
 
+IconProvider::Theme
+Settings::iconTheme() const {
+  IconProvider::Theme theme = IconProvider::LIGHT_THEME;
+#if defined(Q_OS_MACOSX) || defined(Q_OS_WIN32)
+  theme = LIGHT_THEME;
+#endif
+  return IconProvider::Theme(value("iconTheme", uint(theme)).toUInt());
+}
+void
+Settings::setIconTheme(IconProvider::Theme theme) {
+  setValue("iconTheme", uint(theme));
+}
+
 
 Friend::Friend()
   : _call(), _name(), _comment()

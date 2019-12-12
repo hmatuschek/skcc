@@ -1,4 +1,6 @@
 #include "icons.hh"
+#include "settings.hh"
+
 
 IconProvider *IconProvider::_provider = nullptr;
 
@@ -38,9 +40,7 @@ const QIcon &
 IconProvider::get(Icon icon) {
   if (nullptr == _provider)
     _provider = new IconProvider();
-  Theme theme = DARK_THEME;
-#ifdef Q_OS_MACOSX
-  theme = LIGHT_THEME;
-#endif
+  Settings settings;
+  Theme theme = settings.iconTheme();
   return _provider->_icons[theme][icon];
 }
