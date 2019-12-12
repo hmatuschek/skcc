@@ -34,12 +34,19 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   tab->setLayout(tlayout);
 
 	_call = new QLineEdit(settings.call());
+  _call->setToolTip(tr("Enter your callsign here. This will be used to logon to the RBN."));
 	_locator = new QLineEdit(settings.locator());
   _locator->setValidator(new QRegExpValidator(QRegExp("[A-Za-z]{2}[0-9]{2}[A-Za-z]{0,2}")));
+  _locator->setToolTip(tr("Enter your locator here. This will be used to determine the distance to "
+                          "the skimmers and also for the map display."));
 	_clusterHost = new QLineEdit(settings.clusterHost());
+  _clusterHost->setToolTip(tr("Enter a RBN mirror here."));
 	_clusterPort = new QLineEdit(QString::number(settings.clusterPort()));
   _clusterPort->setValidator(new QIntValidator(0, 65535));
+  _clusterPort->setToolTip(tr("Enter the host port here."));
 	_logFile = new QLineEdit(settings.logFile());
+  _logFile->setToolTip(tr("Specify a ADIF file to monitor. This logfile will be used to classify "
+                          "new spots."));
 
   QGroupBox *box = new QGroupBox(tr("Operator"));
   QFormLayout *form = new QFormLayout();
@@ -81,7 +88,6 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
   int i=0;
   for (Friends::iterator item=friends.begin(); item != friends.end(); i++, item++) {
-    qDebug() << "Show" << i << item->call() << item->name() << item->comment();
     _friends->setItem(i, 0, new QTableWidgetItem(item->call()));
     _friends->setItem(i, 1, new QTableWidgetItem(item->name()));
     _friends->setItem(i, 2, new QTableWidgetItem(item->comment()));
