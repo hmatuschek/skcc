@@ -5,6 +5,8 @@
 #include <QRegExp>
 #include <QTime>
 #include <QTimer>
+#include <QNetworkConfigurationManager>
+
 
 typedef enum {
   CQ_SPOT, DX_SPOT, BEACON_SPOT
@@ -64,18 +66,19 @@ signals:
 private slots:
   void onConnected();
   void onReadyRead();
-  void onError(QAbstractSocket::SocketError err);
   void onDisconnected();
-  void onPing();
+  void onError(QAbstractSocket::SocketError err);
+  void onOnlineStateChanged(bool online);
 
 protected:
+  QNetworkConfigurationManager _network;
   State _state;
   QString _host;
   quint16 _port;
   QString _call;
   QRegExp _rbnpattern;
   QByteArray _buffer;
-  QTimer _ping;
+  QTimer _reconnect;
 };
 
 
