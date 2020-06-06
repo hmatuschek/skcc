@@ -1,7 +1,7 @@
 #include "dxcc.hh"
 #include <QVector>
 #include <QPair>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QHash>
 #include <QChar>
 
@@ -29,7 +29,7 @@ bool
 DXCCListReader::read(const QString &line) {
   State state = START;
   bool  read_footnote = false;
-  QList<QRegExp> pattern;
+  QList<QRegularExpression> pattern;
   QList<QString> contients, itu, cq;
   QString name;
   int id = -1;
@@ -71,12 +71,12 @@ DXCCListReader::read(const QString &line) {
           buffer.append("[0-9]");
         } else if (',' == c) {
           buffer.prepend("^("); buffer.append(")");
-          pattern.append(QRegExp(buffer, Qt::CaseInsensitive));
+          pattern.append(QRegularExpression(buffer, QRegularExpression::CaseInsensitiveOption));
           buffer.clear();
           state = PATTERN_START;
         } else if (('*'==c) || ('#'==c) || ('^'==c) || c.isSpace()) {
           buffer.prepend("^("); buffer.append(")");
-          pattern.append(QRegExp(buffer, Qt::CaseInsensitive));
+          pattern.append(QRegularExpression(buffer, QRegularExpression::CaseInsensitiveOption));
           buffer.clear();
           state = PATTERN_COMMENT;
         } else if ('('==c) {
@@ -260,8 +260,8 @@ DXCCListReader::read(const QString &line) {
   qDebug() << "*** Got" << pattern << "for" << name  << "in cont." << contients << "ITU" << itu
            << "CQ" << cq << "and with ID" << id;
 
-  foreach (QRegExp rule, pattern) {
-    if (rule.pattern().isEmpty())
+  foreach (QRegularExpression rule, pattern) {
+    if (rule.pattern().isEmpty() || (! rule.isValid()))
       continue;
     _list.addRule(rule, name, id);
   }
@@ -304,23 +304,29 @@ DXCCList::instance() {
   return DXCCList::_singleton;
 }
 void
-DXCCList::addRule(const QRegExp &rule, const QString &name, int id) {
+DXCCList::addRule(const QRegularExpression &rule, const QString &name, int id) {
   _rules.append( { rule, name, id } );
+  _dxcc_name[id] = name;
 }
 
 void
 DXCCList::addRule(const Rule &rule) {
   _rules.append( rule );
+  _dxcc_name[rule.id] = rule.name;
 }
 
 int
 DXCCList::dxcc(const QString &call) {
+  if (_dxcc_cache.contains(call))
+    return _dxcc_cache[call];
+
   int match_len = 0;
   Rule match;
   foreach (Rule rule, _rules) {
-    if (0 != rule.pattern.indexIn(call))
+    QRegularExpressionMatch m = rule.pattern.match(call);
+    if (! m.hasMatch())
       continue;
-    int len = rule.pattern.cap(1).length();
+    int len = m.captured(1).length();
     if (len > match_len) {
       match = rule;
       match_len = len;
@@ -329,26 +335,16 @@ DXCCList::dxcc(const QString &call) {
 
   if (0 == match_len)
     return -1;
+  _dxcc_cache[call] = match.id;
   return match.id;
 }
 
 
 QString
 DXCCList::dxcc_name(const QString &call) {
-  int match_len = 0;
-  Rule match;
-  foreach (Rule rule, _rules) {
-    if ( 0 != rule.pattern.indexIn(call))
-      continue;
-    int len = rule.pattern.cap(1).length();
-    if (len > match_len) {
-      match = rule;
-      match_len = len;
-    }
-  }
-
-  if (0 == match_len)
+  int nr = dxcc(call);
+  if (! _dxcc_name.contains(nr))
     return "Unknown DXCC";
-  return match.name;
+  return _dxcc_name[nr];
 }
 

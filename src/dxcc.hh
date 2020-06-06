@@ -3,6 +3,7 @@
 
 #include "webfile.hh"
 #include <QString>
+#include <QRegularExpression>
 
 int dxcc_from_call(const QString &call);
 QString dxcc_name_from_call(const QString &call);
@@ -14,7 +15,7 @@ class DXCCList: public QObject
 
 public:
   typedef struct {
-    QRegExp pattern;
+    QRegularExpression pattern;
     QString name;
     int     id;
   } Rule;
@@ -27,7 +28,7 @@ public:
   virtual ~DXCCList();
 
   void addRule(const Rule &rule);
-  void addRule(const QRegExp &rule, const QString &name, int id);
+  void addRule(const QRegularExpression &rule, const QString &name, int id);
 
   int dxcc(const QString &call);
   QString dxcc_name(const QString &call);
@@ -36,6 +37,8 @@ public:
 
 protected:
   QList<Rule> _rules;
+  QHash<QString, int> _dxcc_cache;
+  QHash<int, QString> _dxcc_name;
 };
 
 
