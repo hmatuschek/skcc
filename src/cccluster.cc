@@ -15,7 +15,7 @@ SpotType readSpotType(const QString &type) {
  * Implementation of CCCluster
  * ******************************************************************************************** */
 CCCluster::CCCluster(const QString &call, const QString &host, quint16 port, QObject *parent)
-  : QTcpSocket(parent), _network(), _state(CONNECTING), _host(host), _port(port), _call(call),
+  : QTcpSocket(parent), _state(CONNECTING), _host(host), _port(port), _call(call),
     _rbnpattern("^DX de ([A-Za-Z0-9]+).*: ([0-9\\.]+) ([A-Z0-9/]+) CW "
                  "([0-9]+) dB ([0-9]+) WPM (CQ|DX|BEACON|NCDXF B) ([0-9][0-9])([0-9][0-9])Z$")
 {
@@ -28,10 +28,8 @@ CCCluster::CCCluster(const QString &call, const QString &host, quint16 port, QOb
           this, SLOT(onError(QAbstractSocket::SocketError)));
   connect(this, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
   connect(&_reconnect, SIGNAL(timeout()), this, SLOT(reconnect()));
-  connect(&_network, SIGNAL(onlineStateChanged(bool)), this, SLOT(onOnlineStateChanged(bool)));
 
-  if (_network.isOnline())
-    reconnect();
+  reconnect();
 }
 
 
@@ -39,16 +37,6 @@ CCCluster::~CCCluster() {
   // pass...
 }
 
-void
-CCCluster::onOnlineStateChanged(bool online) {
-  if (online) {
-    qDebug() << "Got online.";
-    _reconnect.start();
-  } else {
-    qDebug() << "Got offline.";
-    this->close();
-  }
-}
 void
 CCCluster::reconnect() {
   _state = CONNECTING;
@@ -96,14 +84,12 @@ void
 CCCluster::onDisconnected() {
   qDebug() << "CCCluster: TCP socked disconnected:" << errorString();
   _state = ERROR;
-  if (_network.isOnline())
-    _reconnect.start();
+  _reconnect.start();
 }
 
 void
 CCCluster::onError(QAbstractSocket::SocketError err) {
   qDebug() << "CCCluster: TCP Error: " << err << errorString();
   _state = ERROR;
-  if (_network.isOnline())
-    _reconnect.start();
+  _reconnect.start();
 }

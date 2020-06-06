@@ -18,6 +18,11 @@ Application::Application(int &argc, char *argv[])
     setApplicationName("rbnc");
     setOrganizationName("DM3MAT");
 
+    qDebug() << "*******************************************************************************";
+    qDebug() << "*******************************************************************************";
+    qDebug() << "** Startup                                                                   **";
+    qDebug() << "*******************************************************************************";
+    qDebug() << "*******************************************************************************";
     Settings settings;
 
     _spots = new SpotTable(settings.call(), settings.locator(), settings.logFile(),

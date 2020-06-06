@@ -68,10 +68,8 @@ private slots:
   void onReadyRead();
   void onDisconnected();
   void onError(QAbstractSocket::SocketError err);
-  void onOnlineStateChanged(bool online);
 
 protected:
-  QNetworkConfigurationManager _network;
   State _state;
   QString _host;
   quint16 _port;
