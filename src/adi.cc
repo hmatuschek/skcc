@@ -7,6 +7,39 @@ bool LogFile::Record::isValid() const {
   return !( call.isEmpty() || band.isEmpty() || mode.isEmpty() );
 }
 
+
+
+LogFile::DXCCRecord::DXCCRecord()
+  : _band_mode()
+{
+  // pass..
+}
+
+LogFile::DXCCRecord::DXCCRecord(const QString &band, const QString &mode)
+  : _band_mode()
+{
+  insert(band, mode);
+}
+
+void
+LogFile::DXCCRecord::insert(const QString &band, const QString &mode) {
+  if (! _band_mode.contains(band)) {
+    _band_mode.insert(band, QSet<QString>());
+  }
+  _band_mode[band].insert(mode);
+}
+
+LogFile::Match
+LogFile::DXCCRecord::isNew(const QString &band, const QString &mode) const {
+  if (! _band_mode.contains(band))
+    return NEW_BAND;
+  if (! _band_mode[band].contains(mode))
+    return NEW_SLOT;
+  return NEW_QSO;
+}
+
+
+
 LogFile::LogFile(const QString &filename)
   : _filename(filename), _watcher()
 {
@@ -18,7 +51,8 @@ LogFile::LogFile(const QString &filename)
 
 void
 LogFile::update() {
-  _log.clear();
+  _QSOs.clear();
+  _DXCCs.clear();
 
   QFile file(_filename);
   if (! file.open(QIODevice::ReadOnly)) {
@@ -42,7 +76,11 @@ LogFile::update() {
 
 void
 LogFile::insert(const Record &qso) {
-  _log.append(qso);
+  _QSOs.insert(qso.call);
+  int dxcc = dxcc_from_call(qso.call);
+  if (! _DXCCs.contains(dxcc)) {
+    _DXCCs.insert(dxcc, DXCCRecord(qso.band, qso.mode));
+  }
 }
 
 int LogFile::readRecord(const QString data, int start) {
@@ -91,18 +129,10 @@ int LogFile::readRecord(const QString data, int start) {
 LogFile::Match
 LogFile::isNew(const QString &call, const QString &band, const QString &mode) const
 {
+  if (_QSOs.contains(call))
+    return WORKED;
   int dxcc = dxcc_from_call(call);
-
-  Match match = NEW_DXCC;
-  foreach (Record qso, _log) {
-    if ((NEW_DXCC == match) && (dxcc == qso.dxcc))
-      match = NEW_BAND;
-    if ((NEW_BAND == match) && (dxcc == qso.dxcc) && (band == qso.band))
-      match = NEW_SLOT;
-    if ((NEW_SLOT == match) && (dxcc == qso.dxcc) && (band == qso.band) && (mode == qso.mode))
-      match = NEW_QSO;
-    if (call == qso.call)
-      return WORKED;
-  }
-  return match;
+  if (! _DXCCs.contains(dxcc))
+    return NEW_DXCC;
+  return _DXCCs[dxcc].isNew(band, mode);
 }

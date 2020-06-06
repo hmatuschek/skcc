@@ -6,6 +6,8 @@
 #include <QDateTime>
 #include <QList>
 #include <QFileSystemWatcher>
+#include <QSet>
+#include <QHash>
 
 
 class LogFile: QObject
@@ -31,6 +33,17 @@ public:
 		bool isValid() const;
 	} Record;
 
+  class DXCCRecord {
+  public:
+    DXCCRecord();
+    DXCCRecord(const QString &band, const QString &mode);
+    void insert(const QString &band, const QString &mode);
+    Match isNew(const QString &band, const QString &mode) const;
+
+  protected:
+    QHash< QString, QSet<QString> > _band_mode;
+  };
+
 public:
   LogFile(const QString &filename);
 
@@ -45,7 +58,8 @@ private:
 
 private:
   QString _filename;
-  QList<Record> _log;
+  QSet<QString> _QSOs;
+  QHash<int, DXCCRecord> _DXCCs;
   QFileSystemWatcher _watcher;
 };
 

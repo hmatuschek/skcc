@@ -2,6 +2,12 @@
 #include <QRegExp>
 #include <QDateTime>
 
+#if defined(Q_OS_LINUX) || defined(Q_OS_DARWIN)
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/tcp.h>
+#endif
+
 SpotType readSpotType(const QString &type) {
   if (("BEACON" == type) || ("NCDXF B" == type)) {
     return BEACON_SPOT;
@@ -29,6 +35,8 @@ CCCluster::CCCluster(const QString &call, const QString &host, quint16 port, QOb
   connect(this, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
   connect(&_reconnect, SIGNAL(timeout()), this, SLOT(reconnect()));
 
+  setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+
   reconnect();
 }
 
@@ -48,6 +56,18 @@ void
 CCCluster::onConnected() {
   qDebug() << "CCCluster: ... connected.";
   _state = CONNECTED;
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_DARWIN)
+  int enableKeepAlive = 1;
+  int fd = socketDescriptor();
+  setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, &enableKeepAlive, sizeof(enableKeepAlive));
+  int maxIdle = 10; /* seconds */
+  setsockopt(fd, IPPROTO_TCP, TCP_KEEPIDLE, &maxIdle, sizeof(maxIdle));
+  int count = 3;  // send up to 3 keepalive packets out, then disconnect if no response
+  setsockopt(fd, SOL_TCP, TCP_KEEPCNT, &count, sizeof(count));
+  int interval = 2;   // send a keepalive packet out every 2 seconds (after the 5 second idle period)
+  setsockopt(fd, SOL_TCP, TCP_KEEPINTVL, &interval, sizeof(interval));
+#endif
 }
 
 void
@@ -83,13 +103,13 @@ CCCluster::onReadyRead()
 void
 CCCluster::onDisconnected() {
   qDebug() << "CCCluster: TCP socked disconnected:" << errorString();
-  _state = ERROR;
+  _state = CCCluster::ERROR;
   _reconnect.start();
 }
 
 void
 CCCluster::onError(QAbstractSocket::SocketError err) {
   qDebug() << "CCCluster: TCP Error: " << err << errorString();
-  _state = ERROR;
+  _state = CCCluster::ERROR;
   _reconnect.start();
 }

@@ -9,6 +9,7 @@
 #include <QStandardPaths>
 #include <QFile>
 #include <QtGlobal>
+#include <QDateTime>
 
 void logFileMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -17,7 +18,7 @@ void logFileMessageOutput(QtMsgType type, const QMessageLogContext &context, con
   QFile logFile(filename);
   logFile.open(QFile::Append|QFile::Text);
   QTextStream stream(&logFile);
-
+  stream << QDateTime::currentDateTime().toString(Qt::SystemLocaleShortDate) << ": ";
   QByteArray localMsg = msg.toLocal8Bit();
   switch (type) {
   case QtDebugMsg: stream << "Debug: "; break;

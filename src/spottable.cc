@@ -258,6 +258,9 @@ SpotTable::onNewSpot(const Spot &spot)
   if ((_showSelf && (spot.spot == _call)) || _friends.contains(spot.spot.toUpper()))
     goto accept;
 
+  if (! _bands.contains(freq2band(spot.freq)))
+    return;
+
   if (0 < _maxDist) {
     if (! _spotterlist.hasSpotter(spot.spotter))
       return;
@@ -265,22 +268,19 @@ SpotTable::onNewSpot(const Spot &spot)
       return;
   }
 
-  if (! _bands.contains(freq2band(spot.freq)))
-    return;
-
   if (BEACON_SPOT == spot.type) {
     if (_showBeaconSpots)
       goto accept;
     return;
   }
 
-  if (_minMatch > _logfile.isNew(spot.spot, freq2band(spot.freq), spot.mode))
-    return;
-
   if ((0<_maxSpeed) && (spot.wpm>_maxSpeed))
     return;
 
   if ((0<_minSNR) && (spot.db<_minSNR))
+    return;
+
+  if (_minMatch > _logfile.isNew(spot.spot, freq2band(spot.freq), spot.mode))
     return;
 
 accept:
