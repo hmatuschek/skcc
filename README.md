@@ -9,7 +9,7 @@ one of those friends is active on the bands, irrespective of your filter
 settings.
 
 ## Releases
- * 2020-06-07 - [**Version 1.0.5**] (https://github.com/hmatuschek/skcc/releases/tag/v1.0.5) Bugfix release and some performance improvements. 
+ * 2020-06-07 - [**Version 1.0.5**](https://github.com/hmatuschek/skcc/releases/tag/v1.0.5) Bugfix release and some performance improvements. 
  * 2019-12-12 - [Version 1.0.3](https://github.com/hmatuschek/skcc/releases/tag/v1.0.3) 
  * 2019-12-11 - [Version 1.0.2](https://github.com/hmatuschek/skcc/releases/tag/v1.0.2)
 
