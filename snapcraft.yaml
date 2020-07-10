@@ -12,16 +12,16 @@ architectures:
   - build-on: amd64
 
 apps:
-  kochmorse:
-    command: kochmorse
-    desktop: usr/share/applications/kochmorse.desktop
+  rbnc:
+    command: rbnc
+    desktop: usr/share/applications/rbnc.desktop
     plugs:
       - desktop
       - network
       - audio-playback
 
 parts:
-  kochmorse:
+  rbnc:
     plugin: cmake
     build-packages:
       - qtbase5-dev
