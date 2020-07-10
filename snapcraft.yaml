@@ -1,6 +1,6 @@
 name: rbnc
 version: git
-grade: edge
+grade: devel
 #version: 1.0.5
 #grade: stable
 summary: Reverse-Beacon-Network Desktop-Client
