@@ -2,6 +2,7 @@
 #define DXCC_HH
 
 #include "webfile.hh"
+#include <QObject>
 #include <QString>
 #include <QRegularExpression>
 

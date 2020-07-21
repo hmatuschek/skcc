@@ -317,8 +317,9 @@ DXCCList::addRule(const Rule &rule) {
 
 int
 DXCCList::dxcc(const QString &call) {
-  if (_dxcc_cache.contains(call))
+  if (_dxcc_cache.contains(call)) {
     return _dxcc_cache[call];
+  }
 
   int match_len = 0;
   Rule match;
@@ -342,7 +343,9 @@ DXCCList::dxcc(const QString &call) {
 
 QString
 DXCCList::dxcc_name(const QString &call) {
+  // get DXCC ID from call
   int nr = dxcc(call);
+  // get name by ID
   if (! _dxcc_name.contains(nr))
     return "Unknown DXCC";
   return _dxcc_name[nr];

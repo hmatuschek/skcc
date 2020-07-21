@@ -1,6 +1,7 @@
 #ifndef ADI_HH
 #define ADI_HH
 
+#include <QObject>
 #include <QFile>
 #include <QString>
 #include <QDateTime>

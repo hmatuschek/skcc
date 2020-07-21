@@ -80,6 +80,8 @@ LogFile::insert(const Record &qso) {
   int dxcc = dxcc_from_call(qso.call);
   if (! _DXCCs.contains(dxcc)) {
     _DXCCs.insert(dxcc, DXCCRecord(qso.band, qso.mode));
+  } else {
+    _DXCCs[dxcc].insert(qso.band, qso.mode);
   }
 }
 
