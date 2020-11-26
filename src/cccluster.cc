@@ -2,7 +2,7 @@
 #include <QRegExp>
 #include <QDateTime>
 
-#if defined(Q_OS_LINUX) || defined(Q_OS_DARWIN)
+#if defined(Q_OS_LINUX)
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
@@ -57,7 +57,7 @@ CCCluster::onConnected() {
   qDebug() << "CCCluster: ... connected.";
   _state = CONNECTED;
 
-#if defined(Q_OS_LINUX) || defined(Q_OS_DARWIN)
+#if defined(Q_OS_LINUX)
   int enableKeepAlive = 1;
   int fd = socketDescriptor();
   setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, &enableKeepAlive, sizeof(enableKeepAlive));
