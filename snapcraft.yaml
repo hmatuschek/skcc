@@ -22,6 +22,7 @@ apps:
       - network
       - audio-playback
       - unity7
+      - home
     extensions:
       - kde-neon
 
