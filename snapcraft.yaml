@@ -21,7 +21,7 @@ apps:
       - desktop
       - network
       - audio-playback
-      - unity8
+      - unity7
     extensions:
       - kde-neon
 
