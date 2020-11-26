@@ -306,6 +306,16 @@ Settings::setNotifyOnNewSKCC(bool enable) {
 }
 
 bool
+Settings::notifyOnNewAGCW() const {
+  return value("notify/onNewAGCW", true).toBool();
+}
+
+void
+Settings::setNotifyOnNewAGCW(bool enable) {
+  setValue("notify/onNewAGCW", enable);
+}
+
+bool
 Settings::notifyOnNewFriend() const {
   return value("notify/onNewFriend", true).toBool();
 }

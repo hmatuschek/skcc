@@ -23,6 +23,7 @@ protected slots:
 	void onNewDXCC(const Spot &spot);
 	void onNewBand(const Spot &spot);
 	void onNewSKCC(const Spot &spot);
+  void onNewAGCW(const Spot &spot);
 	void onNewFriend(const Spot &spot);
 
 protected:

@@ -30,6 +30,7 @@ TrayIcon::TrayIcon(Application *app)
   connect(_app->spots(), SIGNAL(newDXCC(Spot)), this, SLOT(onNewDXCC(Spot)));
   connect(_app->spots(), SIGNAL(newBand(Spot)), this, SLOT(onNewBand(Spot)));
   connect(_app->spots(), SIGNAL(newSKCC(Spot)), this, SLOT(onNewSKCC(Spot)));
+  connect(_app->spots(), SIGNAL(newAGCW(Spot)), this, SLOT(onNewAGCW(Spot)));
   connect(_app->spots(), SIGNAL(newFriend(Spot)), this, SLOT(onNewFriend(Spot)));
 }
 
@@ -93,6 +94,19 @@ TrayIcon::onNewSKCC(const Spot &spot) {
     return;
   qDebug() << "Notify new SKCC...";
   _popup->setPopupText(tr("New SKCC <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.spot)
+                       .arg(spot.freq).arg(spot.db).arg(spot.wpm));
+  _popup->show();
+
+  if (Settings().notificationSoundEnabled())
+    QSound::play(":/sound/single_chime.wav");
+}
+
+void
+TrayIcon::onNewAGCW(const Spot &spot) {
+  if (! Settings().notifyOnNewAGCW())
+    return;
+  qDebug() << "Notify new AGCW...";
+  _popup->setPopupText(tr("New AGCW <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.spot)
                        .arg(spot.freq).arg(spot.db).arg(spot.wpm));
   _popup->show();
 

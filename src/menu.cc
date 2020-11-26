@@ -199,6 +199,13 @@ Menu::Menu(Application *app, QWidget *parent)
     agroup->addAction(action);
     menu->addAction(action);
 
+    action = new QAction(tr("on new AGCW"), this);
+    action->setCheckable(true);
+    action->setChecked(Settings().notifyOnNewAGCW());
+    action->setData("AGCW");
+    agroup->addAction(action);
+    menu->addAction(action);
+
     action = new QAction(tr("on new Friend"), this);
     action->setCheckable(true);
     action->setChecked(Settings().notifyOnNewFriend());
@@ -328,6 +335,8 @@ Menu::onNotifyToggled(QAction *action) {
     Settings().setNotifyOnNewBand(enabled);
   else if ("SKCC" == action->data().toString())
     Settings().setNotifyOnNewSKCC(enabled);
+  else if ("AGCW" == action->data().toString())
+    Settings().setNotifyOnNewAGCW(enabled);
   else if ("Friend" == action->data().toString())
     Settings().setNotifyOnNewFriend(enabled);
 }
