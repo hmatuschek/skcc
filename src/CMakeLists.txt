@@ -1,11 +1,11 @@
 set(rbnc_SOURCES main.cc locator.cc bands.cc icons.cc
     cccluster.cc spottable.cc rbn.cc skcc.cc popup.cc mainwindow.cc settings.cc settingsdialog.cc
 	application.cc webfile.cc dxcc.cc menu.cc trayicon.cc colorbutton.cc adi.cc map.cc
-  selfspotmap.cc aboutdialog.cc)
+  selfspotmap.cc aboutdialog.cc agcw.cc)
 set(rbnc_MOC_HEADERS
     cccluster.hh spottable.hh rbn.hh skcc.hh popup.hh mainwindow.hh settings.hh settingsdialog.hh
 	application.hh webfile.hh dxcc.hh menu.hh trayicon.hh colorbutton.hh adi.hh map.hh
-  selfspotmap.hh aboutdialog.hh)
+  selfspotmap.hh aboutdialog.hh agcw.hh)
 set(rbnc_HEADERS locator.hh bands.hh icons.hh ${skcc_MOC_HEADERS})
 
 qt5_wrap_cpp(rbnc_MOC_SOURCES ${rbnc_MOC_HEADERS})

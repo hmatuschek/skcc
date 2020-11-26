@@ -12,7 +12,7 @@ SpotTable::SpotTable(const QString &call, const QString &locator, const QString 
                      bool showSelf, bool showBeacon, int maxdist, int maxage, LogFile::Match minMatch, int maxSpeed,
                      int minSNR, QObject *parent)
     : QAbstractTableModel(parent), _cluster(call, cluster, port),
-      _spotterlist(), _logfile(logfile), _skcc(), _spots(), _call(call), _locator(locator),
+      _spotterlist(), _logfile(logfile), _skcc(), _agcw(), _spots(), _call(call), _locator(locator),
       _showSelf(showSelf), _showBeaconSpots(showBeacon), _maxAge(maxage), _maxDist(maxdist),
       _maxSpeed(maxSpeed), _minSNR(minSNR),
       _minMatch(minMatch)
@@ -47,6 +47,7 @@ SpotTable::data(const QModelIndex &index, int role) const {
   QList<Spot> spots = _spots.at(index.row());
   QString call = spots.first().spot;
   bool skcc = _skcc.isMember(call);
+  bool agcw = _agcw.isMember(call);
   bool beacon = ( BEACON_SPOT == spots.first().type );
   int  sc = spots.size();
   int  db = spots.first().db;
@@ -61,8 +62,15 @@ SpotTable::data(const QModelIndex &index, int role) const {
   }
 
   if (Qt::DisplayRole == role) {
+    QStringList prefixlst;
+    if (skcc) prefixlst.append("skcc");
+    if (agcw) prefixlst.append("agcw");
+    if (beacon) prefixlst.append("b");
+    QString prefix = "";
+    if (prefixlst.size())
+      prefix = QString("[%1] ").arg(prefixlst.join(", "));
     switch (index.column()) {
-      case 0: return (skcc ? QString("[skcc] ") : QString()) + (beacon ? QString("[b] ") : QString()) + call;
+      case 0: return prefix + call;
       case 1: return _spots.at(index.row()).last().freq;
       case 2: return db;
       case 3: return _spots.at(index.row()).first().wpm;
@@ -325,6 +333,10 @@ accept:
   if ((LogFile::WORKED != logmatch) && _skcc.isMember(spot.spot)) {
     qDebug() << "Emit new SKCC...";
     emit newSKCC(spot);
+  }
+  if ((LogFile::WORKED != logmatch) && _agcw.isMember(spot.spot)) {
+    qDebug() << "Emit new AGCW...";
+    emit newAGCW(spot);
   }
 
   if (_friends.contains(spot.spot.toUpper())) {

@@ -7,6 +7,7 @@
 #include "rbn.hh"
 #include "adi.hh"
 #include "skcc.hh"
+#include "agcw.hh"
 #include "settings.hh"
 
 /** Central table holding all current spots matching the chosen conditions. */
@@ -77,6 +78,7 @@ signals:
 	void newDXCC(const Spot &spot);
 	void newBand(const Spot &spot);
 	void newSKCC(const Spot &spot);
+  void newAGCW(const Spot &spot);
   void newFriend(const Spot &spot);
   void newSelfSpot(const Spot &spot, const QString &spotterLoc);
 
@@ -85,6 +87,7 @@ protected:
 	RBNSpotterList _spotterlist;
 	LogFile _logfile;
 	SKCCMembers _skcc;
+  AGCWMembers _agcw;
 
 	QList< QList<Spot> > _spots;
 

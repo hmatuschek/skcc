@@ -1,8 +1,8 @@
 name: rbnc
-#version: git
-#grade: devel
-version: 1.0.6
-grade: stable
+version: git
+grade: devel
+#version: 1.0.6
+#grade: stable
 summary: Reverse-Beacon-Network Desktop-Client
 description: |
   RBNC is a system tray client application to the reverse beacon network.
@@ -41,7 +41,7 @@ parts:
       - libqt5multimedia5-plugins
     source: https://github.com/hmatuschek/skcc.git
     source-type: git
-    source-tag: "v$SNAPCRAFT_PROJECT_VERSION"
+    #source-tag: "v$SNAPCRAFT_PROJECT_VERSION"
     configflags:
       - "-DCMAKE_INSTALL_PREFIX=/usr"
       - "-DCMAKE_BUILD_TYPE=Release"
