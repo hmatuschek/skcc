@@ -8,6 +8,9 @@ set(rbnc_MOC_HEADERS
   selfspotmap.hh aboutdialog.hh agcw.hh)
 set(rbnc_HEADERS locator.hh bands.hh icons.hh ${skcc_MOC_HEADERS})
 
+configure_file(config.h.in ${PROJECT_BINARY_DIR}/src/config.h)
+INCLUDE_DIRECTORIES(${PROJECT_BINARY_DIR}/src/)
+
 qt5_wrap_cpp(rbnc_MOC_SOURCES ${rbnc_MOC_HEADERS})
 qt5_add_resources(rbnc_RCC_SOURCES ../resources.qrc)
 
