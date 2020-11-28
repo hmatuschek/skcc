@@ -3,8 +3,8 @@
 !define DESCRIPTION "A system-tray client application for the reverse beacon network"
 # These three must be integers
 !define VERSIONMAJOR 1
-!define VERSIONMINOR 0
-!define VERSIONBUILD 5
+!define VERSIONMINOR 1
+!define VERSIONBUILD 0
 
 RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
  

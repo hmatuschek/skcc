@@ -3,7 +3,7 @@
 #include <QLabel>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
-
+#include "config.h"
 
 AboutDialog::AboutDialog()
 {
@@ -12,7 +12,8 @@ AboutDialog::AboutDialog()
     return;
 
   QLabel *txt = new QLabel(this);
-  txt->setText(about.readAll());
+  QString html = about.readAll();
+  txt->setText(html.arg(VERSION_STRING));
   txt->setWordWrap(true);
   txt->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
