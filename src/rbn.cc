@@ -30,7 +30,7 @@ RBNSpotterList::listDownloaded(QNetworkReply *reply) {
 	QString data = QString::fromUtf8(reply->readAll()).simplified();
   data.remove('\r'); data.remove('\n');
 
-	QRegExp re("<td[^>]*><a href=\"/dxsd1.php\\?f=[^>]*>\\s*([A-Z0-9/]*)\\s*</a>[^<]*</td>\\s*<td[^>]*>\\s*([0-9m,]*)</a></td>\\s*<td[^>]*>([0-9A-Za-z]*)</td>", Qt::CaseInsensitive);
+  QRegExp re("<td[^>]*><a href=\"/dxsd1.php\\?f=[^>]*>\\s*([A-Z0-9/\\-]*)\\s*</a>[^<]*</td>\\s*<td[^>]*>\\s*([0-9m,]*)</a></td>\\s*<td[^>]*>([0-9A-Za-z]*)</td>", Qt::CaseInsensitive);
 	int start = 0;
 	while (0 < (start = data.indexOf("online24h online7d total\">", start))) {
 		start += 27;
@@ -41,6 +41,7 @@ RBNSpotterList::listDownloaded(QNetworkReply *reply) {
 			continue;
 		QString spotter = re.cap(1);
 		QString grid = re.cap(3);
+    qDebug() << "Add spotter " << re.cap(1) << " @ " << re.cap(3);
     _spotter[spotter] = grid;
 	}
 
