@@ -1,6 +1,8 @@
 #include "rbn.hh"
 #include "locator.hh"
-
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
 
 RBNSpotterList::RBNSpotterList(int selfupdate, QObject *parent)
     : QObject(parent), _timer()
@@ -21,29 +23,25 @@ void
 RBNSpotterList::update() {
   qDebug() << "Update spotter list.";
   _spotter.clear();
-	QNetworkRequest request(QUrl("http://reversebeacon.net/cont_includes/status.php?t=skt"));
+  QNetworkRequest request(QUrl("http://reversebeacon.net/nodes/detail_json.php"));
 	_WebCtrl.get(request);
 }
 
 void
 RBNSpotterList::listDownloaded(QNetworkReply *reply) {
-	QString data = QString::fromUtf8(reply->readAll()).simplified();
-  data.remove('\r'); data.remove('\n');
+  QJsonParseError error;
+  QJsonDocument document = QJsonDocument::fromJson(reply->readAll(), &error);
+  QJsonArray list = document.array();
 
-  QRegExp re("<td[^>]*><a href=\"/dxsd1.php\\?f=[^>]*>\\s*([A-Z0-9/\\-]*)\\s*</a>[^<]*</td>\\s*<td[^>]*>\\s*([0-9m,]*)</a></td>\\s*<td[^>]*>([0-9A-Za-z]*)</td>", Qt::CaseInsensitive);
-	int start = 0;
-	while (0 < (start = data.indexOf("online24h online7d total\">", start))) {
-		start += 27;
-		int end = data.indexOf("</tr>", start);
-		if (0 > end) continue;
-		int found = re.indexIn(data, start);
-		if ((0>found) || (found>end))
-			continue;
-		QString spotter = re.cap(1);
-		QString grid = re.cap(3);
-    qDebug() << "Add spotter " << re.cap(1) << " @ " << re.cap(3);
-    _spotter[spotter] = grid;
-	}
+  for (QJsonArray::iterator item=list.begin(); item!=list.end(); item++) {
+    if (! item->isObject())
+      continue;
+    QJsonObject obj = item->toObject();
+    if ((! obj.contains("call")) || (! obj.contains("grid")))
+      continue;
+    _spotter[obj.value("call").toString()] = obj.value("grid").toString();
+    qDebug() << "Add skimmer" << obj.value("call") << "@" << obj.value("grid");
+  }
 
   reply->deleteLater();
   qDebug() << "Got" << _spotter.size() << "skimmer.";
