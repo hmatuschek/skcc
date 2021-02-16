@@ -226,7 +226,12 @@ SpotTable::setMinSNR(int db) {
 void
 SpotTable::onNewSpot(const Spot &spot)
 {
-  // First remove all old spots
+  /* Ok, there will be a lot of spots hitting this function. Remember, all spots all over the world
+   * are fed into this function. Consequently, it should be relatively efficient to filter all
+   * spots that are irrelevant w.r.t. the filter settings. Do only fancy stuff after the majority of
+   * spots are ignored. */
+
+  // First remove all old spots if maxAge is specified
   if (0 < _maxAge) {
     QDateTime now = QDateTime::currentDateTimeUtc();
 
@@ -260,15 +265,28 @@ SpotTable::onNewSpot(const Spot &spot)
     }
   }
 
-  if (spot.spot == _call)
-    emit newSelfSpot(spot, _spotterlist.spotterGrid(spot.spotter));
-
-  if ((_showSelf && (spot.spot == _call)) || _friends.contains(spot.spot.toUpper()))
+  // If spot is a self-spot -> accept anyway
+  if (spot.spot == _call) {
+    if (_spotterlist.hasSpotter(spot.spotter))
+      emit newSelfSpot(spot, _spotterlist.spotterGrid(spot.spotter));
+    else
+      qDebug() << "Uknown skimmer" << spot.spotter;
     goto accept;
+  }
 
+  // If spot is a friend-spot -> accept anyway
+  if (_friends.contains(spot.spot.toUpper())) {
+    emit newFriend(spot);
+    goto accept;
+  }
+
+  // Otherwise filter by settings
+
+  // If spot-band is enabled
   if (! _bands.contains(freq2band(spot.freq)))
     return;
 
+  // Filter by spotter distance (if enabled)
   if (0 < _maxDist) {
     if (! _spotterlist.hasSpotter(spot.spotter))
       return;
@@ -276,23 +294,30 @@ SpotTable::onNewSpot(const Spot &spot)
       return;
   }
 
+  // Handle beacon spots
   if (BEACON_SPOT == spot.type) {
+    // accept if beacons are enabled
     if (_showBeaconSpots)
       goto accept;
     return;
   }
 
+  // Filter by speed
   if ((0<_maxSpeed) && (spot.wpm>_maxSpeed))
     return;
 
+  // Filter by SNR
   if ((0<_minSNR) && (spot.db<_minSNR))
     return;
 
+  // Filter by log match (e.g., new call, band or dxcc)
   if (_minMatch > _logfile.isNew(spot.spot, freq2band(spot.freq), spot.mode))
     return;
 
+  // If the spot is accepted
 accept:
   int row=0;
+  // Check for duplicate spots and aggregate spots by call
   bool isDup = false, hasSpot = false;
   for (QList<QList<Spot> >::iterator item = _spots.begin(); item != _spots.end(); item++, row++) {
     if (item->first().spot == spot.spot) {
@@ -337,9 +362,5 @@ accept:
   if ((LogFile::WORKED != logmatch) && _agcw.isMember(spot.spot)) {
     qDebug() << "Emit new AGCW...";
     emit newAGCW(spot);
-  }
-
-  if (_friends.contains(spot.spot.toUpper())) {
-    emit newFriend(spot);
   }
 }

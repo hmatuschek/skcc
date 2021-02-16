@@ -36,11 +36,15 @@ signals:
 	void listUpdated();
 
 private slots:
+  /** Internal call-back to handle downloaded spotter list. */
 	void listDownloaded(QNetworkReply* reply);
 
 private:
+  /** Network access. */
   QNetworkAccessManager _WebCtrl;
+  /** Maps spotter call to locator. */
   QHash<QString, QString> _spotter;
+  /** Timer to update spotter list regularily (if enabled). */
   QTimer _timer;
 };
 

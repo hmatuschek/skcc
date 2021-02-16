@@ -10,9 +10,12 @@ RBNSpotterList::RBNSpotterList(int selfupdate, QObject *parent)
 	connect(&_WebCtrl, SIGNAL (finished(QNetworkReply*)), this, SLOT (listDownloaded(QNetworkReply*)));
   connect(&_timer, SIGNAL(timeout()), this, SLOT(update()));
 
+  // get spotter list now
 	update();
 
-  if (0<selfupdate) {
+  // if a self-update period is given in minutes
+  if (0 < selfupdate) {
+    // -> enable timer
     _timer.setInterval(selfupdate*60*1000);
     _timer.setSingleShot(false);
     _timer.start();
@@ -29,10 +32,16 @@ RBNSpotterList::update() {
 
 void
 RBNSpotterList::listDownloaded(QNetworkReply *reply) {
+  // parse JSON document
   QJsonParseError error;
   QJsonDocument document = QJsonDocument::fromJson(reply->readAll(), &error);
+  if (QJsonParseError::NoError != error.error) {
+    qWarning() << "JSON parse error" << error.errorString();
+    return;
+  }
+  // Get spotter list
   QJsonArray list = document.array();
-
+  // add spotter
   for (QJsonArray::iterator item=list.begin(); item!=list.end(); item++) {
     if (! item->isObject())
       continue;
@@ -42,7 +51,7 @@ RBNSpotterList::listDownloaded(QNetworkReply *reply) {
     _spotter[obj.value("call").toString()] = obj.value("grid").toString();
     qDebug() << "Add skimmer" << obj.value("call") << "@" << obj.value("grid");
   }
-
+  // delete request reply later on
   reply->deleteLater();
   qDebug() << "Got" << _spotter.size() << "skimmer.";
   emit listUpdated();
