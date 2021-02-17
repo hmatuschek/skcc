@@ -1,7 +1,7 @@
 name: rbnc
-version: git
-grade: devel
-#version: 1.1.2
+#version: git
+#grade: devel
+version: 1.1.2
 grade: stable
 summary: Reverse-Beacon-Network Desktop-Client
 description: |
@@ -41,7 +41,7 @@ parts:
       - libqt5multimedia5-plugins
     source: https://github.com/hmatuschek/skcc.git
     source-type: git
-    #source-tag: "v$SNAPCRAFT_PROJECT_VERSION"
+    source-tag: "v$SNAPCRAFT_PROJECT_VERSION"
     configflags:
       - "-DCMAKE_INSTALL_PREFIX=/usr"
       - "-DCMAKE_BUILD_TYPE=Release"
