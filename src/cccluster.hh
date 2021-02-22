@@ -17,15 +17,16 @@ SpotType readSpotType(const QString &type);
 /** Defines a spot. */
 typedef struct
 {
-  QString   spot;    ///< Spot call sign.
-  QString   spotter; ///< Spotter call sign.
-  double    freq;    ///< Spot frequency.
-  QString   mode;    ///< Spot mode (CW, etc).
-  SpotType  type;    ///< Spot type (CQ, BEACON, etc).
-  int       db;      ///< Spot signal strength.
-  int       wpm;     ///< Spot speed.
-  QTime     time;    ///< Spot time.
-  QDateTime rxtime;  ///< Time of announcement on cluster.
+  QString   full_call; ///< Full spot call sign (including /p or prefix (e.g., HB0/...).
+  QString   call;      ///< Spot call sign.
+  QString   spotter;   ///< Spotter call sign.
+  double    freq;      ///< Spot frequency.
+  QString   mode;      ///< Spot mode (CW, etc).
+  SpotType  type;      ///< Spot type (CQ, BEACON, etc).
+  int       db;        ///< Spot signal strength.
+  int       wpm;       ///< Spot speed.
+  QTime     time;      ///< Spot time.
+  QDateTime rxtime;    ///< Time of announcement on cluster.
 } Spot;
 
 
@@ -75,6 +76,7 @@ protected:
   quint16 _port;
   QString _call;
   QRegExp _rbnpattern;
+  QRegExp _callsignPattern;
   QByteArray _buffer;
   QTimer _reconnect;
 };

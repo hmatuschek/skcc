@@ -66,7 +66,7 @@ TrayIcon::onNewDXCC(const Spot &spot) {
     return;
 
   qDebug() << "Notify new DXCC...";
-  _popup->setPopupText(tr("New DXCC <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.spot)
+  _popup->setPopupText(tr("New DXCC <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.full_call)
                        .arg(spot.freq).arg(spot.db).arg(spot.wpm));
   _popup->show();
 
@@ -80,7 +80,7 @@ TrayIcon::onNewBand(const Spot &spot) {
     return;
 
   qDebug() << "Notify new Band...";
-  _popup->setPopupText(tr("New Band <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.spot)
+  _popup->setPopupText(tr("New Band <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.full_call)
                        .arg(spot.freq).arg(spot.db).arg(spot.wpm));
   _popup->show();
 
@@ -93,7 +93,7 @@ TrayIcon::onNewSKCC(const Spot &spot) {
   if (! Settings().notifyOnNewSKCC())
     return;
   qDebug() << "Notify new SKCC...";
-  _popup->setPopupText(tr("New SKCC <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.spot)
+  _popup->setPopupText(tr("New SKCC <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.full_call)
                        .arg(spot.freq).arg(spot.db).arg(spot.wpm));
   _popup->show();
 
@@ -106,7 +106,7 @@ TrayIcon::onNewAGCW(const Spot &spot) {
   if (! Settings().notifyOnNewAGCW())
     return;
   qDebug() << "Notify new AGCW...";
-  _popup->setPopupText(tr("New AGCW <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.spot)
+  _popup->setPopupText(tr("New AGCW <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.full_call)
                        .arg(spot.freq).arg(spot.db).arg(spot.wpm));
   _popup->show();
 
@@ -118,14 +118,14 @@ void
 TrayIcon::onNewFriend(const Spot &spot) {
   if (! Settings().notifyOnNewFriend())
     return;
-  qDebug() << "Notify Friend" << spot.spot;
-  Friend fri = _app->spots()->friends()[spot.spot];
+  qDebug() << "Notify Friend" << spot.full_call;
+  Friend fri = _app->spots()->friends()[spot.full_call];
   if (fri.name().isEmpty()) {
-    _popup->setPopupText(tr("Friend <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.spot)
+    _popup->setPopupText(tr("Friend <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.full_call)
                          .arg(spot.freq).arg(spot.db).arg(spot.wpm));
   } else {
     _popup->setPopupText(tr("%1 <b>%2</b> on <b>%3kHz</b> (%4dB, %5WPM)")
-                         .arg(fri.name()).arg(spot.spot)
+                         .arg(fri.name()).arg(spot.full_call)
                          .arg(spot.freq).arg(spot.db).arg(spot.wpm));
 
   }

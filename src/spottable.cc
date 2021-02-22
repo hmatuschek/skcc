@@ -45,7 +45,7 @@ SpotTable::data(const QModelIndex &index, int role) const {
     return QVariant();
 
   QList<Spot> spots = _spots.at(index.row());
-  QString call = spots.first().spot;
+  QString call = spots.first().full_call;
   bool skcc = _skcc.isMember(call);
   bool agcw = _agcw.isMember(call);
   bool beacon = ( BEACON_SPOT == spots.first().type );
@@ -90,16 +90,16 @@ SpotTable::data(const QModelIndex &index, int role) const {
     }
   } else if (Qt::BackgroundRole == role) {
     Settings settings;
-    if (_spots.at(index.row()).first().spot == _call)
+    if (_spots.at(index.row()).first().full_call == _call)
       return settings.selfSpotColor();
-    if (_friends.contains(_spots.at(index.row()).first().spot.toUpper()))
+    if (_friends.contains(_spots.at(index.row()).first().full_call.toUpper()))
       return settings.friendSpotColor();
     if (BEACON_SPOT == _spots.at(index.row()).first().type)
       return settings.beaconSpotColor();
-    if (0 > dxcc_from_call(_spots.at(index.row()).first().spot))
+    if (0 > dxcc_from_call(_spots.at(index.row()).first().full_call))
       return settings.newQSOColor();
     LogFile::Match match = _logfile.isNew(
-          _spots.at(index.row()).first().spot, freq2band(_spots.at(index.row()).first().freq),
+          _spots.at(index.row()).first().full_call, freq2band(_spots.at(index.row()).first().freq),
           _spots.at(index.row()).first().mode);
     switch (match) {
       case LogFile::NEW_DXCC: return settings.newDXCCColor();
@@ -266,7 +266,7 @@ SpotTable::onNewSpot(const Spot &spot)
   }
 
   // If spot is a self-spot -> accept anyway
-  if (spot.spot == _call) {
+  if (spot.call == _call) {
     if (_spotterlist.hasSpotter(spot.spotter))
       emit newSelfSpot(spot, _spotterlist.spotterGrid(spot.spotter));
     else
@@ -275,7 +275,7 @@ SpotTable::onNewSpot(const Spot &spot)
   }
 
   // If spot is a friend-spot -> accept anyway
-  if (_friends.contains(spot.spot.toUpper())) {
+  if (_friends.contains(spot.call.toUpper())) {
     emit newFriend(spot);
     goto accept;
   }
@@ -311,7 +311,7 @@ SpotTable::onNewSpot(const Spot &spot)
     return;
 
   // Filter by log match (e.g., new call, band or dxcc)
-  if (_minMatch > _logfile.isNew(spot.spot, freq2band(spot.freq), spot.mode))
+  if (_minMatch > _logfile.isNew(spot.full_call, freq2band(spot.freq), spot.mode))
     return;
 
   // If the spot is accepted
@@ -320,7 +320,7 @@ accept:
   // Check for duplicate spots and aggregate spots by call
   bool isDup = false, hasSpot = false;
   for (QList<QList<Spot> >::iterator item = _spots.begin(); item != _spots.end(); item++, row++) {
-    if (item->first().spot == spot.spot) {
+    if (item->first().full_call == spot.full_call) {
       hasSpot = true;
       isDup = (item->last().time == spot.time);
       item->append(spot);
@@ -341,7 +341,7 @@ accept:
   if (isDup)
     return;
 
-  LogFile::Match logmatch = _logfile.isNew(spot.spot, freq2band(spot.freq), spot.mode);
+  LogFile::Match logmatch = _logfile.isNew(spot.full_call, freq2band(spot.freq), spot.mode);
   switch (logmatch) {
     case LogFile::NEW_DXCC:
       qDebug() << "Emit new DXCC...";
@@ -355,11 +355,11 @@ accept:
       break;
   }
 
-  if ((LogFile::WORKED != logmatch) && _skcc.isMember(spot.spot)) {
+  if ((LogFile::WORKED != logmatch) && _skcc.isMember(spot.full_call)) {
     qDebug() << "Emit new SKCC...";
     emit newSKCC(spot);
   }
-  if ((LogFile::WORKED != logmatch) && _agcw.isMember(spot.spot)) {
+  if ((LogFile::WORKED != logmatch) && _agcw.isMember(spot.full_call)) {
     qDebug() << "Emit new AGCW...";
     emit newAGCW(spot);
   }

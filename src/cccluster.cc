@@ -23,7 +23,8 @@ SpotType readSpotType(const QString &type) {
 CCCluster::CCCluster(const QString &call, const QString &host, quint16 port, QObject *parent)
   : QTcpSocket(parent), _state(CONNECTING), _host(host), _port(port), _call(call),
     _rbnpattern("^DX de ([A-Za-Z0-9]+).*: ([0-9\\.]+) ([A-Z0-9/]+) CW "
-                 "([0-9]+) dB ([0-9]+) WPM (CQ|DX|BEACON|NCDXF B) ([0-9][0-9])([0-9][0-9])Z$")
+                 "([0-9]+) dB ([0-9]+) WPM (CQ|DX|BEACON|NCDXF B) ([0-9][0-9])([0-9][0-9])Z$"),
+    _callsignPattern("([A-Za-z0-9]+/)?([A-Z0-9]+[0-9][A-Z]+)(/(p|m|mm|am|qrp|qrpp|[0-9]))?$", Qt::CaseInsensitive)
 {
   _reconnect.setInterval(10000);
   _reconnect.setSingleShot(true);
@@ -86,12 +87,16 @@ CCCluster::onReadyRead()
     } else if ((WAIT == _state) && (line.startsWith("DX"))) {
       //qDebug() << "Got line" << line;
       if (_rbnpattern.exactMatch(line)) {
-        Spot spot = { _rbnpattern.cap(3), _rbnpattern.cap(1), _rbnpattern.cap(2).toDouble(),
+        QString fullcall = _rbnpattern.cap(3), call = fullcall;
+        if (_callsignPattern.exactMatch(fullcall))
+          call = _callsignPattern.cap(2);
+        Spot spot = { fullcall, call, _rbnpattern.cap(1), _rbnpattern.cap(2).toDouble(),
                       "CW", readSpotType(_rbnpattern.cap(6)), _rbnpattern.cap(4).toInt(),
                       _rbnpattern.cap(5).toInt(), QTime(_rbnpattern.cap(7).toInt(),
                       _rbnpattern.cap(8).toInt()), QDateTime::currentDateTimeUtc() };
-        /*qDebug() << "Got " << spot.spot << "from" << spot.spotter << "on" << spot.freq
-                 << "with" << spot.db << "dB and" << spot.wpm << "wpm at" << spot.time;*/
+        qDebug() << "Got " << spot.call << "as" << spot.full_call
+                 << "from" << spot.spotter << "on" << spot.freq
+                 << "with" << spot.db << "dB and" << spot.wpm << "wpm at" << spot.time;
         emit newSpot(spot);
       }
     }
