@@ -6,9 +6,7 @@
 #include "cccluster.hh"
 #include "rbn.hh"
 #include "adi.hh"
-#include "skcc.hh"
-#include "agcw.hh"
-#include "hsc.hh"
+#include "clubmembership.hh"
 #include "settings.hh"
 
 /** Central table holding all current spots matching the chosen conditions. */
@@ -78,9 +76,7 @@ signals:
   void disconnected();
 	void newDXCC(const Spot &spot);
 	void newBand(const Spot &spot);
-	void newSKCC(const Spot &spot);
-  void newAGCW(const Spot &spot);
-  void newHSC(const Spot &spot);
+  void newMembership(const Spot &spot, const Membership &membership);
   void newFriend(const Spot &spot);
   void newSelfSpot(const Spot &spot, const QString &spotterLoc);
 
@@ -88,9 +84,7 @@ protected:
 	CCCluster _cluster;
 	RBNSpotterList _spotterlist;
 	LogFile _logfile;
-	SKCCMembers _skcc;
-  AGCWMembers _agcw;
-  HSCMembers  _hsc;
+  ClubMembership _memberships;
 
 	QList< QList<Spot> > _spots;
 

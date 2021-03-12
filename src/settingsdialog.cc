@@ -191,6 +191,44 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   tlayout->addWidget(box);
   tab->setLayout(tlayout);
 
+
+  tab = new QWidget();
+  tabs->addTab(tab, tr("Memberships"));
+  tlayout = new QVBoxLayout();
+
+  box = new QGroupBox(tr("Show memberships"));
+  form = new QFormLayout();
+  _showMembership = new QCheckBox();
+  _showMembership->setChecked(settings.showMembership());
+  form->addRow(tr("Show memberships in spot table."), _showMembership);
+  box->setLayout(form);
+  tlayout->addWidget(box);
+
+  box = new QGroupBox(tr("Show memberships"));
+  form = new QFormLayout();
+  Membership mem = settings.notifyOnNewMembership();
+  _notifySKCC = new QCheckBox();
+  _notifySKCC->setChecked(mem.skcc);
+  form->addRow(tr("Notify on new SKCC member"), _notifySKCC);
+  _notifyAGCW = new QCheckBox();
+  _notifyAGCW->setChecked(mem.agcw);
+  form->addRow(tr("Notify on new AGCW member"), _notifyAGCW);
+  _notifyHSC = new QCheckBox();
+  _notifyHSC->setChecked(mem.hsc);
+  form->addRow(tr("Notify on new HSC member"), _notifyHSC);
+  _notifyVHSC = new QCheckBox();
+  _notifyVHSC->setChecked(mem.vhsc);
+  form->addRow(tr("Notify on new VHSC member"), _notifyVHSC);
+  _notifySHSC = new QCheckBox();
+  _notifySHSC->setChecked(mem.shsc);
+  form->addRow(tr("Notify on new SHSC member"), _notifySHSC);
+  _notifyEHSC = new QCheckBox();
+  _notifyEHSC->setChecked(mem.ehsc);
+  form->addRow(tr("Notify on new EHSC member"), _notifyEHSC);
+  box->setLayout(form);
+  tlayout->addWidget(box);
+  tab->setLayout(tlayout);
+
   QDialogButtonBox *bb = new QDialogButtonBox(QDialogButtonBox::Save|QDialogButtonBox::Cancel);
   layout->addWidget(bb);
 
@@ -262,6 +300,15 @@ SettingsDialog::accept() {
   settings.setSpot10mColor(_spot10m->color());
   settings.setSpot6mColor(_spot6m->color());
   settings.setIconTheme(IconProvider::Theme(_iconTheme->currentData().toUInt()));
+  settings.setShowMembership(_showMembership->isChecked());
+  Membership mem;
+  if (_notifySKCC->isChecked()) mem.skcc = 1;
+  if (_notifyAGCW->isChecked()) mem.agcw = 1;
+  if (_notifyHSC->isChecked())  mem.hsc = 1;
+  if (_notifyVHSC->isChecked()) mem.vhsc = 1;
+  if (_notifySHSC->isChecked()) mem.shsc = 1;
+  if (_notifyEHSC->isChecked()) mem.ehsc = 1;
+  settings.setNotifyOnNewMembership(mem);
 
   Friends friends;
   for (int i=0; i<_friends->rowCount(); i++) {

@@ -2,6 +2,8 @@
 #define AGCWMEMBERS_HH
 
 #include "webfile.hh"
+#include "clubmembership.hh"
+
 
 class AGCWMembers: public WebFile
 {
@@ -15,6 +17,7 @@ public:
   /** Returns the ID of the given AGCW member. */
   int memberID(const QString &call) const;
 
+  Membership membership(const QString &call) const;
 
 private slots:
   void listUpdated();

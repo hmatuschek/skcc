@@ -89,37 +89,15 @@ TrayIcon::onNewBand(const Spot &spot) {
 }
 
 void
-TrayIcon::onNewSKCC(const Spot &spot) {
-  if (! Settings().notifyOnNewSKCC())
+TrayIcon::onNewMembership(const Spot &spot, const Membership &memb) {
+  if (! (Settings().notifyOnNewMembership() & memb).any())
     return;
-  qDebug() << "Notify new SKCC...";
-  _popup->setPopupText(tr("New SKCC <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.full_call)
-                       .arg(spot.freq).arg(spot.db).arg(spot.wpm));
-  _popup->show();
 
-  if (Settings().notificationSoundEnabled())
-    QSound::play(":/sound/single_chime.wav");
-}
-
-void
-TrayIcon::onNewAGCW(const Spot &spot) {
-  if (! Settings().notifyOnNewAGCW())
-    return;
-  qDebug() << "Notify new AGCW...";
-  _popup->setPopupText(tr("New AGCW <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.full_call)
-                       .arg(spot.freq).arg(spot.db).arg(spot.wpm));
-  _popup->show();
-
-  if (Settings().notificationSoundEnabled())
-    QSound::play(":/sound/single_chime.wav");
-}
-
-void
-TrayIcon::onNewHSC(const Spot &spot) {
-  if (! Settings().notifyOnNewAGCW())
-    return;
-  qDebug() << "Notify new HSC...";
-  _popup->setPopupText(tr("New HSC <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.full_call)
+  Membership notify = Settings().notifyOnNewMembership() & memb;
+  QString memberships = notify.names().join(", ").toUpper();
+  qDebug() << "Notify new" << memberships << "...";
+  _popup->setPopupText(tr("New %1 <b>%2</b> on <b>%3kHz</b> (%4dB, %5WPM)")
+                       .arg(memberships).arg(spot.full_call)
                        .arg(spot.freq).arg(spot.db).arg(spot.wpm));
   _popup->show();
 

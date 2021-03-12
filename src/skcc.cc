@@ -44,3 +44,12 @@ int
 SKCCMembers::memberID(const QString &call) const {
   return _members[call];
 }
+
+Membership
+SKCCMembers::membership(const QString &call) const {
+  Membership memb;
+  if (! _members.contains(call))
+    return memb;
+  memb.skcc = 1;
+  return memb;
+}

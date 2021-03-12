@@ -24,16 +24,16 @@ HSCMembers::listUpdated()
     line = QString::fromUtf8(file.readLine()).simplified();
     QStringList row = line.split(";");
     if (3 <= row.size()) {
-      MemberShip mem = MEMB_NONE;
+      Membership mem;
       if ("-" != row.at(2))
-        mem = (MemberShip) (mem|MEMB_HSC);
+        mem.hsc = 1;
       if ("-" != row.at(3))
-        mem = (MemberShip) (mem|MEMB_SHSC);
+        mem.shsc = 1;
       if ("-" != row.at(4))
-        mem = (MemberShip) (mem|MEMB_VHSC);
+        mem.vhsc = 1;
       if ("-" != row.at(5))
-        mem = (MemberShip) (mem|MEMB_EHSC);
-      _members.insert(row.at(1),mem);
+        mem.ehsc = 1;
+      _members.insert(row.at(1), mem);
     }
   } while (! line.isEmpty());
 
@@ -47,9 +47,10 @@ HSCMembers::isMember(const QString &call) const {
   return _members.contains(call);
 }
 
-HSCMembers::MemberShip
+
+Membership
 HSCMembers::membership(const QString &call) const {
   if (! isMember(call))
-    return MEMB_NONE;
+    return Membership();
   return _members[call];
 }

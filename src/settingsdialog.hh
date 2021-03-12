@@ -6,6 +6,7 @@
 #include <QTableWidget>
 #include "colorbutton.hh"
 #include <QComboBox>
+#include <QCheckBox>
 
 
 class SettingsDialog : public QDialog
@@ -34,6 +35,8 @@ private:
   ColorButton *_qthColor, *_spot2200m, *_spot630m, *_spot160m, *_spot80m, *_spot60m, *_spot40m;
   ColorButton *_spot30m, *_spot20m, *_spot17m, *_spot15m, *_spot12m, *_spot10m, *_spot6m;
   QComboBox *_iconTheme;
+  QCheckBox *_showMembership;
+  QCheckBox *_notifySKCC,*_notifyAGCW,*_notifyHSC,*_notifyVHSC,*_notifySHSC,*_notifyEHSC;
 };
 
 #endif // SETTINGSDIALOG_HH

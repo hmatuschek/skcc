@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "webfile.hh"
-
+#include "clubmembership.hh"
 
 /** Downloads the current list of SKCC members. */
 class SKCCMembers: public WebFile
@@ -19,6 +19,7 @@ public:
   /** Returns the ID of the given SKCC member. */
 	int memberID(const QString &call) const;
 
+  Membership membership(const QString &call) const;
 
 private slots:
 	void listUpdated();

@@ -5,6 +5,8 @@
 #include <QColor>
 #include "adi.hh"
 #include "icons.hh"
+#include "clubmembership.hh"
+
 
 class Friend
 {
@@ -101,6 +103,9 @@ public:
   bool showSelfSpots() const;
   void setShowSelfSpots(bool show);
 
+  bool showMembership() const;
+  void setShowMembership(bool show);
+
   bool showBeaconSpots() const;
   void setShowBeaconSpots(bool show);
 
@@ -127,12 +132,8 @@ public:
   void setNotifyOnNewDXCC(bool enable);
   bool notifyOnNewBand() const;
   void setNotifyOnNewBand(bool enable);
-  bool notifyOnNewSKCC() const;
-  void setNotifyOnNewSKCC(bool enable);
-  bool notifyOnNewAGCW() const;
-  void setNotifyOnNewAGCW(bool enable);
-  bool notifyOnNewHSC() const;
-  void setNotifyOnNewHSC(bool enable);
+  Membership notifyOnNewMembership() const;
+  void setNotifyOnNewMembership(const Membership &memb);
   bool notifyOnNewFriend() const;
   void setNotifyOnNewFriend(bool enable);
 

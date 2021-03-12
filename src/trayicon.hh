@@ -22,9 +22,7 @@ protected slots:
 	void onShowSettings();
 	void onNewDXCC(const Spot &spot);
 	void onNewBand(const Spot &spot);
-	void onNewSKCC(const Spot &spot);
-  void onNewAGCW(const Spot &spot);
-  void onNewHSC(const Spot &spot);
+  void onNewMembership(const Spot &spot, const Membership &memb);
 	void onNewFriend(const Spot &spot);
 
 protected:

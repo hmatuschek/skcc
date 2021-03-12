@@ -12,7 +12,7 @@ SpotTable::SpotTable(const QString &call, const QString &locator, const QString 
                      bool showSelf, bool showBeacon, int maxdist, int maxage, LogFile::Match minMatch, int maxSpeed,
                      int minSNR, QObject *parent)
     : QAbstractTableModel(parent), _cluster(call, cluster, port),
-      _spotterlist(), _logfile(logfile), _skcc(), _agcw(), _spots(), _call(call), _locator(locator),
+      _spotterlist(), _logfile(logfile), _memberships(), _spots(), _call(call), _locator(locator),
       _showSelf(showSelf), _showBeaconSpots(showBeacon), _maxAge(maxage), _maxDist(maxdist),
       _maxSpeed(maxSpeed), _minSNR(minSNR),
       _minMatch(minMatch)
@@ -44,11 +44,11 @@ SpotTable::data(const QModelIndex &index, int role) const {
   if (_spots.at(index.row()).isEmpty())
     return QVariant();
 
+  Settings settings;
   QList<Spot> spots = _spots.at(index.row());
   QString call = spots.first().full_call;
-  bool skcc = _skcc.isMember(call);
-  bool agcw = _agcw.isMember(call);
-  HSCMembers::MemberShip hsc_memb = _hsc.membership(call);
+  Membership memb = _memberships.membership(call);
+
   bool beacon = ( BEACON_SPOT == spots.first().type );
   int  sc = spots.size();
   int  db = spots.first().db;
@@ -64,13 +64,10 @@ SpotTable::data(const QModelIndex &index, int role) const {
 
   if (Qt::DisplayRole == role) {
     QStringList prefixlst;
-    if (skcc) prefixlst.append("skcc");
-    if (agcw) prefixlst.append("agcw");
-    if (HSCMembers::MEMB_EHSC & hsc_memb) prefixlst.append("ehsc");
-    else if (HSCMembers::MEMB_SHSC & hsc_memb) prefixlst.append("shsc");
-    else if (HSCMembers::MEMB_VHSC & hsc_memb) prefixlst.append("vhsc");
-    else if (HSCMembers::MEMB_HSC & hsc_memb) prefixlst.append("hsc");
-    if (beacon) prefixlst.append("b");
+    if (settings.showMembership() && memb.any())
+      prefixlst += memb.names();
+    if (beacon)
+      prefixlst.append("b");
     QString prefix = "";
     if (prefixlst.size())
       prefix = QString("[%1] ").arg(prefixlst.join(", "));
@@ -94,7 +91,6 @@ SpotTable::data(const QModelIndex &index, int role) const {
       case 6: return _spots.at(index.row()).last().rxtime;
     }
   } else if (Qt::BackgroundRole == role) {
-    Settings settings;
     if (_spots.at(index.row()).first().full_call == _call)
       return settings.selfSpotColor();
     if (_friends.contains(_spots.at(index.row()).first().full_call.toUpper()))
@@ -360,16 +356,7 @@ accept:
       break;
   }
 
-  if ((LogFile::WORKED != logmatch) && _skcc.isMember(spot.full_call)) {
-    qDebug() << "Emit new SKCC...";
-    emit newSKCC(spot);
-  }
-  if ((LogFile::WORKED != logmatch) && _agcw.isMember(spot.full_call)) {
-    qDebug() << "Emit new AGCW...";
-    emit newAGCW(spot);
-  }
-  if ((LogFile::WORKED != logmatch) && _hsc.isMember(spot.full_call)) {
-    qDebug() << "Emit new HSC...";
-    emit newHSC(spot);
-  }
+  Membership memb = _memberships.membership(spot.full_call);
+  if ((LogFile::WORKED != logmatch) && memb.any())
+    emit newMembership(spot, memb);
 }

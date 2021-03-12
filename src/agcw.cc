@@ -43,3 +43,12 @@ AGCWMembers::memberID(const QString &call) const {
   return _members[call];
 }
 
+Membership
+AGCWMembers::membership(const QString &call) const {
+  Membership memb;
+  if (! _members.contains(call))
+    return memb;
+  memb.agcw = 1;
+  return memb;
+}
+

@@ -190,17 +190,24 @@ bool
 Settings::showSelfSpots() const {
   return value("showSelf", true).toBool();
 }
-
 void
 Settings::setShowSelfSpots(bool show) {
   setValue("showSelf", show);
 }
 
 bool
+Settings::showMembership() const {
+  return value("showMembership", true).toBool();
+}
+void
+Settings::setShowMembership(bool show) {
+  setValue("showMembership", show);
+}
+
+bool
 Settings::showBeaconSpots() const {
   return value("showBeacon", true).toBool();
 }
-
 void
 Settings::setShowBeaconSpots(bool show) {
   setValue("showBeacon", show);
@@ -295,34 +302,14 @@ Settings::setNotifyOnNewBand(bool enable) {
   setValue("notify/onNewBand", enable);
 }
 
-bool
-Settings::notifyOnNewSKCC() const {
-  return value("notify/onNewSKCC", true).toBool();
+Membership
+Settings::notifyOnNewMembership() const {
+  return value("notify/onNewMembership", 0).toUInt();
 }
 
 void
-Settings::setNotifyOnNewSKCC(bool enable) {
-  setValue("notify/onNewSKCC", enable);
-}
-
-bool
-Settings::notifyOnNewAGCW() const {
-  return value("notify/onNewAGCW", true).toBool();
-}
-
-void
-Settings::setNotifyOnNewAGCW(bool enable) {
-  setValue("notify/onNewAGCW", enable);
-}
-
-bool
-Settings::notifyOnNewHSC() const {
-  return value("notify/onNewHSC", true).toBool();
-}
-
-void
-Settings::setNotifyOnNewHSC(bool enable) {
-  setValue("notify/onNewHSC", enable);
+Settings::setNotifyOnNewMembership(const Membership &memb) {
+  setValue("notify/onNewMembership", (unsigned int)(memb));
 }
 
 bool
