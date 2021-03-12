@@ -115,6 +115,19 @@ TrayIcon::onNewAGCW(const Spot &spot) {
 }
 
 void
+TrayIcon::onNewHSC(const Spot &spot) {
+  if (! Settings().notifyOnNewAGCW())
+    return;
+  qDebug() << "Notify new HSC...";
+  _popup->setPopupText(tr("New HSC <b>%1</b> on <b>%2kHz</b> (%3dB, %4WPM)").arg(spot.full_call)
+                       .arg(spot.freq).arg(spot.db).arg(spot.wpm));
+  _popup->show();
+
+  if (Settings().notificationSoundEnabled())
+    QSound::play(":/sound/single_chime.wav");
+}
+
+void
 TrayIcon::onNewFriend(const Spot &spot) {
   if (! Settings().notifyOnNewFriend())
     return;

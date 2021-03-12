@@ -24,6 +24,7 @@ protected slots:
 	void onNewBand(const Spot &spot);
 	void onNewSKCC(const Spot &spot);
   void onNewAGCW(const Spot &spot);
+  void onNewHSC(const Spot &spot);
 	void onNewFriend(const Spot &spot);
 
 protected:

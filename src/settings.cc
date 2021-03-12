@@ -316,6 +316,16 @@ Settings::setNotifyOnNewAGCW(bool enable) {
 }
 
 bool
+Settings::notifyOnNewHSC() const {
+  return value("notify/onNewHSC", true).toBool();
+}
+
+void
+Settings::setNotifyOnNewHSC(bool enable) {
+  setValue("notify/onNewHSC", enable);
+}
+
+bool
 Settings::notifyOnNewFriend() const {
   return value("notify/onNewFriend", true).toBool();
 }

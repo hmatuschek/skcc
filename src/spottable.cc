@@ -67,8 +67,8 @@ SpotTable::data(const QModelIndex &index, int role) const {
     if (skcc) prefixlst.append("skcc");
     if (agcw) prefixlst.append("agcw");
     if (HSCMembers::MEMB_EHSC & hsc_memb) prefixlst.append("ehsc");
-    else if (HSCMembers::MEMB_VHSC & hsc_memb) prefixlst.append("vhsc");
     else if (HSCMembers::MEMB_SHSC & hsc_memb) prefixlst.append("shsc");
+    else if (HSCMembers::MEMB_VHSC & hsc_memb) prefixlst.append("vhsc");
     else if (HSCMembers::MEMB_HSC & hsc_memb) prefixlst.append("hsc");
     if (beacon) prefixlst.append("b");
     QString prefix = "";

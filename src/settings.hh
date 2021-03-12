@@ -131,6 +131,8 @@ public:
   void setNotifyOnNewSKCC(bool enable);
   bool notifyOnNewAGCW() const;
   void setNotifyOnNewAGCW(bool enable);
+  bool notifyOnNewHSC() const;
+  void setNotifyOnNewHSC(bool enable);
   bool notifyOnNewFriend() const;
   void setNotifyOnNewFriend(bool enable);
 
