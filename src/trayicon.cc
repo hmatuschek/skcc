@@ -29,8 +29,8 @@ TrayIcon::TrayIcon(Application *app)
   _popup->setProperty("popupDuration", 5000);
   connect(_app->spots(), SIGNAL(newDXCC(Spot)), this, SLOT(onNewDXCC(Spot)));
   connect(_app->spots(), SIGNAL(newBand(Spot)), this, SLOT(onNewBand(Spot)));
-  connect(_app->spots(), SIGNAL(newSKCC(Spot)), this, SLOT(onNewSKCC(Spot)));
-  connect(_app->spots(), SIGNAL(newAGCW(Spot)), this, SLOT(onNewAGCW(Spot)));
+  connect(_app->spots(), SIGNAL(newMembership(Spot,Membership)),
+          this, SLOT(onNewMembership(Spot,Membership)));
   connect(_app->spots(), SIGNAL(newFriend(Spot)), this, SLOT(onNewFriend(Spot)));
 }
 

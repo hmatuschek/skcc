@@ -204,7 +204,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   box->setLayout(form);
   tlayout->addWidget(box);
 
-  box = new QGroupBox(tr("Show memberships"));
+  box = new QGroupBox(tr("Membership notification"));
   form = new QFormLayout();
   Membership mem = settings.notifyOnNewMembership();
   _notifySKCC = new QCheckBox();
