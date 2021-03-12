@@ -48,10 +48,7 @@ SpotTable::data(const QModelIndex &index, int role) const {
   QString call = spots.first().full_call;
   bool skcc = _skcc.isMember(call);
   bool agcw = _agcw.isMember(call);
-  bool hsc = (HSCMembers::MEMB_HSC & _hsc.membership(call));
-  bool shsc = (HSCMembers::MEMB_SHSC & _hsc.membership(call));
-  bool vhsc = (HSCMembers::MEMB_VHSC & _hsc.membership(call));
-  bool ehsc = (HSCMembers::MEMB_EHSC & _hsc.membership(call));
+  HSCMembers::MemberShip hsc_memb = _hsc.membership(call);
   bool beacon = ( BEACON_SPOT == spots.first().type );
   int  sc = spots.size();
   int  db = spots.first().db;
@@ -69,10 +66,10 @@ SpotTable::data(const QModelIndex &index, int role) const {
     QStringList prefixlst;
     if (skcc) prefixlst.append("skcc");
     if (agcw) prefixlst.append("agcw");
-    if (ehsc) prefixlst.append("ehsc");
-    else if (vhsc) prefixlst.append("vhsc");
-    else if (shsc) prefixlst.append("shsc");
-    else if (hsc) prefixlst.append("hsc");
+    if (HSCMembers::MEMB_EHSC & hsc_memb) prefixlst.append("ehsc");
+    else if (HSCMembers::MEMB_VHSC & hsc_memb) prefixlst.append("vhsc");
+    else if (HSCMembers::MEMB_SHSC & hsc_memb) prefixlst.append("shsc");
+    else if (HSCMembers::MEMB_HSC & hsc_memb) prefixlst.append("hsc");
     if (beacon) prefixlst.append("b");
     QString prefix = "";
     if (prefixlst.size())
