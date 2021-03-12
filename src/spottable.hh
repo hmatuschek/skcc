@@ -8,6 +8,7 @@
 #include "adi.hh"
 #include "skcc.hh"
 #include "agcw.hh"
+#include "hsc.hh"
 #include "settings.hh"
 
 /** Central table holding all current spots matching the chosen conditions. */
@@ -79,6 +80,7 @@ signals:
 	void newBand(const Spot &spot);
 	void newSKCC(const Spot &spot);
   void newAGCW(const Spot &spot);
+  void newHSC(const Spot &spot);
   void newFriend(const Spot &spot);
   void newSelfSpot(const Spot &spot, const QString &spotterLoc);
 
@@ -88,6 +90,7 @@ protected:
 	LogFile _logfile;
 	SKCCMembers _skcc;
   AGCWMembers _agcw;
+  HSCMembers  _hsc;
 
 	QList< QList<Spot> > _spots;
 
