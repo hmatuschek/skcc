@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.0.0)
 project(rbnc)
 
 set(VERSION_MAJOR 1)
-set(VERSION_MINOR 1)
-set(VERSION_PATCH 3)
+set(VERSION_MINOR 2)
+set(VERSION_PATCH 0)
 set(VERSION_STRING "\"${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}\"")
 message(STATUS "Build version ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 
