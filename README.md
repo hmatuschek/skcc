@@ -9,7 +9,8 @@ one of those friends is active on the bands, irrespective of your filter
 settings.
 
 ## Releases
- * 2021-02-17 - [**Version 1.1.2](https://github.com/hmatuschek/skcc/releases/tag/v1.1.2) Bugfix release.
+ * 2021-02-17 - [**Version 1.2.0**](https://github.com/hmatuschek/skcc/releases/tag/v1.2.0) Added HSC club membership.
+ * 2021-02-17 - [Version 1.1.2](https://github.com/hmatuschek/skcc/releases/tag/v1.1.2) Bugfix release.
  * 2020-11-26 - [Version 1.1.0](https://github.com/hmatuschek/skcc/releases/tag/v1.1.0) Added AGCW member list.
  * 2020-06-07 - [Version 1.0.5](https://github.com/hmatuschek/skcc/releases/tag/v1.0.5) Bugfix release and some performance improvements. 
  * 2019-12-12 - [Version 1.0.3](https://github.com/hmatuschek/skcc/releases/tag/v1.0.3) 
