@@ -3,6 +3,8 @@
 
 #include <QAbstractTableModel>
 #include <QSet>
+#include <QTimer>
+
 #include "cccluster.hh"
 #include "rbn.hh"
 #include "adi.hh"
@@ -70,6 +72,7 @@ public:
 
 protected slots:
 	void onNewSpot(const Spot &spot);
+  void removeOldSpots();
 
 signals:
   void connected();
@@ -100,6 +103,8 @@ protected:
 	LogFile::Match _minMatch;
 	QSet<QString> _bands;
   Friends _friends;
+
+  QTimer _cleanupTimer;
 };
 
 #endif // SPOTTABLE_HH

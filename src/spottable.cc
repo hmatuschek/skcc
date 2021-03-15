@@ -15,14 +15,21 @@ SpotTable::SpotTable(const QString &call, const QString &locator, const QString 
       _spotterlist(), _logfile(logfile), _memberships(), _spots(), _call(call), _locator(locator),
       _showSelf(showSelf), _showBeaconSpots(showBeacon), _maxAge(maxage), _maxDist(maxdist),
       _maxSpeed(maxSpeed), _minSNR(minSNR),
-      _minMatch(minMatch)
+      _minMatch(minMatch), _cleanupTimer()
 {
   _bands << BAND_2200M << BAND_630M << BAND_160M << BAND_80M << BAND_60M << BAND_40M << BAND_30M
          << BAND_20M << BAND_17M << BAND_15M << BAND_12M << BAND_10M << BAND_6M;
 
+  // Cleanup only once every minute.
+  _cleanupTimer.setInterval(60000);
+  _cleanupTimer.setSingleShot(false);
+
 	connect(&_cluster, SIGNAL(newSpot(Spot)), this, SLOT(onNewSpot(Spot)));
   connect(&_cluster, SIGNAL(connected()), this, SIGNAL(connected()));
   connect(&_cluster, SIGNAL(disconnected()), this, SIGNAL(disconnected()));
+  connect(&_cleanupTimer, SIGNAL(timeout()), this, SLOT(removeOldSpots()));
+
+  _cleanupTimer.start();
 }
 
 int
@@ -232,40 +239,6 @@ SpotTable::onNewSpot(const Spot &spot)
    * spots that are irrelevant w.r.t. the filter settings. Do only fancy stuff after the majority of
    * spots are ignored. */
 
-  // First remove all old spots if maxAge is specified
-  if (0 < _maxAge) {
-    QDateTime now = QDateTime::currentDateTimeUtc();
-
-    int row = 0;
-    for (QList<QList<Spot> >::iterator it=_spots.begin(); it!=_spots.end(); it++, row++)
-    {
-      int spotRemIdx = -1;
-      for (QList<Spot>::iterator sit=it->begin(); sit!=it->end(); sit++) {
-        if (sit->rxtime.secsTo(now)>_maxAge)
-          spotRemIdx++;
-        else
-          break;
-      }
-      for (int i=0; i<=spotRemIdx; i++)
-        it->removeFirst();
-
-      if (it->size() && (0<=spotRemIdx))
-        emit dataChanged(index(row, 0), index(row, 6));
-    }
-
-    row = 0;
-    for (QList<QList<Spot> >::iterator it=_spots.begin(); it!=_spots.end();) {
-      if (it->empty()) {
-        beginRemoveRows(QModelIndex(), row, row);
-        it = _spots.erase(it);
-        endRemoveRows();
-      } else {
-        it++;
-        row++;
-      }
-    }
-  }
-
   // If spot is a self-spot -> accept anyway
   if (spot.call == _call) {
     if (_spotterlist.hasSpotter(spot.spotter))
@@ -359,4 +332,41 @@ accept:
   Membership memb = _memberships.membership(spot.full_call);
   if ((LogFile::WORKED != logmatch) && memb.any())
     emit newMembership(spot, memb);
+}
+
+void
+SpotTable::removeOldSpots() {
+  // First remove all old spots if maxAge is specified
+  if (0 < _maxAge) {
+    QDateTime now = QDateTime::currentDateTimeUtc();
+
+    int row = 0;
+    for (QList<QList<Spot> >::iterator it=_spots.begin(); it!=_spots.end(); it++, row++)
+    {
+      int spotRemIdx = -1;
+      for (QList<Spot>::iterator sit=it->begin(); sit!=it->end(); sit++) {
+        if (sit->rxtime.secsTo(now)>_maxAge)
+          spotRemIdx++;
+        else
+          break;
+      }
+      for (int i=0; i<=spotRemIdx; i++)
+        it->removeFirst();
+
+      if (it->size() && (0<=spotRemIdx))
+        emit dataChanged(index(row, 0), index(row, 6));
+    }
+
+    row = 0;
+    for (QList<QList<Spot> >::iterator it=_spots.begin(); it!=_spots.end();) {
+      if (it->empty()) {
+        beginRemoveRows(QModelIndex(), row, row);
+        it = _spots.erase(it);
+        endRemoveRows();
+      } else {
+        it++;
+        row++;
+      }
+    }
+  }
 }
