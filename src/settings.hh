@@ -58,7 +58,7 @@ class Settings: public QSettings
 	Q_OBJECT
 
 public:
-  Settings();
+  explicit Settings(QObject *parent=nullptr);
 
   bool isComplete() const;
 

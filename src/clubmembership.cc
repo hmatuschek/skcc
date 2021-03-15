@@ -5,15 +5,15 @@
 
 
 Membership::Membership(unsigned int bits) {
-  (unsigned int &)(*this) = bits;
+  this->bits = bits;
 }
 
 Membership::operator unsigned int() const {
-  return *(unsigned int *)(this);
+  return bits;
 }
 
 Membership::operator unsigned int() {
-  return *(unsigned int *)(this);
+  return bits;
 }
 
 bool
@@ -41,12 +41,12 @@ Membership::names() const {
 
 Membership
 Membership::operator |(const Membership &other) {
-  return Membership((unsigned int)(*this) | (unsigned int)(other));
+  return Membership(bits | other.bits);
 }
 
 Membership
 Membership::operator &(const Membership &other) {
-  return Membership((unsigned int)(*this) & (unsigned int)(other));
+  return Membership(bits & other.bits);
 }
 
 

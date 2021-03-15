@@ -10,12 +10,15 @@ class HSCMembers;
 
 
 struct __attribute__((packed)) Membership {
-  unsigned int skcc : 1,
-    agcw : 1,
-    hsc  : 1,
-    vhsc : 1,
-    shsc : 1,
-    ehsc : 1;
+  union {
+    unsigned int skcc : 1,
+      agcw : 1,
+      hsc  : 1,
+      vhsc : 1,
+      shsc : 1,
+      ehsc : 1;
+    unsigned int bits;
+  };
 
   Membership(unsigned int bits=0);
   operator unsigned int() const;

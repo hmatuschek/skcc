@@ -3,8 +3,8 @@
 #include <QDebug>
 
 
-Settings::Settings()
-    : QSettings("io.github.hmatuschek", "skcc")
+Settings::Settings(QObject *parent)
+    : QSettings("io.github.hmatuschek", "skcc", parent)
 {
 	// pass...
 }
