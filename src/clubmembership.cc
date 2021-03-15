@@ -18,7 +18,7 @@ Membership::operator unsigned int() {
 
 bool
 Membership::any() const {
-  return skcc | agcw | hsc | vhsc | shsc | ehsc;
+  return skcc || agcw || hsc || vhsc || shsc || ehsc;
 }
 
 QStringList
@@ -30,9 +30,9 @@ Membership::names() const {
     n.append("agcw");
   if (ehsc)
     n.append("ehsc");
-  else if (shsc)
+  if (shsc)
     n.append("shsc");
-  else if (vhsc)
+  if (vhsc)
     n.append("vhsc");
   if (hsc)
     n.append("hsc");

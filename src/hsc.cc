@@ -28,9 +28,9 @@ HSCMembers::listUpdated()
       if ("-" != row.at(2))
         mem.hsc = 1;
       if ("-" != row.at(3))
-        mem.shsc = 1;
-      if ("-" != row.at(4))
         mem.vhsc = 1;
+      if ("-" != row.at(4))
+        mem.shsc = 1;
       if ("-" != row.at(5))
         mem.ehsc = 1;
       _members.insert(row.at(1), mem);

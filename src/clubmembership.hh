@@ -11,12 +11,14 @@ class HSCMembers;
 
 struct __attribute__((packed)) Membership {
   union {
-    unsigned int skcc : 1,
-      agcw : 1,
-      hsc  : 1,
-      vhsc : 1,
-      shsc : 1,
-      ehsc : 1;
+    struct {
+      unsigned int skcc : 1,
+        agcw : 1,
+        hsc  : 1,
+        vhsc : 1,
+        shsc : 1,
+        ehsc : 1;
+    };
     unsigned int bits;
   };
 
