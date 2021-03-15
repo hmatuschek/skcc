@@ -1,7 +1,7 @@
 #include "hsc.hh"
 
 HSCMembers::HSCMembers(QObject *parent)
-  : WebFile("hsclist.txt", QUrl("http://hsc.dj1yfk.de/db/hsc_list_by_number.csv"), 7, parent),
+  : WebFile("hsclist.txt", QUrl("https://hsc.dj1yfk.de/db/hsc_list_by_number.csv"), 7, parent),
     _members()
 {
   connect(this, SIGNAL(updated()), this, SLOT(listUpdated()));
