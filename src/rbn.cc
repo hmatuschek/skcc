@@ -4,9 +4,11 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-RBNSpotterList::RBNSpotterList(int selfupdate, QObject *parent)
-    : QObject(parent), _timer()
+RBNSpotterList::RBNSpotterList(const QString &myloc, int selfupdate, QObject *parent)
+    : QObject(parent), _my_cla(0), _my_lon(0), _timer()
 {
+  setLocator(myloc);
+
 	connect(&_WebCtrl, SIGNAL (finished(QNetworkReply*)), this, SLOT (listDownloaded(QNetworkReply*)));
   connect(&_timer, SIGNAL(timeout()), this, SLOT(update()));
 
@@ -20,6 +22,12 @@ RBNSpotterList::RBNSpotterList(int selfupdate, QObject *parent)
     _timer.setSingleShot(false);
     _timer.start();
   }
+}
+
+void
+RBNSpotterList::setLocator(const QString &loc) {
+  loc2deg(loc, _my_lon, _my_cla);
+  _spotter_dist.clear();
 }
 
 void
@@ -68,12 +76,15 @@ RBNSpotterList::spotterGrid(const QString &call) const {
 }
 
 double
-RBNSpotterList::spotterDist(const QString &call, const QString grid) const {
+RBNSpotterList::spotterDist(const QString &call) {
   if (! _spotter.contains(call))
     return -1;
-  double slon,scla,mlon,mcla;
+  if (_spotter_dist.contains(call))
+    return _spotter_dist[call];
+  double slon,scla;
   loc2deg(_spotter[call], slon, scla);
-  loc2deg(grid, mlon, mcla);
-  return great_circle_distance(slon, scla, mlon, mcla);
+  double dist = great_circle_distance(slon, scla, _my_lon, _my_cla);
+  _spotter_dist.insert(call, dist);
+  return dist;
 }
 

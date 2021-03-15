@@ -94,9 +94,9 @@ CCCluster::onReadyRead()
                       "CW", readSpotType(_rbnpattern.cap(6)), _rbnpattern.cap(4).toInt(),
                       _rbnpattern.cap(5).toInt(), QTime(_rbnpattern.cap(7).toInt(),
                       _rbnpattern.cap(8).toInt()), QDateTime::currentDateTimeUtc() };
-        qDebug() << "Got " << spot.call << "as" << spot.full_call
+        /*qDebug() << "Got " << spot.call << "as" << spot.full_call
                  << "from" << spot.spotter << "on" << spot.freq
-                 << "with" << spot.db << "dB and" << spot.wpm << "wpm at" << spot.time;
+                 << "with" << spot.db << "dB and" << spot.wpm << "wpm at" << spot.time;*/
         emit newSpot(spot);
       }
     }

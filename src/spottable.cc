@@ -12,11 +12,13 @@ SpotTable::SpotTable(const QString &call, const QString &locator, const QString 
                      bool showSelf, bool showBeacon, int maxdist, int maxage, LogFile::Match minMatch, int maxSpeed,
                      int minSNR, QObject *parent)
     : QAbstractTableModel(parent), _cluster(call, cluster, port),
-      _spotterlist(), _logfile(logfile), _memberships(), _spots(), _call(call), _locator(locator),
+      _spotterlist(nullptr), _logfile(logfile), _memberships(), _spots(), _call(call),
       _showSelf(showSelf), _showBeaconSpots(showBeacon), _maxAge(maxage), _maxDist(maxdist),
       _maxSpeed(maxSpeed), _minSNR(minSNR),
       _minMatch(minMatch), _cleanupTimer()
 {
+  _spotterlist = new RBNSpotterList(locator, 30, this);
+
   _bands << BAND_2200M << BAND_630M << BAND_160M << BAND_80M << BAND_60M << BAND_40M << BAND_30M
          << BAND_20M << BAND_17M << BAND_15M << BAND_12M << BAND_10M << BAND_6M;
 
@@ -60,9 +62,9 @@ SpotTable::data(const QModelIndex &index, int role) const {
   int  sc = spots.size();
   int  db = spots.first().db;
   QString spotter = spots.first().spotter;
-  double  dist = _spotterlist.spotterDist(spotter, _locator);
+  double  dist = _spotterlist->spotterDist(spotter);
   for (QList<Spot>::iterator it = spots.begin(); it != spots.end(); it++) {
-    double d2 = _spotterlist.spotterDist(it->spotter, _locator);
+    double d2 = _spotterlist->spotterDist(it->spotter);
     if (d2<dist) {
       db = it->db;
       spotter = it->spotter;
@@ -232,6 +234,16 @@ SpotTable::setMinSNR(int db) {
 }
 
 void
+SpotTable::setLocator(const QString &loc) {
+  _spotterlist->setLocator(loc);
+}
+
+void
+SpotTable::setCall(const QString &call) {
+  _call = call;
+}
+
+void
 SpotTable::onNewSpot(const Spot &spot)
 {
   /* Ok, there will be a lot of spots hitting this function. Remember, all spots all over the world
@@ -241,8 +253,8 @@ SpotTable::onNewSpot(const Spot &spot)
 
   // If spot is a self-spot -> accept anyway
   if (spot.call == _call) {
-    if (_spotterlist.hasSpotter(spot.spotter))
-      emit newSelfSpot(spot, _spotterlist.spotterGrid(spot.spotter));
+    if (_spotterlist->hasSpotter(spot.spotter))
+      emit newSelfSpot(spot, _spotterlist->spotterGrid(spot.spotter));
     else
       qDebug() << "Uknown skimmer" << spot.spotter;
     goto accept;
@@ -262,9 +274,9 @@ SpotTable::onNewSpot(const Spot &spot)
 
   // Filter by spotter distance (if enabled)
   if (0 < _maxDist) {
-    if (! _spotterlist.hasSpotter(spot.spotter))
+    if (! _spotterlist->hasSpotter(spot.spotter))
       return;
-    if (_spotterlist.spotterDist(spot.spotter, _locator) > _maxDist)
+    if (_spotterlist->spotterDist(spot.spotter) > _maxDist)
       return;
   }
 

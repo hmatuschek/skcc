@@ -18,14 +18,15 @@ class RBNSpotterList: public QObject
 
 public:
   /** Constructor. */
-	explicit RBNSpotterList(int selfupdate=30, QObject *parent=0);
+  explicit RBNSpotterList(const QString &grid, int selfupdate=30, QObject *parent=0);
 
+  void setLocator(const QString &loc);
   /** Returns if the given call is in the list of skimmers. */
 	bool hasSpotter(const QString &call) const;
   /** Returns the grid locator of the given skimmer. */
 	QString spotterGrid(const QString &call) const;
   /** Returns the distance to the given skimmer from the specified grid locator. */
-	double spotterDist(const QString &call, const QString grid) const;
+  double spotterDist(const QString &call);
 
 public slots:
   /** Updates the list of skimmers. */
@@ -40,10 +41,12 @@ private slots:
 	void listDownloaded(QNetworkReply* reply);
 
 private:
+  double _my_cla, _my_lon;
   /** Network access. */
   QNetworkAccessManager _WebCtrl;
   /** Maps spotter call to locator. */
   QHash<QString, QString> _spotter;
+  QHash<QString, int> _spotter_dist;
   /** Timer to update spotter list regularily (if enabled). */
   QTimer _timer;
 };

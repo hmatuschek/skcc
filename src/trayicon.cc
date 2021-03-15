@@ -57,6 +57,8 @@ TrayIcon::onShowSettings() {
   if (QDialog::Accepted == dialog.exec()) {
     Settings settings;
     _app->spots()->friends() = settings.friends();
+    _app->spots()->setLocator(settings.locator());
+    _app->spots()->setCall(settings.call());
   }
 }
 

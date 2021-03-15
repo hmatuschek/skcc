@@ -70,6 +70,9 @@ public:
 	int minSNR() const;
 	void setMinSNR(int db);
 
+  void setLocator(const QString &loc);
+  void setCall(const QString &call);
+
 protected slots:
 	void onNewSpot(const Spot &spot);
   void removeOldSpots();
@@ -85,14 +88,13 @@ signals:
 
 protected:
 	CCCluster _cluster;
-	RBNSpotterList _spotterlist;
+  RBNSpotterList *_spotterlist;
 	LogFile _logfile;
   ClubMembership _memberships;
 
 	QList< QList<Spot> > _spots;
 
 	QString _call;
-	QString _locator;
 
 	bool _showSelf;
   bool _showBeaconSpots;
