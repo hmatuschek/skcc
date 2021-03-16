@@ -43,7 +43,7 @@ SpotTable::rowCount(const QModelIndex &parent) const {
 int
 SpotTable::columnCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
-	return 7;
+  return 8;
 }
 
 QVariant
@@ -71,33 +71,37 @@ SpotTable::data(const QModelIndex &index, int role) const {
     }
   }
 
+
   if (Qt::DisplayRole == role) {
-    QStringList prefixlst;
-    if (settings.showMembership() && memb.any())
-      prefixlst += memb.names();
+    QString memberships;
+    if ((settings.showMembership() & memb).any())
+      memberships = (settings.showMembership() & memb).names().join(", ");
+    QString prefix;
     if (beacon)
-      prefixlst.append("b");
-    QString prefix = "";
-    if (prefixlst.size())
-      prefix = QString("[%1] ").arg(prefixlst.join(", "));
+      prefix = "[b] ";
     switch (index.column()) {
       case 0: return prefix + call;
       case 1: return _spots.at(index.row()).last().freq;
       case 2: return db;
       case 3: return _spots.at(index.row()).first().wpm;
-      case 4: return dxcc_name_from_call(call);
-      case 5: return spotter + ((1<sc) ? QString(" + %1").arg(sc-1) : QString());
-      case 6: return _spots.at(index.row()).last().time.toString();
+      case 4: return memberships;
+      case 5: return dxcc_name_from_call(call);
+      case 6: return spotter + ((1<sc) ? QString(" + %1").arg(sc-1) : QString());
+      case 7: return _spots.at(index.row()).last().time.toString();
     }
   } else if (Qt::EditRole == role) {
+    QString memberships;
+    if ((settings.showMembership() & memb).any())
+      memberships = (settings.showMembership() & memb).names().join(", ");
     switch (index.column()) {
       case 0: return call;
       case 1: return _spots.at(index.row()).first().freq;
       case 2: return db;
       case 3: return _spots.at(index.row()).first().wpm;
-      case 4: return dxcc_name_from_call(call);
-      case 5: return spotter;
-      case 6: return _spots.at(index.row()).last().rxtime;
+      case 4: return memberships;
+      case 5: return dxcc_name_from_call(call);
+      case 6: return spotter;
+      case 7: return _spots.at(index.row()).last().rxtime;
     }
   } else if (Qt::BackgroundRole == role) {
     if (_spots.at(index.row()).first().full_call == _call)
@@ -130,13 +134,14 @@ SpotTable::headerData(int section, Qt::Orientation orientation, int role) const 
   if ((Qt::Horizontal != orientation) || (Qt::DisplayRole != role))
     return QVariant();
   switch (section) {
-    case 0: return "Spot";
-    case 1: return "Freq. [kHz]";
-    case 2: return "SNR [dB]";
-    case 3: return "Speed [WPM]";
-    case 4: return "DXCC";
-    case 5: return "Spotter";
-    case 6: return "Time";
+    case 0: return tr("Spot");
+    case 1: return tr("Freq. [kHz]");
+    case 2: return tr("SNR [dB]");
+    case 3: return tr("Speed [WPM]");
+    case 4: return tr("Memberships");
+    case 5: return tr("DXCC");
+    case 6: return tr("Spotter");
+    case 7: return tr("Time");
   }
 
   return QVariant();

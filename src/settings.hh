@@ -103,8 +103,8 @@ public:
   bool showSelfSpots() const;
   void setShowSelfSpots(bool show);
 
-  bool showMembership() const;
-  void setShowMembership(bool show);
+  Membership showMembership() const;
+  void setShowMembership(Membership show);
 
   bool showBeaconSpots() const;
   void setShowBeaconSpots(bool show);

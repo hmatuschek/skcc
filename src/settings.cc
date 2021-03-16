@@ -195,13 +195,12 @@ Settings::setShowSelfSpots(bool show) {
   setValue("showSelf", show);
 }
 
-bool
-Settings::showMembership() const {
-  return value("showMembership", true).toBool();
+Membership Settings::showMembership() const {
+  return value("showMembership", 0xffffffff).toUInt();
 }
 void
-Settings::setShowMembership(bool show) {
-  setValue("showMembership", show);
+Settings::setShowMembership(Membership show) {
+  setValue("showMembership", show.bits);
 }
 
 bool

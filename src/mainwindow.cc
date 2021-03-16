@@ -28,17 +28,18 @@ SpotWindow::SpotWindow(SpotTable *spots, QWidget *parent)
 
 	setModel(filter);
   setSortingEnabled(true);
-  sortByColumn(6, Qt::DescendingOrder);
+  sortByColumn(7, Qt::DescendingOrder);
   setShowGrid(false);
   verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
   verticalHeader()->hide();
+  setWordWrap(false);
 
-  for (int i=0; i<7; i++)
+  uint totalWidth = 0;
+  for (int i=0; i<spots->columnCount(QModelIndex()); i++) {
     setColumnWidth(i, settings.sectionSize(i));
-
-  setMinimumWidth(columnWidth(0)+columnWidth(1)+columnWidth(2)+
-                  columnWidth(3)+columnWidth(4)+columnWidth(5)+
-                  columnWidth(6)+2);
+    totalWidth += columnWidth(i);
+  }
+  setMinimumWidth(totalWidth+2);
   setMinimumHeight(500);
   resize(minimumWidth(), minimumHeight());
 

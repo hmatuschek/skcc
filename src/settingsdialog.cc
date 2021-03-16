@@ -198,15 +198,32 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
   box = new QGroupBox(tr("Show memberships"));
   form = new QFormLayout();
-  _showMembership = new QCheckBox();
-  _showMembership->setChecked(settings.showMembership());
-  form->addRow(tr("Show memberships in spot table."), _showMembership);
+  Membership mem = settings.showMembership();
+  _showSKCC = new QCheckBox();
+  _showSKCC->setChecked(mem.skcc);
+  form->addRow(tr("Show SKCC membership"), _showSKCC);
+  _showAGCW = new QCheckBox();
+  _showAGCW->setChecked(mem.agcw);
+  form->addRow(tr("Show AGCW membership"), _showAGCW);
+  _showHSC = new QCheckBox();
+  _showHSC->setChecked(mem.hsc);
+  form->addRow(tr("Show HSC membership"), _showHSC);
+  _showVHSC = new QCheckBox();
+  _showVHSC->setChecked(mem.vhsc);
+  form->addRow(tr("Show VHSC membership"), _showVHSC);
+  _showSHSC = new QCheckBox();
+  _showSHSC->setChecked(mem.shsc);
+  form->addRow(tr("Show SHSC membership"), _showSHSC);
+  _showEHSC = new QCheckBox();
+  _showEHSC->setChecked(mem.ehsc);
+  form->addRow(tr("Show EHSC membership"), _showEHSC);
+
   box->setLayout(form);
   tlayout->addWidget(box);
 
   box = new QGroupBox(tr("Membership notification"));
   form = new QFormLayout();
-  Membership mem = settings.notifyOnNewMembership();
+  mem = settings.notifyOnNewMembership();
   _notifySKCC = new QCheckBox();
   _notifySKCC->setChecked(mem.skcc);
   form->addRow(tr("Notify on new SKCC member"), _notifySKCC);
@@ -300,8 +317,14 @@ SettingsDialog::accept() {
   settings.setSpot10mColor(_spot10m->color());
   settings.setSpot6mColor(_spot6m->color());
   settings.setIconTheme(IconProvider::Theme(_iconTheme->currentData().toUInt()));
-  settings.setShowMembership(_showMembership->isChecked());
   Membership mem;
+  if (_showSKCC->isChecked()) mem.skcc = 1;
+  if (_showAGCW->isChecked()) mem.agcw = 1;
+  if (_showHSC->isChecked())  mem.hsc = 1;
+  if (_showVHSC->isChecked()) mem.vhsc = 1;
+  if (_showSHSC->isChecked()) mem.shsc = 1;
+  if (_showEHSC->isChecked()) mem.ehsc = 1;
+  settings.setShowMembership(mem);
   if (_notifySKCC->isChecked()) mem.skcc = 1;
   if (_notifyAGCW->isChecked()) mem.agcw = 1;
   if (_notifyHSC->isChecked())  mem.hsc = 1;
